@@ -1,0 +1,11 @@
+This folder must contain your real screenshots for zkr-ecommerce, named exactly:
+
+- Blog.JPG
+- Featured Products.JPG
+- Hero.JPG
+- Login.JPG
+- Products.JPG
+- Register.JPG
+
+data/projects.ts already references these exact filenames — just drop the real image files in here (same names, matching case) and they'll appear on the site.
+You can delete this .txt file once the real images are in place.

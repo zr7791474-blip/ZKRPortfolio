@@ -1,0 +1,30 @@
+"use client";
+
+import { useState } from "react";
+import { Check, Copy } from "lucide-react";
+
+export default function CopyEmailButton({ email }: { email: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      // Clipboard API can fail (permissions, insecure context) — fail silently,
+      // the tile itself is still a working mailto link.
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="inline-flex items-center gap-[6px] border-b border-dashed border-border-strong pb-[2px] font-mono text-[11px] text-text-faint transition-colors hover:text-accent"
+    >
+      {copied ? <Check className="h-3 w-3 text-sage" /> : <Copy className="h-3 w-3" />}
+      <span className={copied ? "text-sage" : ""}>{copied ? "Copied to clipboard" : "Copy address instead"}</span>
+    </button>
+  );
+}

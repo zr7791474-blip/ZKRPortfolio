@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg text-text font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  ::selection {
+    background: var(--accent-selection, rgba(205, 160, 90, 0.18));
+    color: #e0b876;
+  }
+  a {
+    color: inherit;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    body,
+    a,
+    button {
+      cursor: none;
+    }
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto max-w-wrap px-6 md:px-10;
+  }
+
+  .eyebrow {
+    @apply mb-[18px] flex items-center gap-[10px] font-mono text-[11px] uppercase tracking-[0.18em] text-accent;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 20px;
+    height: 1px;
+    background: theme("colors.accent.line");
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-[10px] rounded-full border border-border-strong px-7 py-[15px] text-sm font-medium outline-offset-[3px] transition-all duration-500 ease-signature;
+  }
+  .btn:focus-visible {
+    outline: 2px solid #cda05a;
+  }
+  .btn-primary {
+    @apply border-text bg-text text-bg hover:-translate-y-0.5 hover:border-accent hover:bg-accent;
+  }
+  .btn-ghost {
+    @apply hover:-translate-y-0.5 hover:border-accent-line hover:text-accent-bright;
+  }
+
+  .tech-badge {
+    @apply rounded-full border border-border-strong px-3 py-[6px] font-mono text-[11px] text-text-dim transition-all duration-300 hover:border-accent-line hover:text-accent-bright;
+  }
+}
+
+/* Background grid used behind the hero — kept out of Tailwind config since it's a one-off. */
+.bg-grid {
+  background-image: linear-gradient(rgba(242, 241, 236, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 241, 236, 0.09) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+}
+
+.focus-ring {
+  outline-offset: 3px;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid #cda05a;
+}
+
+/*
+ * Fix: native <select> dropdown text was unreadable (light text on the
+ * browser's default light/white popup background) until hovered, because
+ * no color-scheme was declared. `color-scheme: dark` tells the browser to
+ * render the select's native popup chrome (background, scrollbar, default
+ * option highlight) in dark-appropriate colors, and the explicit
+ * background-color/color on <option> is a belt-and-suspenders fallback for
+ * engines that don't fully theme the option list from color-scheme alone.
+ * Scoped to `select` only — the rest of the page is unaffected.
+ */
+select {
+  color-scheme: dark;
+}
+select option {
+  background-color: #131316; /* surface */
+  color: #f2f1ec; /* text */
+}
