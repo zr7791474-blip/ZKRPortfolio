@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Mail, Github, Twitter, MessageCircle } from "lucide-react";
+import { Mail, Github, Twitter, Instagram, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig, mailtoHref } from "@/lib/site";
 
@@ -43,6 +43,7 @@ export default function FloatingDock() {
     { label: "Email", icon: Mail, href: emailHref, external: false },
     { label: "GitHub", icon: Github, href: siteConfig.githubUrl || "#contact", external: true },
     { label: "X / Twitter", icon: Twitter, href: siteConfig.xUrl || "#contact", external: true },
+    { label: "Instagram", icon: Instagram, href: siteConfig.instagramUrl || "#contact", external: true },
     { label: "WhatsApp", icon: MessageCircle, href: siteConfig.whatsappUrl || "#contact", external: true },
   ];
 
@@ -61,7 +62,7 @@ export default function FloatingDock() {
             key={item.label}
             href={item.href}
             target={item.external ? "_blank" : undefined}
-            rel={item.external ? "noopener" : undefined}
+            rel={item.external ? "noopener noreferrer" : undefined}
             aria-label={item.label}
             className="flex h-[42px] w-[42px] items-center justify-center rounded-full text-text-dim transition-all duration-[350ms] ease-signature hover:-translate-y-[3px] hover:bg-accent-soft hover:text-accent-bright max-md:h-[46px] max-md:w-full"
           >

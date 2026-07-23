@@ -41,7 +41,7 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
         </div>
 
         <div className="hidden items-center gap-[22px] md:flex">
-          <Magnetic as="a" href={siteConfig.githubUrl} target="_blank" rel="noopener" className="btn btn-ghost !px-[22px] !py-[11px] text-[13px]">
+          <Magnetic as="a" href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost !px-[22px] !py-[11px] text-[13px]">
             GitHub
           </Magnetic>
           <Magnetic as="a" href="#contact" className="btn btn-primary !px-[22px] !py-[11px] text-[13px]">

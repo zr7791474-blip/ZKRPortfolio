@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Twitter, MessageCircle } from "lucide-react";
+import { Mail, Github, Twitter, MessageCircle, Instagram } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import ContactForm from "./ContactForm";
 import CopyEmailButton from "./CopyEmailButton";
@@ -19,6 +19,7 @@ export default function ContactSection() {
   const socials = [
     { label: "GitHub", href: siteConfig.githubUrl, icon: Github },
     { label: "X / Twitter", href: siteConfig.xUrl, icon: Twitter },
+    { label: "Instagram", href: siteConfig.instagramUrl, icon: Instagram },
     { label: "WhatsApp", href: siteConfig.whatsappUrl, icon: MessageCircle },
   ].filter((s) => s.href);
 
@@ -69,6 +70,7 @@ export default function ContactSection() {
             <a
               href={emailHref}
               data-cursor="OPEN"
+              aria-label={siteConfig.email ? `Email ${siteConfig.email}` : "Email"}
               className="group flex items-center gap-3 text-[17px] text-text transition-colors hover:text-accent-bright"
             >
               <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-strong transition-colors duration-300 group-hover:border-accent group-hover:text-accent">
@@ -90,7 +92,8 @@ export default function ContactSection() {
                   key={s.label}
                   href={s.href}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
                   data-cursor="OPEN"
                   className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[.06em] text-text-dim transition-colors hover:text-accent-bright"
                 >

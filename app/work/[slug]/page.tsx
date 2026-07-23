@@ -56,10 +56,10 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </div>
 
           <div className="mt-9 flex flex-wrap gap-[14px]">
-            <a href={project.liveUrl} target="_blank" rel="noopener" className="btn btn-primary">
+            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               Live Demo <ArrowUpRight className="h-[15px] w-[15px]" />
             </a>
-            <a href={project.repositoryUrl} target="_blank" rel="noopener" className="btn btn-ghost">
+            <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
               GitHub
             </a>
           </div>

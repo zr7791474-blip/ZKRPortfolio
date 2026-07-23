@@ -63,7 +63,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 as="a"
                 href={project.liveUrl}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 data-cursor="OPEN"
                 className="btn btn-primary !px-5 !py-3 text-[13px]"
               >
@@ -73,7 +73,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 as="a"
                 href={project.repositoryUrl}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="btn btn-ghost !px-5 !py-3 text-[13px]"
               >
                 GitHub

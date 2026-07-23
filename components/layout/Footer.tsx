@@ -1,26 +1,42 @@
-import { siteConfig } from "@/lib/site";
+import { mailtoHref, siteConfig } from "@/lib/site";
 import Logo from "@/components/ui/Logo";
 
 export default function Footer() {
+  const emailHref = siteConfig.email
+    ? mailtoHref({
+        email: siteConfig.email,
+        subject: "Project Inquiry",
+        body: "Hello Zakaria,\n\nI would like to contact you regarding...",
+      })
+    : "#contact";
+
+  const links = [
+    { label: "GitHub", href: siteConfig.githubUrl, external: true },
+    { label: "X", href: siteConfig.xUrl, external: true },
+    { label: "Instagram", href: siteConfig.instagramUrl, external: true },
+    { label: "WhatsApp", href: siteConfig.whatsappUrl, external: true },
+    { label: "Email", href: emailHref, external: false },
+  ].filter((l) => l.href);
+
   return (
     <footer className="border-t border-border py-[50px]">
       <div className="wrap flex flex-wrap items-center justify-between gap-5">
-        <a href="#hero" className="flex items-center">
+        <a href="#hero" className="flex items-center" aria-label="Back to top">
           <Logo size={26} />
         </a>
         <div className="flex gap-[26px]">
-          <a href={siteConfig.githubUrl} target="_blank" rel="noopener" className="text-[13px] text-text-dim transition-colors hover:text-accent">
-            GitHub
-          </a>
-          <a href={siteConfig.xUrl} target="_blank" rel="noopener" className="text-[13px] text-text-dim transition-colors hover:text-accent">
-            X
-          </a>
-          <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener" className="text-[13px] text-text-dim transition-colors hover:text-accent">
-            WhatsApp
-          </a>
-          <a href={`mailto:${siteConfig.email}`} className="text-[13px] text-text-dim transition-colors hover:text-accent">
-            Email
-          </a>
+          {links.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              target={l.external ? "_blank" : undefined}
+              rel={l.external ? "noopener noreferrer" : undefined}
+              aria-label={l.label}
+              className="text-[13px] text-text-dim transition-colors hover:text-accent"
+            >
+              {l.label}
+            </a>
+          ))}
         </div>
         <span className="font-mono text-[11px] text-text-faint">© 2026 ZAKARIA ADLI — BUILT WITH INTENT</span>
       </div>
