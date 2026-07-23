@@ -1,9 +1,0 @@
-This folder must contain your real screenshots for zkr-estate, named exactly:
-
-- screen1.JPG
-- screen2.JPG
-- screen3.JPG
-- screen4.JPG
-
-data/projects.ts already references these exact filenames — just drop the real image files in here (same names, matching case) and they'll appear on the site.
-You can delete this .txt file once the real images are in place.
