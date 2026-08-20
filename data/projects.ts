@@ -51,8 +51,10 @@ export type Project = {
   description: string;
   technologies: string[];
   features: ProjectFeature[];
-  repositoryUrl: string;
-  liveUrl: string;
+  /** Omit when no verified public repository exists — never fabricate one. */
+  repositoryUrl?: string;
+  /** Omit when no verified live deployment exists — never fabricate one. */
+  liveUrl?: string;
   screenshots: Screenshot[];
   architecture: {
     layers: string[];
@@ -381,6 +383,437 @@ export const projects: Project[] = [
       },
     ],
     accent: { hex: "#b98a63", soft: "rgba(185,138,99,0.16)", moodVia: "#4a5d4e" }, // clay + forest — architectural
+  },
+  {
+    slug: "coffy-network",
+    index: "05",
+    title: "Coffy°",
+    category: "Café & brunch spot — bilingual marketing site",
+    tagline: "Un Lieu Pour Brunch, Café et Matcha",
+    statement: "A real café's menu and address, done properly online.",
+    layoutVariant: "editorial",
+    description:
+      "A bilingual (FR/AR) marketing site for a real Casablanca café — a digital menu transcribed directly from the physical card, a brunch & crêpes program, and a map straight to the door on Rue Ramallah.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Google Maps Embed",
+    ],
+    features: [
+      {
+        title: "Home",
+        description: "Full-bleed hero with real café photography and quick links into the menu.",
+      },
+      {
+        title: "Menu",
+        description: "13 drink families transcribed from the physical menu, hot/iced pricing in MAD.",
+      },
+      {
+        title: "Café, Brunch & Crêpes",
+        description: "Dedicated pages for the specialty coffee program and the brunch menu.",
+      },
+      {
+        title: "Matcha",
+        description: "A standalone section for the matcha drink line.",
+      },
+      {
+        title: "Nous trouver",
+        description: "Embedded map, address, hours, and contact for the Rue Ramallah 07 location.",
+      },
+      {
+        title: "Bilingual",
+        description: "FR / AR language toggle in the header, for a local Casablanca audience.",
+      },
+    ],
+    liveUrl: "https://coffyhousee.netlify.app/",
+    screenshots: [
+      { src: "/projects/coffy-network/hero.JPG", alt: "Coffy° — Hero section", label: "Hero", isPlaceholder: false },
+      { src: "/projects/coffy-network/menu.JPG", alt: "Coffy° — Menu", label: "Menu", isPlaceholder: false },
+      { src: "/projects/coffy-network/brunch crepes.JPG", alt: "Coffy° — Brunch & Crêpes", label: "Brunch & Crêpes", isPlaceholder: false },
+      { src: "/projects/coffy-network/nous trover.JPG", alt: "Coffy° — Find us / location", label: "Find Us", isPlaceholder: false },
+    ],
+    architecture: {
+      layers: ["app/ (marketing routes)", "components/sections", "i18n (FR/AR)", "menu content data"],
+      panelLabel: "SITE MAP",
+      panelMeta: "6 ROUTES",
+    },
+    caseStudy: [
+      {
+        heading: "Objective",
+        body: "Give a real neighborhood café a site that answers the only three questions people actually have — what's on the menu, what does it cost, and where is it — without the usual template bloat.",
+      },
+      {
+        heading: "Solution",
+        body: "The full physical menu card was transcribed into structured content so pricing and descriptions stay accurate, with hot/iced variants handled as a single data shape instead of duplicated entries.",
+      },
+      {
+        heading: "Architecture",
+        body: "A small set of marketing routes share one layout; an FR/AR toggle swaps copy at the layer closest to the content instead of duplicating whole pages.",
+      },
+      {
+        heading: "Details",
+        body: "An embedded, pre-pinned map and one-tap directions link remove the friction of a first-time visitor finding Rue Ramallah 07 from a phone.",
+      },
+    ],
+    accent: { hex: "#b3453a", soft: "rgba(179,69,58,0.16)", moodVia: "#241209" }, // terracotta + espresso — editorial
+  },
+  {
+    slug: "zkr-coffee",
+    index: "06",
+    title: "ZKR Coffee",
+    category: "Coffee brand concept site",
+    tagline: "ZKRCoffee — Dekka",
+    statement: "Premium coffee, presented like a product launch.",
+    layoutVariant: "editorial",
+    description:
+      "A concept storefront for a premium coffee brand — a curated seven-drink collection, a farm-to-cup process timeline, and a dark, gold-accented visual language built to feel handcrafted rather than templated.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+    ],
+    features: [
+      {
+        title: "Hero",
+        description: "Today's special callout over a live espresso shot, with dual Order Now / Explore Menu CTAs.",
+      },
+      {
+        title: "Collection",
+        description: "Curated selection of 7 coffees with MAD pricing and a short tasting note per drink.",
+      },
+      {
+        title: "Experience",
+        description: "Fresh Beans, Barista Art, and Premium Machines — the standards behind the brand.",
+      },
+      {
+        title: "About",
+        description: "Brand story, sourcing philosophy, and single-origin bean details.",
+      },
+      {
+        title: "Process",
+        description: "A six-step \"Farm to Cup\" timeline from harvest through serving.",
+      },
+    ],
+    liveUrl: "https://zkrcoffee.vercel.app/",
+    screenshots: [
+      { src: "/projects/zkr-coffee/hero.JPG", alt: "ZKR Coffee — Hero section", label: "Hero", isPlaceholder: false },
+      { src: "/projects/zkr-coffee/collection.JPG", alt: "ZKR Coffee — Curated coffee collection", label: "Collection", isPlaceholder: false },
+      { src: "/projects/zkr-coffee/experience.JPG", alt: "ZKR Coffee — The ZKRCoffee difference", label: "Experience", isPlaceholder: false },
+      { src: "/projects/zkr-coffee/menu.JPG", alt: "ZKR Coffee — About / brand story", label: "About", isPlaceholder: false },
+      { src: "/projects/zkr-coffee/process.JPG", alt: "ZKR Coffee — Farm to Cup process", label: "Process", isPlaceholder: false },
+    ],
+    architecture: {
+      layers: ["app/ (marketing routes)", "components/sections", "components/ui", "content/collection data"],
+      panelLabel: "SITE MAP",
+      panelMeta: "8 ROUTES",
+    },
+    caseStudy: [
+      {
+        heading: "Objective",
+        body: "Show that a coffee brand's site can carry the same weight as its packaging — moody photography, considered type, and copy that reads like it was written by someone who roasts.",
+      },
+      {
+        heading: "Solution",
+        body: "A single dark, gold-accented palette runs through every section, with the today's-special hero card as the one bright, focal element on the page.",
+      },
+      {
+        heading: "Architecture",
+        body: "Collection items, process steps, and testimonials are all driven from typed content arrays, so the catalog can grow without touching layout components.",
+      },
+      {
+        heading: "Details",
+        body: "The Farm to Cup timeline mirrors the actual sourcing chain — farm, harvest, roasting, grinding, brewing, serving — rather than a generic \"our story\" block.",
+      },
+    ],
+    accent: { hex: "#c99b4e", soft: "rgba(201,155,78,0.16)", moodVia: "#1c130a" }, // gold + roasted brown — editorial
+  },
+  {
+    slug: "zkr-festival",
+    index: "07",
+    title: "ZKR Festival",
+    category: "Event & ticketing landing page",
+    tagline: "Experience the Future of Music",
+    statement: "Three nights, one page, built to sell tickets.",
+    layoutVariant: "editorial",
+    description:
+      "A high-energy landing page for a fictional three-day music festival — full lineup grid, gallery, and a persistent ticket CTA, designed around the same one-page-does-the-selling logic as a real event site.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+    ],
+    features: [
+      {
+        title: "Hero",
+        description: "Date, location, duration, lineup size, and format surfaced above the fold, with Buy Tickets and Watch Trailer CTAs.",
+      },
+      {
+        title: "Lineup",
+        description: "40+ artist cards with genre tags, stage, and day, in a responsive grid.",
+      },
+      {
+        title: "Experience",
+        description: "Section walking through what a festival day actually feels like on-site.",
+      },
+      {
+        title: "Gallery",
+        description: "Photo wall of crowd, stage, and lighting shots for social proof.",
+      },
+      {
+        title: "Tickets & Schedule",
+        description: "Persistent header CTA and a dedicated schedule/tickets flow.",
+      },
+    ],
+    liveUrl: "https://zkrfestival.vercel.app/",
+    screenshots: [
+      { src: "/projects/zkr-festival/hero.JPG", alt: "ZKR Festival — Hero section", label: "Hero", isPlaceholder: false },
+      { src: "/projects/zkr-festival/lineup.JPG", alt: "ZKR Festival — Artist lineup", label: "Lineup", isPlaceholder: false },
+      { src: "/projects/zkr-festival/experience.JPG", alt: "ZKR Festival — Experience section", label: "Experience", isPlaceholder: false },
+      { src: "/projects/zkr-festival/gallery.JPG", alt: "ZKR Festival — Photo gallery", label: "Gallery", isPlaceholder: false },
+    ],
+    architecture: {
+      layers: ["app/ (single-page sections)", "components/sections", "components/ui", "content/lineup data"],
+      panelLabel: "SITE MAP",
+      panelMeta: "7 SECTIONS",
+    },
+    caseStudy: [
+      {
+        heading: "Objective",
+        body: "Build the kind of one-page event site that has to convert a scroll into a ticket purchase — pace, hierarchy, and CTA placement all had to earn their spot.",
+      },
+      {
+        heading: "Solution",
+        body: "A dark, neon-lit palette and heavy type set the tone immediately, while a compact stats bar in the hero answers the five questions a buyer has before they scroll further.",
+      },
+      {
+        heading: "Architecture",
+        body: "The lineup grid renders from a typed artist array (name, genre, stage, day), so swapping a real bill in means editing data, not markup.",
+      },
+      {
+        heading: "Details",
+        body: "The ticket CTA stays pinned in the header across every section, keeping the primary action one tap away regardless of scroll depth.",
+      },
+    ],
+    accent: { hex: "#c2469e", soft: "rgba(194,70,158,0.16)", moodVia: "#1c1030" }, // magenta + deep violet — editorial
+  },
+  {
+    slug: "zkr-taskflow",
+    index: "08",
+    title: "ZKR TaskFlow",
+    category: "Project & task management SaaS",
+    tagline: "Manage Your Projects With Precision",
+    statement: "A dashboard that treats project data as real data.",
+    layoutVariant: "technical",
+    description:
+      "A project-management dashboard with an analytics overview, a drag-and-drop kanban board, and a project list — the core screens of a real TaskFlow-style SaaS product.",
+    technologies: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Recharts",
+    ],
+    features: [
+      {
+        title: "Auth",
+        description: "Sign in / sign up flow with a demo account for quick evaluation.",
+      },
+      {
+        title: "Dashboard",
+        description: "Stat cards for projects, active tasks, hours logged, and team size, plus a productivity chart.",
+      },
+      {
+        title: "Kanban Board",
+        description: "Drag-and-drop task columns — To Do, In Progress, In Review, Completed — with tags and assignees.",
+      },
+      {
+        title: "Projects",
+        description: "Sortable project table with status, progress bars, task counts, and team avatars.",
+      },
+      {
+        title: "Recent Activity",
+        description: "Live feed of task completions, team joins, and upcoming deadlines.",
+      },
+    ],
+    screenshots: [
+      { src: "/projects/zkr-taskflow/index.PNG", alt: "ZKR TaskFlow — Sign in", label: "Sign In", isPlaceholder: false },
+      { src: "/projects/zkr-taskflow/dashboard.PNG", alt: "ZKR TaskFlow — Dashboard", label: "Dashboard", isPlaceholder: false },
+      { src: "/projects/zkr-taskflow/kanban.PNG", alt: "ZKR TaskFlow — Kanban board", label: "Kanban Board", isPlaceholder: false },
+      { src: "/projects/zkr-taskflow/projects.PNG", alt: "ZKR TaskFlow — Projects list", label: "Projects", isPlaceholder: false },
+    ],
+    architecture: {
+      layers: ["src/pages", "src/components (kanban, charts, tables)", "src/context + hooks", "src/styles/tokens.css"],
+      panelLabel: "MAIN PAGES",
+      panelMeta: "4 SCREENS",
+    },
+    caseStudy: [
+      {
+        heading: "Objective",
+        body: "Build the four screens that make or break a task-management tool — dashboard, board, project list, auth — with real interaction, not static mockups.",
+      },
+      {
+        heading: "Solution",
+        body: "The kanban board uses native drag-and-drop between typed column states, so moving a card actually mutates the task's status rather than just its position.",
+      },
+      {
+        heading: "Architecture",
+        body: "A shared sidebar/topbar shell wraps every authenticated screen, with page components kept thin and stat/chart/board logic isolated in their own components.",
+      },
+      {
+        heading: "Current status",
+        body: "Frontend-complete on mock data; a persistence layer and real multi-user collaboration are the next milestones, not claimed as shipped.",
+      },
+    ],
+    accent: { hex: "#6366f1", soft: "rgba(99,102,241,0.16)", moodVia: "#0e1024" }, // indigo + midnight — technical
+  },
+  {
+    slug: "zkr-verano",
+    index: "09",
+    title: "ZKR Verano",
+    category: "Personal archive — editorial media journal",
+    tagline: "A Personal Archive of Summer",
+    statement: "The things I watched, listened to, and wanted to remember.",
+    layoutVariant: "editorial",
+    description:
+      "A personal, editorial-style archive site — full-bleed video/photo hero, an anime log, a music playlist, and a gallery — built as a slow, typographic scrapbook rather than a portfolio.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+    ],
+    features: [
+      {
+        title: "Home",
+        description: "Full-bleed ambient video hero with a numbered side nav into each section.",
+      },
+      {
+        title: "Anime",
+        description: "A watched-list with cover art, genre, year, and status per title.",
+      },
+      {
+        title: "Music",
+        description: "A running playlist log with track, artist, and genre tags, and a now-playing panel.",
+      },
+      {
+        title: "Gallery & Favorites",
+        description: "A visual scrapbook of saved images alongside a shorter, curated favorites list.",
+      },
+      {
+        title: "About",
+        description: "A single large editorial statement explaining the site's purpose as a personal archive.",
+      },
+    ],
+    liveUrl: "https://zkrverano.vercel.app/",
+    screenshots: [
+      { src: "/projects/zkr-verano/hero.JPG", alt: "ZKR Verano — Hero section", label: "Hero", isPlaceholder: false },
+      { src: "/projects/zkr-verano/anime.JPG", alt: "ZKR Verano — Anime log", label: "Anime", isPlaceholder: false },
+      { src: "/projects/zkr-verano/music.JPG", alt: "ZKR Verano — Music playlist", label: "Music", isPlaceholder: false },
+      { src: "/projects/zkr-verano/about.JPG", alt: "ZKR Verano — About statement", label: "About", isPlaceholder: false },
+    ],
+    architecture: {
+      layers: ["app/ (single-page sections)", "components/sections", "components/ui", "content/log data"],
+      panelLabel: "SITE MAP",
+      panelMeta: "6 SECTIONS",
+    },
+    caseStudy: [
+      {
+        heading: "Objective",
+        body: "Build a personal site that reads like a kept journal, not a resume — slow pacing, large serif type, and content that's allowed to just be a list of things enjoyed.",
+      },
+      {
+        heading: "Solution",
+        body: "A single ambient hero sets the tone, then each section (anime, music, gallery) reuses the same numbered, editorial list pattern so the whole site feels like one continuous archive.",
+      },
+      {
+        heading: "Architecture",
+        body: "Anime and music entries are driven from typed log arrays, so new entries are appended to data rather than hand-built as new markup each time.",
+      },
+      {
+        heading: "Details",
+        body: "The About section is a single oversized statement rather than a bio, treating the \"why\" of the archive as the most important line on the page.",
+      },
+    ],
+    accent: { hex: "#2fb7c9", soft: "rgba(47,183,201,0.16)", moodVia: "#08161c" }, // ocean teal + midnight — editorial
+  },
+  {
+    slug: "fleurs-alliance",
+    index: "10",
+    title: "Fleurs Alliance",
+    category: "Florist — catalogue & delivery site",
+    tagline: "Des Fleurs Composées Avec Soin, Livrées à Casablanca",
+    statement: "A neighborhood florist's catalogue, ordering, and delivery, in one place.",
+    layoutVariant: "commerce",
+    description:
+      "A bilingual (FR/AR) storefront for Lorist by Fleurs Alliance, a Casablanca florist — a browsable catalogue of natural, artificial, and dried flower arrangements, an address-based delivery estimate, and WhatsApp-first ordering.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+    ],
+    features: [
+      {
+        title: "Home",
+        description: "Full-bleed hero with the current arrangement, a Natural / Artificial / Dried filter, and a live delivery-fee callout.",
+      },
+      {
+        title: "Catalogue",
+        description: "Full product catalogue organized by category (Bouquet, Box Fleurs, Plantes, Compositions Séchées) with pricing.",
+      },
+      {
+        title: "Ordering",
+        description: "WhatsApp-first ordering flow, so a customer can go from browsing to a real conversation in one tap.",
+      },
+      {
+        title: "Delivery estimate",
+        description: "Neighborhood-based address picker that surfaces an estimated delivery time before checkout.",
+      },
+      {
+        title: "L'atelier / Find us",
+        description: "Workshop gallery, trust stats (average rating, category count), and the Gauthier workshop address and hours.",
+      },
+      {
+        title: "Bilingual",
+        description: "FR / AR language toggle in the header, for a local Casablanca audience.",
+      },
+    ],
+    liveUrl: "https://fleurs-alliance.netlify.app/",
+    screenshots: [
+      {
+        src: "/projects/fleurs-alliance/hero.jpg",
+        alt: "Fleurs Alliance — placeholder cover, see the live site for real screens",
+        label: "Hero",
+        isPlaceholder: true,
+      },
+    ],
+    architecture: {
+      layers: ["app/ (marketing + catalogue routes)", "components/sections", "i18n (FR/AR)", "catalogue content data"],
+      panelLabel: "SITE MAP",
+      panelMeta: "5 ROUTES",
+    },
+    caseStudy: [
+      {
+        heading: "Objective",
+        body: "Give a real Casablanca florist a WhatsApp-first storefront — a catalogue people can actually browse and an ordering path that doesn't force a phone call to get a price.",
+      },
+      {
+        heading: "Solution",
+        body: "Catalogue items are grouped into the same categories the workshop already sells by (bouquets, box arrangements, plants, dried compositions), so the site maps onto how staff actually work, not a generic e-commerce taxonomy.",
+      },
+      {
+        heading: "Architecture",
+        body: "A shared marketing shell carries the home page and catalogue routes, with an FR/AR toggle swapping copy at the content layer instead of duplicating pages.",
+      },
+      {
+        heading: "Details",
+        body: "An address-based delivery estimate sits right in the hero, answering the one question — \"can I get this delivered, and roughly when\" — before a visitor has to scroll.",
+      },
+    ],
+    accent: { hex: "#c76b83", soft: "rgba(199,107,131,0.16)", moodVia: "#1c0f14" }, // rose + deep plum — commerce
   },
 ];
 

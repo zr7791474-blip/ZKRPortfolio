@@ -35,7 +35,7 @@ export default function AboutSection() {
             design that everything else depends on.
           </p>
           <p className="max-w-[560px] text-[15.5px] text-cream-ink/75">
-            What ties the four projects on this page together isn&rsquo;t a shared
+            What ties the ten projects on this page together isn&rsquo;t a shared
             visual style — it&rsquo;s the same habit of thinking in{" "}
             <strong className="font-medium text-cream-ink">systems</strong>. An e-commerce
             checkout is a system of roles, states, and edge cases. A dashboard is a

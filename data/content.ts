@@ -8,7 +8,7 @@ export const nav = [
 ] as const;
 
 export const heroStats = [
-  { value: "4", suffix: "", label: "Featured Projects", isNumber: true },
+  { value: "10", suffix: "", label: "Featured Projects", isNumber: true },
   { value: "Full-Stack", suffix: "", label: "Frontend + Backend + Database", isNumber: false },
   { value: "Production-Ready", suffix: "", label: "Real auth, real data, real payments", isNumber: false },
   { value: "End-to-End", suffix: "", label: "From schema to shipped UI", isNumber: false },
@@ -157,7 +157,7 @@ export const loaderMessages = [
 ] as const;
 
 export const loaderMeta = [
-  "04 PROJECTS",
+  "10 PROJECTS",
   "FULL-STACK DEVELOPMENT",
   "CASABLANCA, MOROCCO",
 ] as const;

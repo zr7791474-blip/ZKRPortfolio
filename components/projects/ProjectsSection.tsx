@@ -14,7 +14,7 @@ export default function ProjectsSection() {
               Work.
             </>
           }
-          description="Four complete products — an agency site, a commerce platform, a SaaS dashboard, and a real-estate marketplace. Each one built end-to-end, not styled mockups."
+          description="Ten complete products — agency and business sites, a commerce platform, a SaaS dashboard, a real-estate marketplace, a task-management tool, and a handful of brand/event/storefront concepts. Each one built end-to-end, not styled mockups."
         />
       </div>
 

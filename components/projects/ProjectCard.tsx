@@ -39,7 +39,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         >
           <div className={mirrored ? "md:order-2" : undefined}>
             <div className="mb-5 font-mono text-xs" style={{ color: project.accent.hex }}>
-              {project.index} / 04 — {project.title.toUpperCase()}
+              {project.index} / 10 — {project.title.toUpperCase()}
             </div>
             <h3 className="font-serif text-[clamp(30px,3.6vw,46px)] tracking-[-0.02em]">{project.tagline}</h3>
             <div className="mb-3 mt-[10px] text-sm font-medium" style={{ color: project.accent.hex }}>
@@ -59,25 +59,29 @@ export default function ProjectCard({ project }: { project: Project }) {
             </div>
 
             <div className="flex flex-wrap gap-[14px]">
-              <Magnetic
-                as="a"
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="OPEN"
-                className="btn btn-primary !px-5 !py-3 text-[13px]"
-              >
-                Live Demo <ArrowUpRight className="h-[15px] w-[15px]" />
-              </Magnetic>
-              <Magnetic
-                as="a"
-                href={project.repositoryUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost !px-5 !py-3 text-[13px]"
-              >
-                GitHub
-              </Magnetic>
+              {project.liveUrl && (
+                <Magnetic
+                  as="a"
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="OPEN"
+                  className="btn btn-primary !px-5 !py-3 text-[13px]"
+                >
+                  Live Demo <ArrowUpRight className="h-[15px] w-[15px]" />
+                </Magnetic>
+              )}
+              {project.repositoryUrl && (
+                <Magnetic
+                  as="a"
+                  href={project.repositoryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost !px-5 !py-3 text-[13px]"
+                >
+                  GitHub
+                </Magnetic>
+              )}
               <Link href={`/work/${project.slug}`} data-cursor="EXPLORE" className="btn btn-ghost !px-5 !py-3 text-[13px]">
                 Case Study <ArrowUpRight className="h-[15px] w-[15px]" />
               </Link>

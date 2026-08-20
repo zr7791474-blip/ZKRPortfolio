@@ -37,7 +37,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
         <Reveal>
           <div className="mb-3 font-mono text-xs" style={{ color: project.accent.hex }}>
-            {project.index} / 04 — {project.title.toUpperCase()}
+            {project.index} / 10 — {project.title.toUpperCase()}
           </div>
           <h1 className="max-w-3xl font-serif text-[clamp(36px,6vw,72px)] tracking-[-0.02em]">
             {project.tagline}
@@ -56,12 +56,16 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </div>
 
           <div className="mt-9 flex flex-wrap gap-[14px]">
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              Live Demo <ArrowUpRight className="h-[15px] w-[15px]" />
-            </a>
-            <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-              GitHub
-            </a>
+            {project.liveUrl && (
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                Live Demo <ArrowUpRight className="h-[15px] w-[15px]" />
+              </a>
+            )}
+            {project.repositoryUrl && (
+              <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                GitHub
+              </a>
+            )}
           </div>
         </Reveal>
       </div>
