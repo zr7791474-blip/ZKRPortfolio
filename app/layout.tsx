@@ -7,6 +7,7 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import NavigationRoot from "@/components/navigation/NavigationRoot";
 import Footer from "@/components/layout/Footer";
 import FloatingDock from "@/components/contact/FloatingDock";
+import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 
 export const metadata: Metadata = {
   title: "ZKR — Zakaria Adli · Full-Stack Developer",
@@ -44,14 +45,16 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Loader />
-        <ScrollProgress />
-        <CursorGlow />
-        <CustomCursor />
-        <NavigationRoot />
-        {children}
-        <Footer />
-        <FloatingDock />
+        <LanguageProvider>
+          <Loader />
+          <ScrollProgress />
+          <CursorGlow />
+          <CustomCursor />
+          <NavigationRoot />
+          {children}
+          <Footer />
+          <FloatingDock />
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -1,11 +1,16 @@
 "use client";
 
+"use client";
+
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import { skillGroups } from "@/data/content";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function SkillsSection() {
+  const { t } = useTranslation();
+
   return (
     <section id="skills" className="relative overflow-hidden border-t border-border bg-midnight py-[150px]">
       <div
@@ -17,12 +22,12 @@ export default function SkillsSection() {
         <SectionHeading
           title={
             <>
-              Technical
+              {t("skills.title1")}
               <br />
-              Toolkit.
+              {t("skills.title2")}
             </>
           }
-          description="Only technologies actually used and shipped across ZKR Company, ZKR Ecommerce, ZKR Eclipse, and ZKR Estate."
+          description={t("skills.description")}
         />
       </div>
 

@@ -7,6 +7,7 @@ import CaseStudyContent from "@/components/case-studies/CaseStudyContent";
 import ScreenshotGallery from "@/components/case-studies/ScreenshotGallery";
 import SchematicPanel from "@/components/projects/SchematicPanel";
 import Reveal from "@/components/ui/Reveal";
+import T from "@/components/ui/T";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -32,7 +33,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           href="/#work"
           className="mb-10 inline-flex items-center gap-2 font-mono text-xs text-text-faint transition-colors hover:text-text"
         >
-          <ArrowLeft className="h-[14px] w-[14px]" /> Back to work
+          <ArrowLeft className="h-[14px] w-[14px]" /> <T k="workPage.backToWork" />
         </Link>
 
         <Reveal>
@@ -58,12 +59,12 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           <div className="mt-9 flex flex-wrap gap-[14px]">
             {project.liveUrl && (
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                Live Demo <ArrowUpRight className="h-[15px] w-[15px]" />
+                <T k="projectCard.liveDemo" /> <ArrowUpRight className="h-[15px] w-[15px]" />
               </a>
             )}
             {project.repositoryUrl && (
               <a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                GitHub
+                <T k="projectCard.github" />
               </a>
             )}
           </div>
@@ -72,18 +73,18 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
       <div className="wrap mt-20">
         <Reveal>
-          <h2 className="mb-6 font-serif text-2xl">Screenshots</h2>
+          <h2 className="mb-6 font-serif text-2xl"><T k="workPage.screenshots" /></h2>
           <ScreenshotGallery project={project} />
         </Reveal>
       </div>
 
       <div className="wrap mt-20 grid grid-cols-1 gap-12 pb-32 md:grid-cols-[1fr_1fr]">
         <Reveal>
-          <h2 className="mb-6 font-serif text-2xl">System overview</h2>
+          <h2 className="mb-6 font-serif text-2xl"><T k="workPage.systemOverview" /></h2>
           <SchematicPanel project={project} />
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="mb-6 font-serif text-2xl">Case study</h2>
+          <h2 className="mb-6 font-serif text-2xl"><T k="workPage.caseStudy" /></h2>
           <CaseStudyContent project={project} />
         </Reveal>
       </div>

@@ -1,15 +1,19 @@
-import { siteConfig } from "@/lib/site";
+"use client";
 
-const items = [
-  "FULL-STACK DEVELOPER",
-  "SOFTWARE ENGINEER",
-  "DIGITAL PRODUCT BUILDER",
-  "PRODUCTION-READY SYSTEMS",
-  (siteConfig.location || "CASABLANCA, MOROCCO").toUpperCase(),
-  "AVAILABLE FOR SELECTED PROJECTS",
-];
+import { siteConfig } from "@/lib/site";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function HeroTicker() {
+  const { t } = useTranslation();
+
+  const items = [
+    t("ticker.fullStack").toUpperCase(),
+    t("ticker.engineer").toUpperCase(),
+    t("ticker.builder").toUpperCase(),
+    t("ticker.systems").toUpperCase(),
+    (siteConfig.location || t("loader.location")).toUpperCase(),
+    t("ticker.available").toUpperCase(),
+  ];
   const doubled = [...items, ...items];
 
   return (

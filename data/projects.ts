@@ -789,6 +789,24 @@ export const projects: Project[] = [
         label: "Hero",
         isPlaceholder: true,
       },
+      {
+        src: "/projects/fleurs-alliance/categories.JPG",
+        alt: "Fleurs Alliance — placeholder, categories section, see the live site for real screens",
+        label: "Categories",
+        isPlaceholder: true,
+      },
+      {
+        src: "/projects/fleurs-alliance/vedio.JPG",
+        alt: "Fleurs Alliance — placeholder, workshop video section, see the live site for real screens",
+        label: "Workshop Video",
+        isPlaceholder: true,
+      },
+      {
+        src: "/projects/fleurs-alliance/catalog.JPG",
+        alt: "Fleurs Alliance — placeholder, catalogue, see the live site for real screens",
+        label: "Catalogue",
+        isPlaceholder: true,
+      },
     ],
     architecture: {
       layers: ["app/ (marketing + catalogue routes)", "components/sections", "i18n (FR/AR)", "catalogue content data"],

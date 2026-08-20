@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import { loaderMessages, loaderMeta } from "@/data/content";
 import Logo from "@/components/ui/Logo";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function Loader() {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { t, tList } = useTranslation();
+
+  const loaderMessages = tList("loader.messages");
+  const loaderMeta = [`10 ${t("loader.projects")}`, t("loader.discipline"), t("loader.location")];
 
   useEffect(() => {
     document.body.style.overflow = "hidden";

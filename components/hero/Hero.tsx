@@ -7,6 +7,7 @@ import Magnetic from "@/components/ui/Magnetic";
 import HeroImage from "./HeroImage";
 import HeroTicker from "./HeroTicker";
 import { siteConfig } from "@/lib/site";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 const container = {
   hidden: {},
@@ -35,6 +36,7 @@ const year = new Date().getFullYear();
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
+  const { t } = useTranslation();
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     if (reduceMotion || !sectionRef.current) return;
@@ -125,7 +127,7 @@ export default function Hero() {
             <span className="absolute inset-0 rounded-full bg-sage" />
             <span className="absolute inset-0 animate-pulse-dot rounded-full bg-sage" />
           </span>
-          Available for selected projects
+          {t("hero.availability")}
         </motion.div>
 
         <div className="mt-6 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
@@ -136,9 +138,7 @@ export default function Hero() {
             transition={{ delay: 2.05 }}
             className="max-w-[460px] text-[16.5px] text-text-dim"
           >
-            I build complete digital products, not just websites — full-stack
-            systems with real authentication, databases, and payments, using
-            modern production tooling. Based in {siteConfig.location || "Morocco"}.
+            {t("hero.description", { location: siteConfig.location || "Morocco" })}
           </motion.p>
 
           <motion.div
@@ -149,7 +149,7 @@ export default function Hero() {
             className="flex flex-wrap gap-4"
           >
             <Magnetic as="a" href="#work" className="btn btn-primary" data-cursor="VIEW">
-              View Projects <ArrowUpRight className="h-[15px] w-[15px]" />
+              {t("hero.ctaView")} <ArrowUpRight className="h-[15px] w-[15px]" />
             </Magnetic>
             <Magnetic
               as="a"
@@ -157,14 +157,14 @@ export default function Hero() {
               className="btn border-accent-line text-accent-bright hover:-translate-y-0.5 hover:border-accent hover:bg-accent-soft"
               data-cursor="OPEN"
             >
-              Start a Project <ArrowUpRight className="h-[15px] w-[15px]" />
+              {t("hero.ctaStart")} <ArrowUpRight className="h-[15px] w-[15px]" />
             </Magnetic>
           </motion.div>
         </div>
       </div>
 
       <div className="absolute bottom-[86px] left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-[10px] text-text-faint md:flex">
-        <span className="font-mono text-[10px] tracking-[.1em]">SCROLL</span>
+        <span className="font-mono text-[10px] tracking-[.1em]">{t("hero.scroll").toUpperCase()}</span>
         <span className="h-[38px] w-px animate-scroll-move bg-gradient-to-b from-accent to-transparent motion-reduce:animate-none" />
       </div>
 

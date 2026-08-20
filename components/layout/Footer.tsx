@@ -1,7 +1,11 @@
+"use client";
+
 import { mailtoHref, siteConfig } from "@/lib/site";
 import Logo from "@/components/ui/Logo";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function Footer() {
+  const { t } = useTranslation();
   const emailHref = siteConfig.email
     ? mailtoHref({
         email: siteConfig.email,
@@ -38,7 +42,7 @@ export default function Footer() {
             </a>
           ))}
         </div>
-        <span className="font-mono text-[11px] text-text-faint">© 2026 ZAKARIA ADLI — BUILT WITH INTENT</span>
+        <span className="font-mono text-[11px] text-text-faint">© 2026 ZAKARIA ADLI — {t("footer.builtWith")}</span>
       </div>
     </footer>
   );

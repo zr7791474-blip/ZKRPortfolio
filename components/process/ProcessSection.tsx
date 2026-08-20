@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { processSteps } from "@/data/content";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function ProcessSection() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -12,6 +13,7 @@ export default function ProcessSection() {
     offset: ["start 0.75", "end 0.4"],
   });
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 22, restDelta: 0.001 });
+  const { t } = useTranslation();
 
   return (
     <section
@@ -22,12 +24,12 @@ export default function ProcessSection() {
         <SectionHeading
           title={
             <>
-              How I
+              {t("process.title1")}
               <br />
-              Work.
+              {t("process.title2")}
             </>
           }
-          description="The same seven-stage process behind every project on this page, from first call to post-launch iteration."
+          description={t("process.description")}
         />
 
         <div ref={trackRef} className="relative pl-[2px]">
@@ -45,8 +47,8 @@ export default function ProcessSection() {
             >
               <div className="font-serif text-[34px] text-text-faint">{step.num}</div>
               <div>
-                <h3 className="mb-2 font-serif text-[22px] font-medium">{step.title}</h3>
-                <p className="max-w-[520px] text-[14.5px] text-text-dim">{step.description}</p>
+                <h3 className="mb-2 font-serif text-[22px] font-medium">{t(`process.${step.num}.title`)}</h3>
+                <p className="max-w-[520px] text-[14.5px] text-text-dim">{t(`process.${step.num}.description`)}</p>
               </div>
             </div>
           ))}

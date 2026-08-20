@@ -6,8 +6,10 @@ import Reveal from "@/components/ui/Reveal";
 import ContactForm from "./ContactForm";
 import CopyEmailButton from "./CopyEmailButton";
 import { siteConfig, mailtoHref } from "@/lib/site";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function ContactSection() {
+  const { t } = useTranslation();
   const emailHref = siteConfig.email
     ? mailtoHref({
         email: siteConfig.email,
@@ -45,14 +47,14 @@ export default function ContactSection() {
       <div className="wrap relative grid grid-cols-1 gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         {/* LEFT — headline, positioning, direct contact */}
         <Reveal className="lg:sticky lg:top-[140px] lg:self-start">
-          <div className="eyebrow">Contact</div>
+          <div className="eyebrow">{t("contact.eyebrow")}</div>
           <h2 className="max-w-[520px] font-serif text-[clamp(38px,5.2vw,64px)] leading-[1.02] tracking-[-0.02em]">
-            Let&rsquo;s build something <em className="italic text-accent">useful</em>.
+            {t("contact.headlinePre")}
+            <em className="italic text-accent">{t("contact.headlineEm")}</em>
+            {t("contact.headlinePost")}
           </h2>
           <p className="mt-6 max-w-[440px] text-[16px] text-text-dim">
-            I build production-ready digital products and complete systems —
-            not just websites. If you have an idea worth building, I can help
-            you turn it into something real.
+            {t("contact.paragraph")}
           </p>
 
           <div className="mt-8 flex items-center gap-[10px] font-mono text-[11px] uppercase tracking-[.1em] text-sage">
@@ -60,12 +62,12 @@ export default function ContactSection() {
               <span className="absolute inset-0 rounded-full bg-sage" />
               <span className="absolute inset-0 animate-pulse-dot rounded-full bg-sage" />
             </span>
-            Available for selected projects
+            {t("contact.availability")}
           </div>
 
           <div className="mt-10 border-t border-border pt-8">
             <div className="mb-2 font-mono text-[11px] uppercase tracking-[.08em] text-text-faint">
-              Direct
+              {t("contact.direct")}
             </div>
             <a
               href={emailHref}
@@ -108,7 +110,7 @@ export default function ContactSection() {
         {/* RIGHT — the project inquiry form */}
         <Reveal delay={0.1}>
           <div className="rounded-md border border-border bg-bg p-7 md:p-10">
-            <div className="eyebrow mb-[26px]">Project Inquiry</div>
+            <div className="eyebrow mb-[26px]">{t("contact.projectInquiry")}</div>
             <ContactForm />
           </div>
         </Reveal>

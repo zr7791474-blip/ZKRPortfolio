@@ -1,20 +1,25 @@
+"use client";
+
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProjectCard from "./ProjectCard";
 import { projects } from "@/data/projects";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function ProjectsSection() {
+  const { t } = useTranslation();
+
   return (
     <section id="work" className="py-[150px] md:py-[150px]">
       <div className="wrap">
         <SectionHeading
           title={
             <>
-              Selected
+              {t("projectsSection.title1")}
               <br />
-              Work.
+              {t("projectsSection.title2")}
             </>
           }
-          description="Ten complete products — agency and business sites, a commerce platform, a SaaS dashboard, a real-estate marketplace, a task-management tool, and a handful of brand/event/storefront concepts. Each one built end-to-end, not styled mockups."
+          description={t("projectsSection.description")}
         />
       </div>
 

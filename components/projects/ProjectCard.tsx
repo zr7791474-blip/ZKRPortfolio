@@ -10,11 +10,13 @@ import Reveal from "@/components/ui/Reveal";
 import Magnetic from "@/components/ui/Magnetic";
 import SchematicPanel from "./SchematicPanel";
 import CaseStudyContent from "@/components/case-studies/CaseStudyContent";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const [open, setOpen] = useState(false);
   const mirrored = Number(project.index) % 2 === 0;
   const cover = project.screenshots[0];
+  const { t } = useTranslation();
 
   return (
     <section
@@ -68,7 +70,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                   data-cursor="OPEN"
                   className="btn btn-primary !px-5 !py-3 text-[13px]"
                 >
-                  Live Demo <ArrowUpRight className="h-[15px] w-[15px]" />
+                  {t("projectCard.liveDemo")} <ArrowUpRight className="h-[15px] w-[15px]" />
                 </Magnetic>
               )}
               {project.repositoryUrl && (
@@ -79,11 +81,11 @@ export default function ProjectCard({ project }: { project: Project }) {
                   rel="noopener noreferrer"
                   className="btn btn-ghost !px-5 !py-3 text-[13px]"
                 >
-                  GitHub
+                  {t("projectCard.github")}
                 </Magnetic>
               )}
               <Link href={`/work/${project.slug}`} data-cursor="EXPLORE" className="btn btn-ghost !px-5 !py-3 text-[13px]">
-                Case Study <ArrowUpRight className="h-[15px] w-[15px]" />
+                {t("projectCard.caseStudy")} <ArrowUpRight className="h-[15px] w-[15px]" />
               </Link>
             </div>
           </div>
@@ -105,7 +107,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-bg/80 to-transparent px-4 py-3">
                   <span className="font-mono text-[10px] uppercase tracking-[.1em] text-text-dim">{cover.label}</span>
                   {cover.isPlaceholder && (
-                    <span className="font-mono text-[9px] uppercase tracking-[.06em] text-text-faint">Placeholder</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[.06em] text-text-faint">{t("projectCard.placeholder")}</span>
                   )}
                 </div>
               </Link>
@@ -122,7 +124,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 className="h-[13px] w-[13px] transition-transform duration-[400ms] ease-signature"
                 style={{ transform: open ? "rotate(180deg)" : "none" }}
               />
-              {open ? "Hide case study preview" : "View case study preview"}
+              {open ? t("projectCard.hidePreview") : t("projectCard.viewPreview")}
             </button>
 
             <AnimatePresence initial={false}>

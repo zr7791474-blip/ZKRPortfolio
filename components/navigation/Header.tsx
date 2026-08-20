@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { nav } from "@/data/content";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import Magnetic from "@/components/ui/Magnetic";
 import Logo from "@/components/ui/Logo";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 type HeaderProps = {
   scrolled: boolean;
@@ -12,7 +16,18 @@ type HeaderProps = {
   activeHref: string;
 };
 
+const navKeyByHref: Record<string, string> = {
+  "#work": "work",
+  "#about": "about",
+  "#skills": "skills",
+  "#services": "services",
+  "#process": "process",
+  "#contact": "contact",
+};
+
 export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }: HeaderProps) {
+  const { t } = useTranslation();
+
   return (
     <header
       className={cn(
@@ -20,8 +35,8 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
         scrolled && "border-border bg-bg/80 py-4 backdrop-blur-2xl backdrop-saturate-150"
       )}
     >
-      <nav className="wrap flex items-center justify-between">
-        <Link href="#hero" className="flex items-center">
+      <nav className="wrap flex items-center justify-between gap-3">
+        <Link href="#hero" className="flex min-w-0 items-center">
           <Logo size={30} />
         </Link>
 
@@ -35,40 +50,51 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
                 activeHref === item.href && "text-text after:w-full"
               )}
             >
-              {item.label}
+              {t(`nav.${navKeyByHref[item.href] ?? item.label.toLowerCase()}`)}
             </a>
           ))}
         </div>
 
-        <div className="hidden items-center gap-[22px] md:flex">
-          <Magnetic as="a" href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost !px-[22px] !py-[11px] text-[13px]">
-            GitHub
+        <div className="hidden items-center gap-[14px] md:flex">
+          <LanguageSwitcher />
+          <Magnetic
+            as="a"
+            href={siteConfig.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost !px-[22px] !py-[11px] text-[13px]"
+          >
+            {t("header.github")}
           </Magnetic>
           <Magnetic as="a" href="#contact" className="btn btn-primary !px-[22px] !py-[11px] text-[13px]">
-            Start a Project
+            {t("header.startProject")}
           </Magnetic>
         </div>
 
-        <button
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-          onClick={onToggleMenu}
-          className="z-[1100] flex w-[26px] flex-col gap-[5px] md:hidden"
-        >
-          <span
-            className={cn(
-              "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
-              menuOpen && "translate-y-[6px] rotate-45"
-            )}
-          />
-          <span className={cn("h-px w-full bg-text transition-all duration-[400ms] ease-signature", menuOpen && "opacity-0")} />
-          <span
-            className={cn(
-              "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
-              menuOpen && "-translate-y-[6px] -rotate-45"
-            )}
-          />
-        </button>
+        {/* Mobile-only row: compact language switcher + hamburger, aligned and never overflowing */}
+        <div className="flex flex-shrink-0 items-center gap-3 md:hidden">
+          <LanguageSwitcher compact />
+          <button
+            aria-label={menuOpen ? t("header.closeMenu") : t("header.openMenu")}
+            aria-expanded={menuOpen}
+            onClick={onToggleMenu}
+            className="z-[1100] flex h-[26px] w-[26px] flex-shrink-0 flex-col items-center justify-center gap-[5px]"
+          >
+            <span
+              className={cn(
+                "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
+                menuOpen && "translate-y-[6px] rotate-45"
+              )}
+            />
+            <span className={cn("h-px w-full bg-text transition-all duration-[400ms] ease-signature", menuOpen && "opacity-0")} />
+            <span
+              className={cn(
+                "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
+                menuOpen && "-translate-y-[6px] -rotate-45"
+              )}
+            />
+          </button>
+        </div>
       </nav>
     </header>
   );
