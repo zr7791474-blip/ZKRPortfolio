@@ -1,150 +1,119 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/data/projects";
-import Reveal from "@/components/ui/Reveal";
-import Magnetic from "@/components/ui/Magnetic";
-import SchematicPanel from "./SchematicPanel";
-import CaseStudyContent from "@/components/case-studies/CaseStudyContent";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-export default function ProjectCard({ project }: { project: Project }) {
-  const [open, setOpen] = useState(false);
-  const mirrored = Number(project.index) % 2 === 0;
+const VISIBLE_TECH_COUNT = 2;
+
+export default function ProjectCard({
+  project,
+  className,
+}: {
+  project: Project;
+  className?: string;
+}) {
   const cover = project.screenshots[0];
   const { t } = useTranslation();
+  const extraTech = project.technologies.length - VISIBLE_TECH_COUNT;
 
   return (
-    <section
-      id={`project-${project.slug}`}
-      className="relative overflow-hidden border-t border-border py-16 last:border-b md:py-20"
-      style={{
-        background: `linear-gradient(180deg, ${project.accent.soft}, ${project.accent.moodVia}22 55%, transparent 85%)`,
-      }}
+    <div
+      className={`group relative flex h-full flex-col overflow-hidden rounded-md border border-border bg-surface transition-all duration-500 ease-signature hover:-translate-y-1 hover:border-accent-line hover:shadow-[0_28px_56px_-32px_var(--card-glow)]${className ? ` ${className}` : ""}`}
+      style={{ ["--card-glow" as string]: project.accent.soft }}
     >
-      {/* oversized ghost index number — the shared archive motif, unique position/scale per project */}
-      <span
+      {/* subtle accent wash on hover — same per-project color language as the rest of the site */}
+      <div
         aria-hidden
-        className="pointer-events-none absolute -top-6 select-none font-serif text-[220px] font-medium leading-none opacity-[0.05] md:text-[320px]"
-        style={{ [mirrored ? "right" : "left"]: "-2%", color: project.accent.hex }}
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background: `radial-gradient(140% 70% at 50% 0%, ${project.accent.soft}, transparent 70%)` }}
+      />
+
+      <Link
+        href={`/work/${project.slug}`}
+        data-cursor="EXPLORE"
+        className="relative block aspect-[16/10] w-full overflow-hidden border-b border-border"
       >
-        {project.index}
-      </span>
-
-      <div className="wrap relative">
-        <Reveal
-          className="grid grid-cols-1 gap-9 md:grid-cols-[0.9fr_1.1fr] md:gap-[70px]"
+        {cover && (
+          <Image
+            src={cover.src}
+            alt={cover.alt}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover object-top transition-transform duration-700 ease-signature group-hover:scale-[1.05]"
+          />
+        )}
+        <span
+          className="absolute left-3 top-3 rounded-full bg-bg/70 px-2 py-1 font-mono text-[10px] tracking-[.08em] backdrop-blur-sm"
+          style={{ color: project.accent.hex }}
         >
-          <div className={mirrored ? "md:order-2" : undefined}>
-            <div className="mb-5 font-mono text-xs" style={{ color: project.accent.hex }}>
-              {project.index} / 10 — {project.title.toUpperCase()}
-            </div>
-            <h3 className="font-serif text-[clamp(30px,3.6vw,46px)] tracking-[-0.02em]">{project.tagline}</h3>
-            <div className="mb-3 mt-[10px] text-sm font-medium" style={{ color: project.accent.hex }}>
-              {project.category}
-            </div>
-            <p className="mb-6 max-w-[420px] font-serif text-[19px] italic text-text-dim">
-              &ldquo;{project.statement}&rdquo;
-            </p>
-            <p className="mb-7 max-w-[420px] text-[15.5px] text-text-dim">{project.description}</p>
+          {project.index} / 10
+        </span>
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 to-transparent px-4 pb-3 pt-9">
+          <span className="font-mono text-[10px] uppercase tracking-[.1em] text-text-faint">{project.category}</span>
+        </div>
+      </Link>
 
-            <div className="mb-8 flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <span key={tech} className="tech-badge">
-                  {tech}
-                </span>
-              ))}
-            </div>
+      <div className="relative flex flex-1 flex-col p-6">
+        <Link href={`/work/${project.slug}`} data-cursor="EXPLORE">
+          <h3 className="line-clamp-2 font-serif text-[21px] leading-[1.2] tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-bright md:min-h-[50px]">
+            {project.tagline}
+          </h3>
+        </Link>
+        <p className="mt-[10px] line-clamp-2 text-[13.5px] leading-relaxed text-text-dim md:min-h-[44px]">
+          {project.description}
+        </p>
 
-            <div className="flex flex-wrap gap-[14px]">
-              {project.liveUrl && (
-                <Magnetic
-                  as="a"
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="OPEN"
-                  className="btn btn-primary !px-5 !py-3 text-[13px]"
-                >
-                  {t("projectCard.liveDemo")} <ArrowUpRight className="h-[15px] w-[15px]" />
-                </Magnetic>
-              )}
-              {project.repositoryUrl && (
-                <Magnetic
-                  as="a"
-                  href={project.repositoryUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-ghost !px-5 !py-3 text-[13px]"
-                >
-                  {t("projectCard.github")}
-                </Magnetic>
-              )}
-              <Link href={`/work/${project.slug}`} data-cursor="EXPLORE" className="btn btn-ghost !px-5 !py-3 text-[13px]">
-                {t("projectCard.caseStudy")} <ArrowUpRight className="h-[15px] w-[15px]" />
-              </Link>
-            </div>
-          </div>
+        <div className="mt-4 flex flex-wrap gap-[6px]">
+          {project.technologies.slice(0, VISIBLE_TECH_COUNT).map((tech) => (
+            <span key={tech} className="tech-badge !px-[10px] !py-[5px] !text-[10.5px]">
+              {tech}
+            </span>
+          ))}
+          {extraTech > 0 && (
+            <span className="tech-badge !px-[10px] !py-[5px] !text-[10.5px] !text-text-faint">+{extraTech}</span>
+          )}
+        </div>
 
-          <div className={mirrored ? "md:order-1" : undefined}>
-            {cover && (
-              <Link
-                href={`/work/${project.slug}`}
-                data-cursor="EXPLORE"
-                className="group relative mb-6 block aspect-[16/10] w-full overflow-hidden rounded-md border border-border"
+        <div className="mt-auto flex items-center justify-between border-t border-border pt-6">
+          <Link
+            href={`/work/${project.slug}`}
+            data-cursor="EXPLORE"
+            className="inline-flex items-center gap-[6px] font-mono text-[11px] tracking-[.06em] text-text-faint transition-colors duration-300 hover:text-accent-bright"
+          >
+            {t("projectCard.caseStudy")}
+            <ArrowUpRight className="h-[12px] w-[12px] transition-transform duration-300 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
+          </Link>
+
+          <div className="flex items-center gap-2">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="OPEN"
+                aria-label={`${t("projectCard.liveDemo")} — ${project.title}`}
+                className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-border-strong text-text-dim transition-all duration-300 ease-signature hover:border-accent hover:bg-accent hover:text-bg"
               >
-                <Image
-                  src={cover.src}
-                  alt={cover.alt}
-                  fill
-                  sizes="(min-width: 768px) 55vw, 100vw"
-                  className="object-cover transition-transform duration-700 ease-signature group-hover:scale-[1.03]"
-                />
-                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-bg/80 to-transparent px-4 py-3">
-                  <span className="font-mono text-[10px] uppercase tracking-[.1em] text-text-dim">{cover.label}</span>
-                  {cover.isPlaceholder && (
-                    <span className="font-mono text-[9px] uppercase tracking-[.06em] text-text-faint">{t("projectCard.placeholder")}</span>
-                  )}
-                </div>
-              </Link>
+                <ExternalLink className="h-[13px] w-[13px]" />
+              </a>
             )}
-
-            <SchematicPanel project={project} />
-
-            <button
-              onClick={() => setOpen((v) => !v)}
-              aria-expanded={open}
-              className="mt-[26px] flex w-full items-center gap-[10px] border-t border-border pt-5 font-mono text-[11.5px] tracking-[.06em] text-text-faint transition-colors hover:text-text"
-            >
-              <ChevronDown
-                className="h-[13px] w-[13px] transition-transform duration-[400ms] ease-signature"
-                style={{ transform: open ? "rotate(180deg)" : "none" }}
-              />
-              {open ? t("projectCard.hidePreview") : t("projectCard.viewPreview")}
-            </button>
-
-            <AnimatePresence initial={false}>
-              {open && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="overflow-hidden"
-                >
-                  <div className="pt-6">
-                    <CaseStudyContent project={project} compact />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {project.repositoryUrl && (
+              <a
+                href={project.repositoryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${t("projectCard.github")} — ${project.title}`}
+                className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-border-strong text-text-dim transition-all duration-300 ease-signature hover:border-accent-line hover:text-accent-bright"
+              >
+                <Github className="h-[13px] w-[13px]" />
+              </a>
+            )}
           </div>
-        </Reveal>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

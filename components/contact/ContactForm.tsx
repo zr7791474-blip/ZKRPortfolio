@@ -74,7 +74,19 @@ export default function ContactForm() {
 
     const fieldErrors = validate(data);
     setErrors(fieldErrors);
-    if (Object.keys(fieldErrors).length > 0) return;
+    if (Object.keys(fieldErrors).length > 0) {
+      const fieldIdByName: Record<keyof FieldErrors, string> = {
+        name: "f-name",
+        email: "f-email",
+        projectType: "f-type",
+        message: "f-message",
+      };
+      const firstInvalid = (Object.keys(fieldErrors) as Array<keyof FieldErrors>)[0];
+      if (firstInvalid) {
+        form.querySelector<HTMLElement>(`#${fieldIdByName[firstInvalid]}`)?.focus();
+      }
+      return;
+    }
 
     setStatus("loading");
     setServerError("");
@@ -133,8 +145,16 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className={`flex flex-col ${ROW_GAP}`}>
       <div className={`grid grid-cols-1 ${ROW_GAP} sm:grid-cols-2`}>
-        <Field id="f-name" name="name" label={t("contactForm.nameLabel")} autoComplete="name" error={errors.name} />
-        <Field id="f-email" name="email" label={t("contactForm.emailLabel")} type="email" autoComplete="email" error={errors.email} />
+        <Field id="f-name" name="name" label={t("contactForm.nameLabel")} autoComplete="name" required error={errors.name} />
+        <Field
+          id="f-email"
+          name="email"
+          label={t("contactForm.emailLabel")}
+          type="email"
+          autoComplete="email"
+          required
+          error={errors.email}
+        />
       </div>
 
       <div className={`grid grid-cols-1 ${ROW_GAP} sm:grid-cols-2`}>
@@ -169,9 +189,13 @@ export default function ContactForm() {
           name="message"
           required
           rows={4}
+          aria-invalid={errors.message ? true : undefined}
+          aria-describedby={errors.message ? "f-message-error" : undefined}
           className={`${inputClasses} min-h-[100px] resize-y`}
         />
-        <span className={errorClasses}>{errors.message}</span>
+        <span id="f-message-error" className={errorClasses} aria-live="polite">
+          {errors.message}
+        </span>
       </div>
 
       {status === "error" && (
@@ -207,6 +231,7 @@ function Field({
   label,
   type = "text",
   autoComplete,
+  required,
   error,
 }: {
   id: string;
@@ -214,8 +239,10 @@ function Field({
   label: string;
   type?: string;
   autoComplete?: string;
+  required?: boolean;
   error?: string;
 }) {
+  const errorId = `${id}-error`;
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={id} className={labelClasses}>
@@ -226,10 +253,14 @@ function Field({
         name={name}
         type={type}
         autoComplete={autoComplete}
-        required={label.includes("*")}
+        required={required}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? errorId : undefined}
         className={inputClasses}
       />
-      <span className={errorClasses}>{error}</span>
+      <span id={errorId} className={errorClasses} aria-live="polite">
+        {error}
+      </span>
     </div>
   );
 }
@@ -249,15 +280,26 @@ function SelectField({
   error?: string;
   children: ReactNode;
 }) {
+  const errorId = `${id}-error`;
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={id} className={labelClasses}>
         {label}
       </label>
-      <select id={id} name={name} required={required} defaultValue="" className={inputClasses}>
+      <select
+        id={id}
+        name={name}
+        required={required}
+        defaultValue=""
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? errorId : undefined}
+        className={inputClasses}
+      >
         {children}
       </select>
-      <span className={errorClasses}>{error}</span>
+      <span id={errorId} className={errorClasses} aria-live="polite">
+        {error}
+      </span>
     </div>
   );
 }

@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { Mail, Github, Twitter, Instagram, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig, mailtoHref } from "@/lib/site";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function FloatingDock() {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [hideOnScroll, setHideOnScroll] = useState(false);
   const lastY = useRef(0);
@@ -40,7 +42,7 @@ export default function FloatingDock() {
     : "#contact";
 
   const items = [
-    { label: "Email", icon: Mail, href: emailHref, external: false },
+    { label: t("footer.email"), icon: Mail, href: emailHref, external: false },
     { label: "GitHub", icon: Github, href: siteConfig.githubUrl || "#contact", external: true },
     { label: "X / Twitter", icon: Twitter, href: siteConfig.xUrl || "#contact", external: true },
     { label: "Instagram", icon: Instagram, href: siteConfig.instagramUrl || "#contact", external: true },

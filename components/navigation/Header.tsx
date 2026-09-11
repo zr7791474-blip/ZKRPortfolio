@@ -75,8 +75,10 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
         <div className="flex flex-shrink-0 items-center gap-3 md:hidden">
           <LanguageSwitcher compact />
           <button
+            id="mobile-menu-toggle"
             aria-label={menuOpen ? t("header.closeMenu") : t("header.openMenu")}
             aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
             onClick={onToggleMenu}
             className="z-[1100] flex h-[26px] w-[26px] flex-shrink-0 flex-col items-center justify-center gap-[5px]"
           >

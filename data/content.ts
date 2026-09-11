@@ -7,13 +7,6 @@ export const nav = [
   { label: "Contact", href: "#contact" },
 ] as const;
 
-export const heroStats = [
-  { value: "10", suffix: "", label: "Featured Projects", isNumber: true },
-  { value: "Full-Stack", suffix: "", label: "Frontend + Backend + Database", isNumber: false },
-  { value: "Production-Ready", suffix: "", label: "Real auth, real data, real payments", isNumber: false },
-  { value: "End-to-End", suffix: "", label: "From schema to shipped UI", isNumber: false },
-] as const;
-
 export const marqueeTech = [
   "NEXT.JS",
   "TYPESCRIPT",

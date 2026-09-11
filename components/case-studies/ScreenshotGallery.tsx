@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ZoomIn } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 /**
  * Screenshot gallery with a fullscreen lightbox. Images are never
@@ -14,8 +15,35 @@ import type { Project } from "@/data/projects";
  * screenshots are dropped in.
  */
 export default function ScreenshotGallery({ project }: { project: Project }) {
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const active = activeIndex !== null ? project.screenshots[activeIndex] : null;
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastTriggerRef = useRef<HTMLElement | null>(null);
+
+  function open(i: number, e: React.MouseEvent<HTMLButtonElement>) {
+    lastTriggerRef.current = e.currentTarget;
+    setActiveIndex(i);
+  }
+
+  function close() {
+    setActiveIndex(null);
+  }
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    closeButtonRef.current?.focus();
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") close();
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      lastTriggerRef.current?.focus();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
 
   return (
     <>
@@ -24,7 +52,7 @@ export default function ScreenshotGallery({ project }: { project: Project }) {
           <button
             key={shot.src}
             type="button"
-            onClick={() => setActiveIndex(i)}
+            onClick={(e) => open(i, e)}
             data-cursor="VIEW"
             className="group relative overflow-hidden rounded-md border border-border bg-surface text-left focus-ring"
           >
@@ -43,7 +71,9 @@ export default function ScreenshotGallery({ project }: { project: Project }) {
             <div className="flex items-center justify-between border-t border-border px-4 py-3">
               <span className="font-mono text-[10.5px] uppercase tracking-[.08em] text-text-dim">{shot.label}</span>
               {shot.isPlaceholder && (
-                <span className="font-mono text-[9.5px] uppercase tracking-[.06em] text-text-faint">Placeholder</span>
+                <span className="font-mono text-[9.5px] uppercase tracking-[.06em] text-text-faint">
+                  {t("workPage.placeholderNote")}
+                </span>
               )}
             </div>
           </button>
@@ -57,12 +87,16 @@ export default function ScreenshotGallery({ project }: { project: Project }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[2000] flex items-center justify-center bg-bg/95 p-6 backdrop-blur-sm"
-            onClick={() => setActiveIndex(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={active.label}
+            onClick={close}
           >
             <button
+              ref={closeButtonRef}
               type="button"
-              aria-label="Close"
-              onClick={() => setActiveIndex(null)}
+              aria-label={t("workPage.close")}
+              onClick={close}
               className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-border-strong text-text-dim transition-colors hover:text-text focus-ring"
             >
               <X className="h-4 w-4" />
@@ -80,7 +114,7 @@ export default function ScreenshotGallery({ project }: { project: Project }) {
               </div>
               <p className="mt-4 text-center font-mono text-xs uppercase tracking-[.08em] text-text-faint">
                 {active.label}
-                {active.isPlaceholder ? " — placeholder, swap the file in /public" + active.src : ""}
+                {active.isPlaceholder ? ` — ${t("workPage.placeholderNote")}` : ""}
               </p>
             </motion.div>
           </motion.div>

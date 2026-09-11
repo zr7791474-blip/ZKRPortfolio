@@ -17,7 +17,7 @@ export const dictionaries = {
   en: {
     nav: { work: "Work", about: "About", skills: "Skills", services: "Services", process: "Process", contact: "Contact" },
     header: { github: "GitHub", startProject: "Start a Project", openMenu: "Open menu", closeMenu: "Close menu" },
-    mobileMenu: { close: "Close" },
+    mobileMenu: { close: "Close", title: "Main navigation" },
     language: { label: "Language" },
     hero: {
       availability: "Available for selected projects",
@@ -94,16 +94,20 @@ export const dictionaries = {
       screenshots: "Screenshots",
       systemOverview: "System overview",
       caseStudy: "Case study",
+      close: "Close",
+      placeholderNote: "Placeholder image",
     },
     contact: {
       eyebrow: "Contact",
-      headlinePre: "Let&rsquo;s build something ",
+      headlinePre: "Let’s build something ",
       headlineEm: "useful",
       headlinePost: ".",
       paragraph: "I build production-ready digital products and complete systems — not just websites. If you have an idea worth building, I can help you turn it into something real.",
       availability: "Available for selected projects",
       direct: "Direct",
       projectInquiry: "Project Inquiry",
+      copyAddress: "Copy address instead",
+      copied: "Copied to clipboard",
     },
     contactForm: {
       nameLabel: "Name *",
@@ -131,6 +135,8 @@ export const dictionaries = {
     },
     footer: {
       builtWith: "BUILT WITH INTENT",
+      backToTop: "Back to top",
+      email: "Email",
     },
     loader: {
       messages: ["ZKR / System Initializing", "Loading Selected Work", "Preparing Portfolio", "Welcome to ZKR"],
@@ -142,7 +148,7 @@ export const dictionaries = {
   fr: {
     nav: { work: "Travaux", about: "À propos", skills: "Compétences", services: "Services", process: "Méthode", contact: "Contact" },
     header: { github: "GitHub", startProject: "Démarrer un projet", openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu" },
-    mobileMenu: { close: "Fermer" },
+    mobileMenu: { close: "Fermer", title: "Navigation principale" },
     language: { label: "Langue" },
     hero: {
       availability: "Disponible pour des projets sélectionnés",
@@ -219,6 +225,8 @@ export const dictionaries = {
       screenshots: "Captures d'écran",
       systemOverview: "Vue d'ensemble du système",
       caseStudy: "Étude de cas",
+      close: "Fermer",
+      placeholderNote: "Image provisoire",
     },
     contact: {
       eyebrow: "Contact",
@@ -229,6 +237,8 @@ export const dictionaries = {
       availability: "Disponible pour des projets sélectionnés",
       direct: "Direct",
       projectInquiry: "Demande de projet",
+      copyAddress: "Copier l'adresse à la place",
+      copied: "Adresse copiée",
     },
     contactForm: {
       nameLabel: "Nom *",
@@ -256,6 +266,8 @@ export const dictionaries = {
     },
     footer: {
       builtWith: "CONSTRUIT AVEC INTENTION",
+      backToTop: "Retour en haut",
+      email: "E-mail",
     },
     loader: {
       messages: ["ZKR / Initialisation du système", "Chargement des travaux sélectionnés", "Préparation du portfolio", "Bienvenue chez ZKR"],
@@ -267,7 +279,7 @@ export const dictionaries = {
   es: {
     nav: { work: "Trabajos", about: "Sobre mí", skills: "Habilidades", services: "Servicios", process: "Proceso", contact: "Contacto" },
     header: { github: "GitHub", startProject: "Iniciar un proyecto", openMenu: "Abrir menú", closeMenu: "Cerrar menú" },
-    mobileMenu: { close: "Cerrar" },
+    mobileMenu: { close: "Cerrar", title: "Navegación principal" },
     language: { label: "Idioma" },
     hero: {
       availability: "Disponible para proyectos seleccionados",
@@ -344,6 +356,8 @@ export const dictionaries = {
       screenshots: "Capturas de pantalla",
       systemOverview: "Visión general del sistema",
       caseStudy: "Caso de estudio",
+      close: "Cerrar",
+      placeholderNote: "Imagen provisional",
     },
     contact: {
       eyebrow: "Contacto",
@@ -354,6 +368,8 @@ export const dictionaries = {
       availability: "Disponible para proyectos seleccionados",
       direct: "Directo",
       projectInquiry: "Consulta de proyecto",
+      copyAddress: "Copiar la dirección en su lugar",
+      copied: "Dirección copiada",
     },
     contactForm: {
       nameLabel: "Nombre *",
@@ -381,6 +397,8 @@ export const dictionaries = {
     },
     footer: {
       builtWith: "CONSTRUIDO CON INTENCIÓN",
+      backToTop: "Volver arriba",
+      email: "Correo",
     },
     loader: {
       messages: ["ZKR / Inicializando sistema", "Cargando trabajos seleccionados", "Preparando portafolio", "Bienvenido a ZKR"],

@@ -36,12 +36,17 @@
     }
   }
 
-  @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    body,
-    a,
-    button {
-      cursor: none;
-    }
+  /*
+   * Hiding the native cursor is only safe once CustomCursor has actually
+   * mounted and started drawing its replacement — gating on `.cursor-active`
+   * (toggled by that component, itself already gated on pointer:fine and
+   * prefers-reduced-motion) avoids a cursorless gap before hydration or if
+   * the component fails to mount for any reason.
+   */
+  html.cursor-active body,
+  html.cursor-active a,
+  html.cursor-active button {
+    cursor: none;
   }
 }
 

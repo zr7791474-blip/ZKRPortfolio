@@ -19,13 +19,13 @@ export default function Footer() {
     { label: "X", href: siteConfig.xUrl, external: true },
     { label: "Instagram", href: siteConfig.instagramUrl, external: true },
     { label: "WhatsApp", href: siteConfig.whatsappUrl, external: true },
-    { label: "Email", href: emailHref, external: false },
+    { label: t("footer.email"), href: emailHref, external: false },
   ].filter((l) => l.href);
 
   return (
     <footer className="border-t border-border py-[50px]">
       <div className="wrap flex flex-wrap items-center justify-between gap-5">
-        <a href="#hero" className="flex items-center" aria-label="Back to top">
+        <a href="#hero" className="flex items-center" aria-label={t("footer.backToTop")}>
           <Logo size={26} />
         </a>
         <div className="flex gap-[26px]">

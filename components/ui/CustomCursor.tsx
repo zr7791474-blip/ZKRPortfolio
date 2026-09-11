@@ -76,6 +76,7 @@ export default function CustomCursor() {
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     if (prefersReduced || isTouch) return;
     setEnabled(true);
+    document.documentElement.classList.add("cursor-active");
 
     let mouseX = 0;
     let mouseY = 0;
@@ -140,6 +141,7 @@ export default function CustomCursor() {
     return () => {
       window.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(raf);
+      document.documentElement.classList.remove("cursor-active");
     };
   }, []);
 

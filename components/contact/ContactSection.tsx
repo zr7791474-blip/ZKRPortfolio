@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Mail, Github, Twitter, MessageCircle, Instagram } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import ContactForm from "./ContactForm";
@@ -10,6 +10,7 @@ import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function ContactSection() {
   const { t } = useTranslation();
+  const reduceMotion = useReducedMotion();
   const emailHref = siteConfig.email
     ? mailtoHref({
         email: siteConfig.email,
@@ -30,7 +31,7 @@ export default function ContactSection() {
       <motion.div
         aria-hidden
         className="bg-grid pointer-events-none absolute inset-0 opacity-[0.35]"
-        animate={{ backgroundPosition: ["0px 0px", "64px 64px"] }}
+        animate={reduceMotion ? undefined : { backgroundPosition: ["0px 0px", "64px 64px"] }}
         transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
       />
       <div
