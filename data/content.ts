@@ -1,10 +1,18 @@
 export const nav = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Services", href: "#services" },
   { label: "Process", href: "#process" },
   { label: "Contact", href: "#contact" },
+] as const;
+
+export const heroStats = [
+  { value: "10", suffix: "", label: "Featured Projects", isNumber: true },
+  { value: "Full-Stack", suffix: "", label: "Frontend + Backend + Database", isNumber: false },
+  { value: "Production-Ready", suffix: "", label: "Real auth, real data, real payments", isNumber: false },
+  { value: "End-to-End", suffix: "", label: "From schema to shipped UI", isNumber: false },
 ] as const;
 
 export const marqueeTech = [

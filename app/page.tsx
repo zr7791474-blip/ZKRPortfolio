@@ -3,6 +3,7 @@ import StatsBar from "@/components/hero/StatsBar";
 import Marquee from "@/components/ui/Marquee";
 import ProjectsSection from "@/components/projects/ProjectsSection";
 import AboutSection from "@/components/about/AboutSection";
+import ExperienceSection from "@/components/experience/ExperienceSection";
 import SkillsSection from "@/components/skills/SkillsSection";
 import ServicesSection from "@/components/services/ServicesSection";
 import ProcessSection from "@/components/process/ProcessSection";
@@ -17,6 +18,7 @@ export default function HomePage() {
       <Marquee items={marqueeTech} />
       <ProjectsSection />
       <AboutSection />
+      <ExperienceSection />
       <SkillsSection />
       <ServicesSection />
       <ProcessSection />

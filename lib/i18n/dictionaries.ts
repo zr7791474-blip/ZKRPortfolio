@@ -15,9 +15,9 @@ export const localeLabels: Record<Locale, string> = {
  */
 export const dictionaries = {
   en: {
-    nav: { work: "Work", about: "About", skills: "Skills", services: "Services", process: "Process", contact: "Contact" },
+    nav: { work: "Work", about: "About", experience: "Experience", skills: "Skills", services: "Services", process: "Process", contact: "Contact" },
     header: { github: "GitHub", startProject: "Start a Project", openMenu: "Open menu", closeMenu: "Close menu" },
-    mobileMenu: { close: "Close", title: "Main navigation" },
+    mobileMenu: { close: "Close" },
     language: { label: "Language" },
     hero: {
       availability: "Available for selected projects",
@@ -46,6 +46,15 @@ export const dictionaries = {
       p1: "I&rsquo;m <strong>Zakaria Adli</strong>, a full-stack developer based in Morocco, working under the name <strong>ZKR</strong>. My work spans the full stack of a real product: frontend interfaces people actually enjoy using, backend logic that holds up under real data, and the database design that everything else depends on.",
       p2: "What ties the ten projects on this page together isn&rsquo;t a shared visual style — it&rsquo;s the same habit of thinking in <strong>systems</strong>. An e-commerce checkout is a system of roles, states, and edge cases. A dashboard is a system of tokens and reusable parts. A real-estate marketplace is a system of permissions between three different kinds of users. I design the system first, then the interface on top of it.",
       p3: "I care about <strong>product thinking</strong> as much as code — features marked &ldquo;coming soon&rdquo; instead of faked, admin numbers computed from real data instead of hardcoded, and every navigation link pointing somewhere real. That standard is what I bring to client work.",
+    },
+    experience: {
+      title1: "Real-World",
+      title2: "Experience.",
+      description: "Not a résumé of job titles — a record of what's actually been designed, built, and shipped, end to end.",
+      "01": { title: "Independent Full-Stack Developer", description: "Working under the name ZKR, based in Casablanca, Morocco — owning projects from the first line of code to production deployment." },
+      "02": { title: "Frontend, Backend & Database", description: "Every project on this site spans the full stack: the interface, the business logic behind it, and the data model underneath." },
+      "03": { title: "10 Shipped, Production-Ready Products", description: "Agency sites, an e-commerce platform, a SaaS dashboard, a real-estate marketplace, and more — each a complete system, not a mockup." },
+      "04": { title: "Open to New Projects", description: "Currently available for selected full-stack engagements — see the contact section below to start a conversation." },
     },
     skills: {
       title1: "Technical",
@@ -94,20 +103,16 @@ export const dictionaries = {
       screenshots: "Screenshots",
       systemOverview: "System overview",
       caseStudy: "Case study",
-      close: "Close",
-      placeholderNote: "Placeholder image",
     },
     contact: {
       eyebrow: "Contact",
-      headlinePre: "Let’s build something ",
+      headlinePre: "Let&rsquo;s build something ",
       headlineEm: "useful",
       headlinePost: ".",
       paragraph: "I build production-ready digital products and complete systems — not just websites. If you have an idea worth building, I can help you turn it into something real.",
       availability: "Available for selected projects",
       direct: "Direct",
       projectInquiry: "Project Inquiry",
-      copyAddress: "Copy address instead",
-      copied: "Copied to clipboard",
     },
     contactForm: {
       nameLabel: "Name *",
@@ -135,8 +140,6 @@ export const dictionaries = {
     },
     footer: {
       builtWith: "BUILT WITH INTENT",
-      backToTop: "Back to top",
-      email: "Email",
     },
     loader: {
       messages: ["ZKR / System Initializing", "Loading Selected Work", "Preparing Portfolio", "Welcome to ZKR"],
@@ -144,11 +147,21 @@ export const dictionaries = {
       discipline: "FULL-STACK DEVELOPMENT",
       location: "CASABLANCA, MOROCCO",
     },
+    assistant: {
+      openLabel: "Open ZKR assistant",
+      closeLabel: "Close ZKR assistant",
+      title: "ZKR",
+      subtitle: "Portfolio Assistant",
+      placeholder: "Ask about my work…",
+      send: "Send",
+      disclaimer: "Answers are based only on real information from this portfolio.",
+      suggestions: ["What do you do?", "Show me your projects", "How can I contact you?", "What are your skills?"],
+    },
   },
   fr: {
-    nav: { work: "Travaux", about: "À propos", skills: "Compétences", services: "Services", process: "Méthode", contact: "Contact" },
+    nav: { work: "Travaux", about: "À propos", experience: "Expérience", skills: "Compétences", services: "Services", process: "Méthode", contact: "Contact" },
     header: { github: "GitHub", startProject: "Démarrer un projet", openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu" },
-    mobileMenu: { close: "Fermer", title: "Navigation principale" },
+    mobileMenu: { close: "Fermer" },
     language: { label: "Langue" },
     hero: {
       availability: "Disponible pour des projets sélectionnés",
@@ -177,6 +190,15 @@ export const dictionaries = {
       p1: "Je suis <strong>Zakaria Adli</strong>, développeur full-stack basé au Maroc, travaillant sous le nom <strong>ZKR</strong>. Mon travail couvre toute la chaîne d'un vrai produit : des interfaces frontend agréables à utiliser, une logique backend qui tient face à de vraies données, et la conception de base de données dont tout le reste dépend.",
       p2: "Ce qui relie les dix projets de cette page n'est pas un style visuel commun — c'est la même habitude de penser en <strong>systèmes</strong>. Un checkout e-commerce est un système de rôles, d'états et de cas limites. Un dashboard est un système de tokens et de composants réutilisables. Une marketplace immobilière est un système de permissions entre trois types d'utilisateurs différents. Je conçois d'abord le système, puis l'interface au-dessus.",
       p3: "Je me soucie autant de la <strong>réflexion produit</strong> que du code — des fonctionnalités marquées « bientôt disponible » plutôt que simulées, des chiffres admin calculés à partir de vraies données plutôt que codés en dur, et chaque lien de navigation qui mène quelque part de réel. C'est ce niveau d'exigence que j'apporte au travail client.",
+    },
+    experience: {
+      title1: "Expérience",
+      title2: "Concrète.",
+      description: "Pas une liste d'intitulés de poste — un aperçu de ce qui a réellement été conçu, développé et mis en production, de bout en bout.",
+      "01": { title: "Développeur Full-Stack Indépendant", description: "Je travaille sous le nom ZKR, basé à Casablanca, au Maroc — en prenant en charge chaque projet de la première ligne de code jusqu'à la mise en production." },
+      "02": { title: "Frontend, Backend & Base de Données", description: "Chaque projet présenté ici couvre l'ensemble de la pile technique : l'interface, la logique métier et le modèle de données sous-jacent." },
+      "03": { title: "10 Produits Livrés et Prêts pour la Production", description: "Sites d'agence, plateforme e-commerce, tableau de bord SaaS, marketplace immobilière, et plus — chacun un système complet, pas une simple maquette." },
+      "04": { title: "Disponible Pour de Nouveaux Projets", description: "Actuellement disponible pour des missions full-stack sélectionnées — rendez-vous dans la section contact pour démarrer une conversation." },
     },
     skills: {
       title1: "Boîte à outils",
@@ -225,8 +247,6 @@ export const dictionaries = {
       screenshots: "Captures d'écran",
       systemOverview: "Vue d'ensemble du système",
       caseStudy: "Étude de cas",
-      close: "Fermer",
-      placeholderNote: "Image provisoire",
     },
     contact: {
       eyebrow: "Contact",
@@ -237,8 +257,6 @@ export const dictionaries = {
       availability: "Disponible pour des projets sélectionnés",
       direct: "Direct",
       projectInquiry: "Demande de projet",
-      copyAddress: "Copier l'adresse à la place",
-      copied: "Adresse copiée",
     },
     contactForm: {
       nameLabel: "Nom *",
@@ -266,8 +284,6 @@ export const dictionaries = {
     },
     footer: {
       builtWith: "CONSTRUIT AVEC INTENTION",
-      backToTop: "Retour en haut",
-      email: "E-mail",
     },
     loader: {
       messages: ["ZKR / Initialisation du système", "Chargement des travaux sélectionnés", "Préparation du portfolio", "Bienvenue chez ZKR"],
@@ -275,11 +291,21 @@ export const dictionaries = {
       discipline: "DÉVELOPPEMENT FULL-STACK",
       location: "CASABLANCA, MAROC",
     },
+    assistant: {
+      openLabel: "Ouvrir l'assistant ZKR",
+      closeLabel: "Fermer l'assistant ZKR",
+      title: "ZKR",
+      subtitle: "Assistant du Portfolio",
+      placeholder: "Posez une question…",
+      send: "Envoyer",
+      disclaimer: "Les réponses reposent uniquement sur les informations réelles de ce portfolio.",
+      suggestions: ["Que fais-tu ?", "Montre-moi tes projets", "Comment te contacter ?", "Quelles sont tes compétences ?"],
+    },
   },
   es: {
-    nav: { work: "Trabajos", about: "Sobre mí", skills: "Habilidades", services: "Servicios", process: "Proceso", contact: "Contacto" },
+    nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", skills: "Habilidades", services: "Servicios", process: "Proceso", contact: "Contacto" },
     header: { github: "GitHub", startProject: "Iniciar un proyecto", openMenu: "Abrir menú", closeMenu: "Cerrar menú" },
-    mobileMenu: { close: "Cerrar", title: "Navegación principal" },
+    mobileMenu: { close: "Cerrar" },
     language: { label: "Idioma" },
     hero: {
       availability: "Disponible para proyectos seleccionados",
@@ -308,6 +334,15 @@ export const dictionaries = {
       p1: "Soy <strong>Zakaria Adli</strong>, desarrollador full-stack afincado en Marruecos, trabajando bajo el nombre <strong>ZKR</strong>. Mi trabajo abarca toda la pila de un producto real: interfaces frontend que a la gente le gusta usar, lógica backend que aguanta con datos reales, y el diseño de base de datos del que todo lo demás depende.",
       p2: "Lo que une a los diez proyectos de esta página no es un estilo visual compartido — es el mismo hábito de pensar en <strong>sistemas</strong>. Un checkout de e-commerce es un sistema de roles, estados y casos límite. Un dashboard es un sistema de tokens y componentes reutilizables. Un marketplace inmobiliario es un sistema de permisos entre tres tipos de usuarios distintos. Diseño primero el sistema, luego la interfaz encima.",
       p3: "Me importa tanto el <strong>pensamiento de producto</strong> como el código — funciones marcadas como «próximamente» en lugar de simuladas, cifras de admin calculadas desde datos reales en lugar de fijas, y cada enlace de navegación que lleva a algo real. Ese es el estándar que aplico en el trabajo con clientes.",
+    },
+    experience: {
+      title1: "Experiencia",
+      title2: "Real.",
+      description: "No es una lista de puestos de trabajo — es un registro de lo que realmente se ha diseñado, construido y publicado, de principio a fin.",
+      "01": { title: "Desarrollador Full-Stack Independiente", description: "Trabajo bajo el nombre ZKR, con base en Casablanca, Marruecos — encargándome de cada proyecto desde la primera línea de código hasta su despliegue en producción." },
+      "02": { title: "Frontend, Backend y Base de Datos", description: "Cada proyecto de esta página abarca toda la pila tecnológica: la interfaz, la lógica de negocio y el modelo de datos que lo sustenta." },
+      "03": { title: "10 Productos Entregados y Listos para Producción", description: "Sitios de agencia, una plataforma de comercio electrónico, un panel SaaS, un marketplace inmobiliario y más — cada uno un sistema completo, no una maqueta." },
+      "04": { title: "Disponible Para Nuevos Proyectos", description: "Actualmente disponible para proyectos full-stack seleccionados — visita la sección de contacto para iniciar una conversación." },
     },
     skills: {
       title1: "Caja de herramientas",
@@ -356,8 +391,6 @@ export const dictionaries = {
       screenshots: "Capturas de pantalla",
       systemOverview: "Visión general del sistema",
       caseStudy: "Caso de estudio",
-      close: "Cerrar",
-      placeholderNote: "Imagen provisional",
     },
     contact: {
       eyebrow: "Contacto",
@@ -368,8 +401,6 @@ export const dictionaries = {
       availability: "Disponible para proyectos seleccionados",
       direct: "Directo",
       projectInquiry: "Consulta de proyecto",
-      copyAddress: "Copiar la dirección en su lugar",
-      copied: "Dirección copiada",
     },
     contactForm: {
       nameLabel: "Nombre *",
@@ -397,14 +428,22 @@ export const dictionaries = {
     },
     footer: {
       builtWith: "CONSTRUIDO CON INTENCIÓN",
-      backToTop: "Volver arriba",
-      email: "Correo",
     },
     loader: {
       messages: ["ZKR / Inicializando sistema", "Cargando trabajos seleccionados", "Preparando portafolio", "Bienvenido a ZKR"],
       projects: "PROYECTOS",
       discipline: "DESARROLLO FULL-STACK",
       location: "CASABLANCA, MARRUECOS",
+    },
+    assistant: {
+      openLabel: "Abrir el asistente ZKR",
+      closeLabel: "Cerrar el asistente ZKR",
+      title: "ZKR",
+      subtitle: "Asistente del Portafolio",
+      placeholder: "Escribe tu pregunta…",
+      send: "Enviar",
+      disclaimer: "Las respuestas se basan únicamente en información real de este portafolio.",
+      suggestions: ["¿A qué te dedicas?", "Muéstrame tus proyectos", "¿Cómo puedo contactarte?", "¿Cuáles son tus habilidades?"],
     },
   },
 } as const;

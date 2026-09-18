@@ -14,8 +14,9 @@ type LogoProps = {
 
 /**
  * Single source of truth for the ZKR mark across the site (nav, loader,
- * footer). Point it at /public/zkr.jpg once that file exists — until then
- * it renders the "ZKR•" text wordmark it already falls back to.
+ * footer, ZKR assistant, favicon). Backed by /public/logo/zkr.jpg, the
+ * official ZKR brand asset — falls back to the "ZKR•" text wordmark if
+ * that file isn't present in this environment.
  */
 export default function Logo({
   className,
@@ -34,7 +35,7 @@ export default function Logo({
           style={{ width: size, height: size }}
         >
           <Image
-            src="/zkr.jpg"
+            src="/logo/zkr.jpg"
             alt="ZKR"
             fill
             sizes={`${size}px`}

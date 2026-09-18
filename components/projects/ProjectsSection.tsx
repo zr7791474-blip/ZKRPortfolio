@@ -24,19 +24,9 @@ export default function ProjectsSection() {
         />
 
         <Reveal className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-          {projects.map((project, index) => {
-            // With 3 desktop columns, a project count of the form 3n+1 leaves
-            // a single orphan card alone in the last row. Centering it under
-            // the middle column reads intentional instead of accidental.
-            const isOrphan = projects.length % 3 === 1 && index === projects.length - 1;
-            return (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-                className={isOrphan ? "lg:col-start-2" : undefined}
-              />
-            );
-          })}
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
         </Reveal>
       </div>
     </section>

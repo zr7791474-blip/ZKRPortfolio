@@ -9,41 +9,27 @@ import HeroTicker from "./HeroTicker";
 import { siteConfig } from "@/lib/site";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.11, delayChildren: 1.6 },
+  },
+};
 
-// Headline entrance is the largest motion on the page (full-height sliding
-// text blocks) — built as functions of `reduceMotion` so the reduced-motion
-// path drops the slide distance and delay stagger entirely instead of just
-// playing the same large translateY animation regardless of OS preference.
-function getContainer(reduceMotion: boolean | null) {
-  return {
-    hidden: {},
-    show: {
-      transition: { staggerChildren: reduceMotion ? 0 : 0.11, delayChildren: reduceMotion ? 0 : 1.6 },
-    },
-  };
-}
+const lineUp = {
+  hidden: { y: "110%", opacity: 0 },
+  show: { y: 0, opacity: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as const } },
+};
 
-function getLineUp(reduceMotion: boolean | null) {
-  return {
-    hidden: { y: reduceMotion ? 0 : "110%", opacity: 0 },
-    show: { y: 0, opacity: 1, transition: { duration: reduceMotion ? 0.4 : 1, ease: EASE } },
-  };
-}
+const lineDown = {
+  hidden: { y: "-90%", opacity: 0 },
+  show: { y: 0, opacity: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] as const } },
+};
 
-function getLineDown(reduceMotion: boolean | null) {
-  return {
-    hidden: { y: reduceMotion ? 0 : "-90%", opacity: 0 },
-    show: { y: 0, opacity: 1, transition: { duration: reduceMotion ? 0.4 : 1.1, ease: EASE } },
-  };
-}
-
-function getFadeUp(reduceMotion: boolean | null) {
-  return {
-    hidden: { opacity: 0, y: reduceMotion ? 0 : 16 },
-    show: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0.4 : 1, ease: EASE } },
-  };
-}
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as const } },
+};
 
 const year = new Date().getFullYear();
 
@@ -51,10 +37,6 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const { t } = useTranslation();
-  const container = getContainer(reduceMotion);
-  const lineUp = getLineUp(reduceMotion);
-  const lineDown = getLineDown(reduceMotion);
-  const fadeUp = getFadeUp(reduceMotion);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     if (reduceMotion || !sectionRef.current) return;

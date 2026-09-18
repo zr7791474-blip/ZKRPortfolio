@@ -7,6 +7,7 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import NavigationRoot from "@/components/navigation/NavigationRoot";
 import Footer from "@/components/layout/Footer";
 import FloatingDock from "@/components/contact/FloatingDock";
+import ZkrAssistant from "@/components/assistant/ZkrAssistant";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 
 export const metadata: Metadata = {
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
     "Zakaria Adli (ZKR) — full-stack developer building production-ready digital products: SaaS dashboards, commerce systems, real estate platforms, and business websites.",
   metadataBase: new URL("https://zkr-portfolio.vercel.app"),
   icons: {
-    icon: "/zkr.jpg",
-    shortcut: "/zkr.jpg",
-    apple: "/zkr.jpg",
+    icon: "/logo/zkr.jpg",
+    shortcut: "/logo/zkr.jpg",
+    apple: "/logo/zkr.jpg",
   },
   openGraph: {
     title: "ZKR — Zakaria Adli · Full-Stack Developer",
@@ -54,6 +55,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <FloatingDock />
+          <ZkrAssistant />
         </LanguageProvider>
       </body>
     </html>

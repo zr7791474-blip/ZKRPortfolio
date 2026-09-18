@@ -6,22 +6,16 @@ import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const VISIBLE_TECH_COUNT = 2;
+const VISIBLE_TECH_COUNT = 3;
 
-export default function ProjectCard({
-  project,
-  className,
-}: {
-  project: Project;
-  className?: string;
-}) {
+export default function ProjectCard({ project }: { project: Project }) {
   const cover = project.screenshots[0];
   const { t } = useTranslation();
   const extraTech = project.technologies.length - VISIBLE_TECH_COUNT;
 
   return (
     <div
-      className={`group relative flex h-full flex-col overflow-hidden rounded-md border border-border bg-surface transition-all duration-500 ease-signature hover:-translate-y-1 hover:border-accent-line hover:shadow-[0_28px_56px_-32px_var(--card-glow)]${className ? ` ${className}` : ""}`}
+      className="group relative flex h-full flex-col overflow-hidden rounded-md border border-border bg-surface transition-all duration-500 ease-signature hover:-translate-y-1 hover:border-accent-line hover:shadow-[0_28px_56px_-32px_var(--card-glow)]"
       style={{ ["--card-glow" as string]: project.accent.soft }}
     >
       {/* subtle accent wash on hover — same per-project color language as the rest of the site */}
@@ -58,11 +52,11 @@ export default function ProjectCard({
 
       <div className="relative flex flex-1 flex-col p-6">
         <Link href={`/work/${project.slug}`} data-cursor="EXPLORE">
-          <h3 className="line-clamp-2 font-serif text-[21px] leading-[1.2] tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-bright md:min-h-[50px]">
+          <h3 className="line-clamp-2 min-h-[50px] font-serif text-[21px] leading-[1.2] tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-bright">
             {project.tagline}
           </h3>
         </Link>
-        <p className="mt-[10px] line-clamp-2 text-[13.5px] leading-relaxed text-text-dim md:min-h-[44px]">
+        <p className="mt-[10px] line-clamp-2 min-h-[44px] text-[13.5px] leading-relaxed text-text-dim">
           {project.description}
         </p>
 

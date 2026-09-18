@@ -1,6 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+"use client";
+
+import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import { skillGroups } from "@/data/content";
@@ -8,7 +10,6 @@ import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function SkillsSection() {
   const { t } = useTranslation();
-  const reduceMotion = useReducedMotion();
 
   return (
     <section id="skills" className="relative overflow-hidden border-t border-border bg-midnight py-[150px]">
@@ -43,19 +44,18 @@ export default function SkillsSection() {
             viewport={{ once: true }}
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           />
-          {!reduceMotion &&
-            [150, 450, 750].map((x, i) => (
-              <motion.circle
-                key={x}
-                cx={x}
-                cy={20}
-                r={3}
-                fill="#cda05a"
-                initial={{ opacity: 0.3, scale: 0.8 }}
-                animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
-                transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.4, ease: "easeInOut" }}
-              />
-            ))}
+          {[150, 450, 750].map((x, i) => (
+            <motion.circle
+              key={x}
+              cx={x}
+              cy={20}
+              r={3}
+              fill="#cda05a"
+              initial={{ opacity: 0.3, scale: 0.8 }}
+              animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
+              transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.4, ease: "easeInOut" }}
+            />
+          ))}
         </svg>
 
         <Reveal className="grid grid-cols-1 gap-px border border-border bg-border md:grid-cols-3">
