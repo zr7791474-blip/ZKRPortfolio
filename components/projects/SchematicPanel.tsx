@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
+import { readableAccent } from "@/lib/utils";
 
 const NODE_POINTS = [
   { x: 0, y: 30 },
@@ -83,7 +84,7 @@ export default function SchematicPanel({ project }: { project: Project }) {
             key={feature.title}
             className="flex items-start gap-[14px] border-t border-border py-[14px] text-sm text-text-dim first:border-t-0"
           >
-            <span className="flex-shrink-0 pt-px font-mono text-[11px]" style={{ color: project.accent.hex }}>
+            <span className="flex-shrink-0 pt-px font-mono text-[11px]" style={{ color: readableAccent(project.accent.hex) }}>
               {String(i + 1).padStart(2, "0")}
             </span>
             <span>
@@ -96,7 +97,7 @@ export default function SchematicPanel({ project }: { project: Project }) {
       <div className="mt-[22px] flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-border pt-[18px] font-mono text-[10.5px] uppercase tracking-[.1em] text-text-faint">
         {project.architecture.layers.map((layer, i) => (
           <span key={layer} className="flex items-center gap-2">
-            {i > 0 && <span style={{ color: project.accent.hex }}>→</span>}
+            {i > 0 && <span style={{ color: readableAccent(project.accent.hex) }}>→</span>}
             {layer}
           </span>
         ))}

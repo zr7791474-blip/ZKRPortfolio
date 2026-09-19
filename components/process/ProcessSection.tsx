@@ -18,7 +18,7 @@ export default function ProcessSection() {
   return (
     <section
       id="process"
-      className="relative overflow-hidden border-t border-border bg-gradient-to-b from-forest via-bg to-midnight py-[150px]"
+      className="relative overflow-hidden border-t border-border bg-gradient-to-b from-forest via-bg to-midnight py-24 md:py-[150px]"
     >
       <div className="wrap relative">
         <SectionHeading

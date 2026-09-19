@@ -13,7 +13,7 @@ export default function AboutSection() {
   const { t } = useTranslation();
 
   return (
-    <section id="about" className="relative overflow-hidden bg-cream py-[150px] text-cream-ink">
+    <section id="about" className="relative overflow-hidden bg-cream py-24 md:py-[150px] text-cream-ink">
       <div
         aria-hidden
         className="pointer-events-none absolute -right-[10%] top-0 h-[70%] w-[50%]"

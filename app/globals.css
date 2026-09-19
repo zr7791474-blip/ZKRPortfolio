@@ -107,6 +107,6 @@ select {
   color-scheme: dark;
 }
 select option {
-  background-color: #131316; /* surface */
+  background-color: #1a1b21; /* surface */
   color: #f2f1ec; /* text */
 }

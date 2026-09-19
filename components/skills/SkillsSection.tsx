@@ -1,23 +1,23 @@
 "use client";
 
-"use client";
-
-import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
+import TechIcon from "./TechIcon";
 import { skillGroups } from "@/data/content";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+/**
+ * A quiet logo wall: one labelled row per discipline, technology mark above its
+ * name. No cards, pills, bars, percentages or claimed proficiency levels.
+ *
+ * Motion is a small CSS-only lift + tilt on hover. It is wrapped in `motion-safe:`
+ * so visitors who prefer reduced motion get a colour change only, no movement.
+ */
 export default function SkillsSection() {
   const { t } = useTranslation();
 
   return (
-    <section id="skills" className="relative overflow-hidden border-t border-border bg-midnight py-[150px]">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-[10%] top-0 h-[60%] w-[50%]"
-        style={{ background: "radial-gradient(ellipse, rgba(143,174,106,0.10) 0%, transparent 70%)" }}
-      />
+    <section id="skills" className="relative overflow-hidden border-t border-border bg-ink py-24 md:py-[150px]">
       <div className="wrap relative">
         <SectionHeading
           title={
@@ -29,53 +29,38 @@ export default function SkillsSection() {
           }
           description={t("skills.description")}
         />
-      </div>
 
-      <div className="wrap">
-        {/* connecting trace tying the toolkit to the same schematic language as the project panels */}
-        <svg aria-hidden viewBox="0 0 900 40" className="mb-[-1px] hidden w-full opacity-40 md:block">
-          <motion.path
-            d="M150 20 H750"
-            fill="none"
-            stroke="#cda05a"
-            strokeWidth="1"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          />
-          {[150, 450, 750].map((x, i) => (
-            <motion.circle
-              key={x}
-              cx={x}
-              cy={20}
-              r={3}
-              fill="#cda05a"
-              initial={{ opacity: 0.3, scale: 0.8 }}
-              animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
-              transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.4, ease: "easeInOut" }}
-            />
-          ))}
-        </svg>
-
-        <Reveal className="grid grid-cols-1 gap-px border border-border bg-border md:grid-cols-3">
+        <div className="border-t border-border">
           {skillGroups.map((group) => (
-            <div key={group.title} className="group bg-bg p-9 transition-colors duration-500 hover:bg-surface">
-              <h3 className="mb-[22px] font-mono text-xs uppercase tracking-[.1em] text-accent">{group.title}</h3>
-              <ul>
-                {group.items.map((item) => (
-                  <li
-                    key={item.name}
-                    className="flex items-center justify-between border-t border-border py-[11px] text-[14.5px] transition-[padding] duration-300 first:border-t-0 hover:pl-[6px]"
-                  >
-                    <span>{item.name}</span>
-                    <span className="font-mono text-[10px] text-text-faint">{item.tag}</span>
+            <Reveal
+              key={group.key}
+              className="grid grid-cols-1 gap-6 border-b border-border py-9 md:grid-cols-[200px_1fr] md:gap-10 md:py-11"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[.12em] text-accent">
+                {t(`skills.groups.${group.key}`)}
+              </h3>
+
+              <ul
+                aria-label={t(`skills.groups.${group.key}`)}
+                className="grid grid-cols-3 gap-x-3 gap-y-7 sm:grid-cols-4 md:grid-cols-[repeat(auto-fill,minmax(112px,1fr))] md:gap-x-6 md:gap-y-9"
+              >
+                {group.items.map((item, i) => (
+                  <li key={item.name} className="group flex min-w-0 flex-col items-start gap-3">
+                    <span
+                      className="skill-icon inline-flex h-11 w-11 items-center justify-center text-text-dim transition-[transform,color] duration-[350ms] ease-signature group-hover:text-text motion-safe:group-hover:-translate-y-[3px] motion-safe:group-hover:scale-[1.1] motion-safe:group-hover:rotate-[var(--tilt)]"
+                      style={{ ["--tilt" as string]: i % 2 === 0 ? "-5deg" : "5deg" }}
+                    >
+                      <TechIcon name={item.icon} className="h-8 w-8" />
+                    </span>
+                    <span className="text-[13.5px] leading-snug text-text-dim transition-colors duration-300 group-hover:text-text">
+                      {item.name}
+                    </span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
           ))}
-        </Reveal>
+        </div>
       </div>
     </section>
   );

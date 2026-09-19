@@ -17,7 +17,7 @@ export const dictionaries = {
   en: {
     nav: { work: "Work", about: "About", experience: "Experience", skills: "Skills", services: "Services", process: "Process", contact: "Contact" },
     header: { github: "GitHub", startProject: "Start a Project", openMenu: "Open menu", closeMenu: "Close menu" },
-    mobileMenu: { close: "Close" },
+    mobileMenu: { close: "Close", label: "Navigation menu" },
     language: { label: "Language" },
     hero: {
       availability: "Available for selected projects",
@@ -60,6 +60,7 @@ export const dictionaries = {
       title1: "Technical",
       title2: "Toolkit.",
       description: "Only technologies actually used and shipped across ZKR Company, ZKR Ecommerce, ZKR Eclipse, and ZKR Estate.",
+      groups: { frontend: "Frontend", backend: "Backend & Database", architecture: "Architecture & Motion" },
     },
     services: {
       title1: "What I",
@@ -100,13 +101,16 @@ export const dictionaries = {
     },
     workPage: {
       backToWork: "Back to work",
+      closeImage: "Close image",
       screenshots: "Screenshots",
       systemOverview: "System overview",
       caseStudy: "Case study",
     },
     contact: {
       eyebrow: "Contact",
-      headlinePre: "Let&rsquo;s build something ",
+      headlinePre: "Let’s build something ",
+      copyEmail: "Copy address instead",
+      copied: "Copied to clipboard",
       headlineEm: "useful",
       headlinePost: ".",
       paragraph: "I build production-ready digital products and complete systems — not just websites. If you have an idea worth building, I can help you turn it into something real.",
@@ -154,6 +158,7 @@ export const dictionaries = {
       subtitle: "Portfolio Assistant",
       placeholder: "Ask about my work…",
       send: "Send",
+      typing: "ZKR is typing…",
       disclaimer: "Answers are based only on real information from this portfolio.",
       suggestions: ["What do you do?", "Show me your projects", "How can I contact you?", "What are your skills?"],
     },
@@ -161,7 +166,7 @@ export const dictionaries = {
   fr: {
     nav: { work: "Travaux", about: "À propos", experience: "Expérience", skills: "Compétences", services: "Services", process: "Méthode", contact: "Contact" },
     header: { github: "GitHub", startProject: "Démarrer un projet", openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu" },
-    mobileMenu: { close: "Fermer" },
+    mobileMenu: { close: "Fermer", label: "Menu de navigation" },
     language: { label: "Langue" },
     hero: {
       availability: "Disponible pour des projets sélectionnés",
@@ -204,6 +209,7 @@ export const dictionaries = {
       title1: "Boîte à outils",
       title2: "technique.",
       description: "Uniquement des technologies réellement utilisées et déployées sur ZKR Company, ZKR Ecommerce, ZKR Eclipse et ZKR Estate.",
+      groups: { frontend: "Frontend", backend: "Backend & base de données", architecture: "Architecture & animation" },
     },
     services: {
       title1: "Ce que je",
@@ -244,6 +250,7 @@ export const dictionaries = {
     },
     workPage: {
       backToWork: "Retour aux travaux",
+      closeImage: "Fermer l’image",
       screenshots: "Captures d'écran",
       systemOverview: "Vue d'ensemble du système",
       caseStudy: "Étude de cas",
@@ -251,6 +258,8 @@ export const dictionaries = {
     contact: {
       eyebrow: "Contact",
       headlinePre: "Construisons quelque chose d'",
+      copyEmail: "Copier l’adresse à la place",
+      copied: "Copié dans le presse-papiers",
       headlineEm: "utile",
       headlinePost: ".",
       paragraph: "Je construis des produits digitaux prêts pour la production et des systèmes complets — pas seulement des sites web. Si vous avez une idée qui mérite d'être construite, je peux vous aider à la concrétiser.",
@@ -298,6 +307,7 @@ export const dictionaries = {
       subtitle: "Assistant du Portfolio",
       placeholder: "Posez une question…",
       send: "Envoyer",
+      typing: "ZKR est en train d'écrire…",
       disclaimer: "Les réponses reposent uniquement sur les informations réelles de ce portfolio.",
       suggestions: ["Que fais-tu ?", "Montre-moi tes projets", "Comment te contacter ?", "Quelles sont tes compétences ?"],
     },
@@ -305,7 +315,7 @@ export const dictionaries = {
   es: {
     nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", skills: "Habilidades", services: "Servicios", process: "Proceso", contact: "Contacto" },
     header: { github: "GitHub", startProject: "Iniciar un proyecto", openMenu: "Abrir menú", closeMenu: "Cerrar menú" },
-    mobileMenu: { close: "Cerrar" },
+    mobileMenu: { close: "Cerrar", label: "Menú de navegación" },
     language: { label: "Idioma" },
     hero: {
       availability: "Disponible para proyectos seleccionados",
@@ -348,6 +358,7 @@ export const dictionaries = {
       title1: "Caja de herramientas",
       title2: "técnica.",
       description: "Solo tecnologías realmente usadas y publicadas en ZKR Company, ZKR Ecommerce, ZKR Eclipse y ZKR Estate.",
+      groups: { frontend: "Frontend", backend: "Backend y base de datos", architecture: "Arquitectura y animación" },
     },
     services: {
       title1: "Lo que",
@@ -388,6 +399,7 @@ export const dictionaries = {
     },
     workPage: {
       backToWork: "Volver a trabajos",
+      closeImage: "Cerrar imagen",
       screenshots: "Capturas de pantalla",
       systemOverview: "Visión general del sistema",
       caseStudy: "Caso de estudio",
@@ -395,6 +407,8 @@ export const dictionaries = {
     contact: {
       eyebrow: "Contacto",
       headlinePre: "Construyamos algo ",
+      copyEmail: "Copiar la dirección en su lugar",
+      copied: "Copiado al portapapeles",
       headlineEm: "útil",
       headlinePost: ".",
       paragraph: "Construyo productos digitales listos para producción y sistemas completos — no solo sitios web. Si tienes una idea que merece construirse, puedo ayudarte a hacerla realidad.",
@@ -410,7 +424,7 @@ export const dictionaries = {
       budgetLabel: "Presupuesto (Opcional)",
       messageLabel: "Mensaje *",
       selectOne: "Selecciona una opción",
-      selectBudget: "Selecciona un presupuesto",
+      selectBudget: "Elige un presupuesto",
       projectTypes: ["Sitio web", "E-commerce", "SaaS / Aplicación web", "Software a medida", "API / Sistema backend", "Otro"],
       budgets: ["Aún no lo sé", "Menos de $1,000", "$1,000 – $3,000", "$3,000 – $10,000", "$10,000+"],
       errorName: "Por favor, introduce tu nombre.",
@@ -442,6 +456,7 @@ export const dictionaries = {
       subtitle: "Asistente del Portafolio",
       placeholder: "Escribe tu pregunta…",
       send: "Enviar",
+      typing: "ZKR está escribiendo…",
       disclaimer: "Las respuestas se basan únicamente en información real de este portafolio.",
       suggestions: ["¿A qué te dedicas?", "Muéstrame tus proyectos", "¿Cómo puedo contactarte?", "¿Cuáles son tus habilidades?"],
     },

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Loader from "@/components/layout/Loader";
 import CursorGlow from "@/components/ui/CursorGlow";
@@ -9,6 +9,16 @@ import Footer from "@/components/layout/Footer";
 import FloatingDock from "@/components/contact/FloatingDock";
 import ZkrAssistant from "@/components/assistant/ZkrAssistant";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import MotionProvider from "@/components/ui/MotionProvider";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#121317",
+  // Android Chrome: resize the layout viewport when the on-screen keyboard opens,
+  // so the bottom-anchored Agent composer is never hidden behind it.
+  interactiveWidget: "resizes-content",
+};
 
 export const metadata: Metadata = {
   title: "ZKR — Zakaria Adli · Full-Stack Developer",
@@ -47,15 +57,17 @@ export default function RootLayout({
       </head>
       <body>
         <LanguageProvider>
-          <Loader />
-          <ScrollProgress />
-          <CursorGlow />
-          <CustomCursor />
-          <NavigationRoot />
-          {children}
-          <Footer />
-          <FloatingDock />
-          <ZkrAssistant />
+          <MotionProvider>
+            <Loader />
+            <ScrollProgress />
+            <CursorGlow />
+            <CustomCursor />
+            <NavigationRoot />
+            {children}
+            <Footer />
+            <FloatingDock />
+            <ZkrAssistant />
+          </MotionProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -11,7 +11,7 @@ export default function ServicesSection() {
   const { t } = useTranslation();
 
   return (
-    <section id="services" className="border-t border-border py-[150px]">
+    <section id="services" className="border-t border-border py-24 md:py-[150px]">
       <div className="wrap">
         <SectionHeading
           title={

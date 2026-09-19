@@ -10,7 +10,7 @@ export default function ProjectsSection() {
   const { t } = useTranslation();
 
   return (
-    <section id="work" className="py-[150px] md:py-[150px]">
+    <section id="work" className="py-24 md:py-[150px]">
       <div className="wrap">
         <SectionHeading
           title={

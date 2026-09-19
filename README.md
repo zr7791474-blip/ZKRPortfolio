@@ -6,7 +6,7 @@ architecture, TypeScript, and a data-driven project system underneath it.
 
 ## Stack
 
-Next.js 14 (App Router) · TypeScript (strict) · Tailwind CSS · Framer Motion · lucide-react
+Next.js 14 (App Router) · TypeScript (strict) · Tailwind CSS · Framer Motion · lucide-react · simple-icons
 
 ## Getting started
 
@@ -68,20 +68,26 @@ list, schematic panel labels, case-study sections, links — comes from
 `data/projects.ts`. No component needs to change to update copy, add a
 feature, or fix a link.
 
-## Brand assets (logo & hero image)
+## Brand assets (logo, hero image & project screenshots)
 
-Two real assets are wired in but **not included** in this zip — drop them in and they activate automatically, no code changes needed:
+**No binary assets are included in this zip.** The code references them and is
+wired to pick them up automatically — drop the real files in at these paths, no
+code changes needed:
 
 | Asset | Path | Used in |
 |---|---|---|
-| ZKR logo | `public/zkr.jpg` | `components/ui/Logo.tsx` — nav, loader, footer, favicon |
+| ZKR logo (official branding) | `public/logo/zkr.jpg` | `components/ui/Logo.tsx` — nav, loader, footer, Agent; also the favicon / apple-touch-icon (`app/layout.tsx`) |
 | Hero background | `public/hero/background.jpg` | `components/hero/HeroImage.tsx` — cinematic hero visual |
+| Project screenshots | `public/projects/<slug>/…` (file names are listed per project in `data/projects.ts`) | project cards and the `/work/[slug]` gallery + lightbox |
 
-Both components check for the file at runtime (`onError`) and fall back
-gracefully if it's missing — `Logo` falls back to the "ZKR•" text wordmark,
-`HeroImage` falls back to the ambient grid + glow treatment used elsewhere
-on the site. Nothing breaks, no broken-image icons, no build failure —
-you'll just see the fallback until the real files are added.
+Until the real files exist, everything degrades instead of breaking:
+
+- `Logo` falls back to the "ZKR•" text wordmark.
+- `HeroImage` falls back to the ambient grid + glow treatment used elsewhere on the site.
+- Project images (`components/ui/SafeImage.tsx`) fall back to a plain card-surface panel — nothing is drawn or invented in place of a missing screenshot.
+- No build failure. The only visible symptoms are the browser's 404 for the favicon and for the image requests.
+
+Never replace the official logo with a redrawn/SVG version — the brand mark is `public/logo/zkr.jpg`.
 
 ## Color rhythm
 
@@ -92,12 +98,64 @@ technical), derived from tones present in the hero image:
 - **Hero** — cinematic image + warm/aurora overlay
 - **Projects** — each project gets a two-tone wash (`accent` + `moodVia` in `data/projects.ts`): brass+forest (Company), burgundy+cream (Ecommerce), dusty blue+lavender (Eclipse), clay+forest (Estate)
 - **About** — a deliberate light "paper" moment: warm cream background, dark ink text, pine-green accent — the one section that isn't dark, by design, to prevent black fatigue
-- **Skills** — deep midnight with an aurora-green ambient glow
+- **Experience** — blue-charcoal (`midnight`)
+- **Skills** — a quiet neutral `ink` tone, no gradients or glows: just the logo wall (see below)
 - **Process** — a top-to-bottom gradient from forest → base → midnight, with a matching aurora→dusty-blue scroll-progress line
 - **Contact** — obsidian with both a brass glow and an aurora glow, as the closing "climax" scene
 
 All of these colors live in `tailwind.config.ts` under a clearly separated
 "atmospheric palette" block, so the whole system is one file to retune.
+
+The base palette is a soft charcoal rather than near-black (`bg #121317`,
+`surface #1a1b21`, `surface-2 #21222a`, `ink #181a21`, `midnight #141c2e`),
+with `text-dim #bdbbb5` / `text-faint #918f8b` chosen to stay above WCAG AA
+(4.5:1) on every surface. Per-project accent colours that are too dark to read
+as text are lightened (hue preserved) by `readableAccent()` in `lib/utils.ts`.
+
+The site is a single dark theme by design (plus the cream About section) —
+there is no theme toggle and no `prefers-color-scheme` handling; the OS colour
+scheme does not change how it renders.
+
+## Skills section
+
+A quiet logo wall: one labelled row per discipline, technology mark above its
+name. No cards, pills, progress bars, percentages or claimed proficiency levels.
+
+- Data: `skillGroups` in `data/content.ts` (each item has an `icon` key).
+- Icons: `components/skills/TechIcon.tsx`. Official brand marks come from
+  [`simple-icons`](https://simpleicons.org) (CC0 data; the marks themselves are
+  trademarks of their respective owners and are used only to identify the
+  technologies). Where that set has no mark (Auth.js, Zustand) or the item is a
+  concept (design tokens) a neutral `lucide-react` glyph is used — no logos are
+  drawn or invented.
+- Motion: a small CSS-only lift + tilt on hover, written with `motion-safe:` so
+  it disappears entirely under `prefers-reduced-motion`.
+- To add a skill: add it to `skillGroups`, import its `si…` icon in
+  `TechIcon.tsx` and register the key.
+
+## ZKR Assistant (EN / FR / ES)
+
+A local, deterministic assistant — deliberately **no LLM / external API** — so
+every answer is traceable to real content in `data/profile.ts` and unmatched
+questions get an honest "I don't have that information" in the visitor's
+language instead of a guess.
+
+- Engine: `lib/assistant/engine.ts`. Input is accent-folded and tokenised;
+  keywords match only as whole words (never substrings). The language is chosen
+  by score (function words, language-specific vocabulary, ¿ ñ ç …); words shared
+  by two languages cancel out; on a tie the website's current language wins.
+- UI: `components/assistant/ZkrAssistant.tsx` — labels, placeholder and
+  suggestion chips follow the site language; the welcome message re-localises
+  when the language changes.
+- Add a topic: add its keywords per language in `TOPIC_KEYWORDS` and its answer
+  text per language in `buildResponses()`.
+
+## Accessibility & motion
+
+- Touch targets are ≥ 44px on phones; form inputs are 16px so iOS Safari does not zoom.
+- The Agent is a labelled dialog with a focus trap, Escape, focus return and a live region for answers.
+- `MotionConfig reducedMotion="user"` (`components/ui/MotionProvider.tsx`) makes every Framer Motion animation honour `prefers-reduced-motion`; CSS animations are neutralised in `globals.css`.
+- Header, mobile menu and footer links are route-aware (`lib/useAnchorNav.ts`): `#work` on the home page, `/#work` on `/work/*` pages.
 
 ## Signature interactions
 
@@ -115,26 +173,24 @@ already set on the hero CTAs, project links, and screenshot thumbnails in
 `components/projects/ProjectCard.tsx` and `components/hero/Hero.tsx`. Add
 the attribute to any new interactive element to give it a label.
 
-## Screenshots (placeholder system)
+## Screenshots
 
-Real screenshots were **not** fabricated. Each project ships with 3 generated
-placeholder SVGs (dark, on-brand, clearly labeled "SCREENSHOT PLACEHOLDER")
-so the layout — including the project cover image, the schematic panel, and
-the lightbox gallery on the case-study route — is fully in place without
-pretending to show a UI that wasn't verified.
+Real screenshots are never fabricated. `data/projects.ts` lists the real screenshot
+files each project expects under `public/projects/<slug>/` (these image files are
+**not** in this zip). Entries marked `isPlaceholder: true` (currently the
+Fleurs Alliance shots) are captioned "Placeholder" in the gallery.
 
-To swap in a real screenshot:
+To add or swap a screenshot:
 
-1. Drop the image into `public/projects/<slug>/` (e.g. `public/projects/zkr-ecommerce/storefront.png`).
-2. Update that shot's entry in that project's `screenshots` array in `data/projects.ts`:
+1. Drop the image into `public/projects/<slug>/`.
+2. Update that shot's entry in the project's `screenshots` array in `data/projects.ts`:
    ```ts
    { src: "/projects/zkr-ecommerce/storefront.png", alt: "...", label: "Storefront", isPlaceholder: false },
    ```
 
-That's it — the project cover image, the gallery grid, and the lightbox all
-update automatically, and the "Placeholder" caption disappears once
-`isPlaceholder` is `false`. Click any screenshot on a `/work/[slug]` page to
-open it in the fullscreen lightbox.
+The project cover, the gallery grid and the lightbox all update automatically,
+and the "Placeholder" caption disappears once `isPlaceholder` is `false`. Click
+any screenshot on a `/work/[slug]` page to open it in the fullscreen lightbox.
 
 ## Contact form
 
@@ -189,11 +245,14 @@ components. See `.env.example`.
   host (Vercel, your machine with full internet), you can switch to
   `next/font/google` if you prefer self-hosted font optimization; the
   current approach works identically at runtime either way.
-- `npm run build` was run and verified in this sandbox: 0 TypeScript errors,
-  0 ESLint warnings/errors, all 9 routes (`/`, `/api/contact`, `/work/*` × 4,
-  `/_not-found`) build and were smoke-tested with `next start` — every
-  internal route returns 200, an unknown `/work/*` slug correctly 404s, and
-  the contact API correctly returns its "no backend configured" fallback.
+- `npm run lint`, `npx tsc --noEmit` and `npm run build` all pass (0 TypeScript
+  errors, 0 ESLint errors). The routes — `/`, `/api/contact`, the 10
+  `/work/[slug]` pages and the 404 page — were smoke-tested in real Chromium on
+  desktop and on 320 / 375 / 390 / 430px phones in EN, FR and ES.
+- The contact API deliberately answers **503** with `{ fallback: "mailto" }` when
+  neither `RESEND_API_KEY` nor `CONTACT_FORM_ENDPOINT` is set; the form then
+  opens a pre-filled email. Browsers log that 503 in the console — it is expected
+  and goes away once a mail backend is configured.
 
 ## What's deliberately not claimed
 

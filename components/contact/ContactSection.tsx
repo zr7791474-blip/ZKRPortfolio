@@ -26,7 +26,7 @@ export default function ContactSection() {
   ].filter((s) => s.href);
 
   return (
-    <section id="contact" className="relative overflow-hidden border-t border-border bg-obsidian py-[150px]">
+    <section id="contact" className="relative overflow-hidden border-t border-border bg-obsidian py-24 md:py-[150px]">
       <motion.div
         aria-hidden
         className="bg-grid pointer-events-none absolute inset-0 opacity-[0.35]"
@@ -73,7 +73,7 @@ export default function ContactSection() {
               href={emailHref}
               data-cursor="OPEN"
               aria-label={siteConfig.email ? `Email ${siteConfig.email}` : "Email"}
-              className="group flex items-center gap-3 text-[17px] text-text transition-colors hover:text-accent-bright"
+              className="group flex min-h-[44px] items-center gap-3 break-all text-[16px] text-text transition-colors hover:text-accent-bright sm:break-normal sm:text-[17px]"
             >
               <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border-strong transition-colors duration-300 group-hover:border-accent group-hover:text-accent">
                 <Mail className="h-4 w-4" />
@@ -97,7 +97,7 @@ export default function ContactSection() {
                   rel="noopener noreferrer"
                   aria-label={s.label}
                   data-cursor="OPEN"
-                  className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[.06em] text-text-dim transition-colors hover:text-accent-bright"
+                  className="flex min-h-[44px] items-center gap-2 font-mono text-[12px] uppercase tracking-[.06em] text-text-dim transition-colors hover:text-accent-bright"
                 >
                   <s.icon className="h-[15px] w-[15px]" />
                   {s.label}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode, type ElementType } from "react";
+import { useRef, type MouseEvent, type ReactNode, type ElementType } from "react";
 import { useReducedMotion } from "framer-motion";
 
 type MagneticProps = {
@@ -11,7 +11,7 @@ type MagneticProps = {
   href?: string;
   target?: string;
   rel?: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
   /** Read by CustomCursor to show a contextual label ("VIEW", "OPEN", ...) on hover. */
   "data-cursor"?: string;
 };

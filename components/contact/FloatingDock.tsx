@@ -51,7 +51,7 @@ export default function FloatingDock() {
     <div
       className={cn(
         "fixed bottom-7 right-7 z-[900] flex flex-col items-end gap-[10px] opacity-0 transition-all duration-500 ease-signature",
-        "max-md:inset-x-3.5 max-md:bottom-3.5 max-md:right-auto max-md:items-stretch",
+        "max-md:inset-x-3.5 max-md:bottom-3.5 max-md:items-stretch",
         visible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-5",
         hideOnScroll && "max-md:translate-y-[120%]"
       )}
@@ -64,7 +64,7 @@ export default function FloatingDock() {
             target={item.external ? "_blank" : undefined}
             rel={item.external ? "noopener noreferrer" : undefined}
             aria-label={item.label}
-            className="flex h-[42px] w-[42px] items-center justify-center rounded-full text-text-dim transition-all duration-[350ms] ease-signature hover:-translate-y-[3px] hover:bg-accent-soft hover:text-accent-bright max-md:h-[46px] max-md:w-full"
+            className="flex h-[42px] w-[42px] items-center justify-center rounded-full text-text-dim transition-all duration-[350ms] ease-signature hover:-translate-y-[3px] hover:bg-accent-soft hover:text-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent max-md:h-[46px] max-md:w-full"
           >
             <item.icon className="h-[17px] w-[17px]" />
           </a>

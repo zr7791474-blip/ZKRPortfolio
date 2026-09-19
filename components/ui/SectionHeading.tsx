@@ -10,7 +10,7 @@ export default function SectionHeading({
 }) {
   return (
     <Reveal>
-      <div className="mb-[70px] flex flex-col items-start justify-between gap-[18px] md:flex-row md:items-end md:gap-10">
+      <div className="mb-12 md:mb-[70px] flex flex-col items-start justify-between gap-[18px] md:flex-row md:items-end md:gap-10">
         <h2 className="font-serif text-[clamp(32px,4.4vw,54px)] leading-[1.05] tracking-[-0.02em]">
           {title}
         </h2>

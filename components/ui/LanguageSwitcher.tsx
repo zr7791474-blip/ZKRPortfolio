@@ -39,8 +39,8 @@ export default function LanguageSwitcher({ compact = false }: { compact?: boolea
         aria-expanded={open}
         aria-label={t("language.label")}
         className={cn(
-          "flex items-center gap-[6px] rounded-full border border-border-strong text-text-dim transition-colors hover:border-accent hover:text-text",
-          compact ? "h-9 px-3 text-[12px]" : "!px-[18px] !py-[11px] text-[13px]"
+          "flex items-center gap-[6px] rounded-full border border-border-strong text-text-dim transition-colors hover:border-accent hover:text-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+          compact ? "h-11 px-3.5 text-[12px]" : "!px-[18px] !py-[11px] text-[13px]"
         )}
       >
         <Globe className={compact ? "h-[14px] w-[14px]" : "h-[15px] w-[15px]"} />
@@ -69,7 +69,7 @@ export default function LanguageSwitcher({ compact = false }: { compact?: boolea
                     setOpen(false);
                   }}
                   className={cn(
-                    "flex w-full items-center justify-between px-4 py-[9px] text-left text-[13px] text-text-dim transition-colors hover:bg-bg hover:text-text",
+                    "flex min-h-[44px] w-full items-center justify-between px-4 text-left text-[13px] text-text-dim transition-colors hover:bg-bg hover:text-text focus-visible:bg-bg focus-visible:text-text focus-visible:outline-none",
                     locale === l && "text-accent"
                   )}
                 >

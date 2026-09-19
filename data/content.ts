@@ -30,41 +30,50 @@ export const marqueeTech = [
   "ZOD",
 ] as const;
 
+/**
+ * The technologies actually used and shipped across the portfolio projects.
+ * `icon` keys resolve in components/skills/TechIcon.tsx — official brand marks
+ * from `simple-icons` where one exists, a neutral lucide-react glyph where it
+ * doesn't (Auth.js, Zustand, design tokens). No skill levels are claimed.
+ */
 export const skillGroups = [
   {
-    title: "Frontend",
+    key: "frontend",
     items: [
-      { name: "Next.js (14 & 16, App Router)", tag: "CORE" },
-      { name: "React", tag: "CORE" },
-      { name: "TypeScript", tag: "CORE" },
-      { name: "Tailwind CSS", tag: "STYLE" },
-      { name: "Vite", tag: "TOOLING" },
-      { name: "shadcn/ui", tag: "UI" },
+      { name: "Next.js", icon: "nextjs" },
+      { name: "React", icon: "react" },
+      { name: "TypeScript", icon: "typescript" },
+      { name: "Tailwind CSS", icon: "tailwind" },
+      { name: "Vite", icon: "vite" },
+      { name: "shadcn/ui", icon: "shadcn" },
     ],
   },
   {
-    title: "Backend & Database",
+    key: "backend",
     items: [
-      { name: "Next.js API Routes / Server Actions", tag: "CORE" },
-      { name: "Prisma ORM", tag: "DATA" },
-      { name: "PostgreSQL / Neon", tag: "DATA" },
-      { name: "NextAuth / Auth.js", tag: "AUTH" },
-      { name: "Stripe", tag: "PAYMENTS" },
-      { name: "Resend", tag: "EMAIL" },
+      { name: "API Routes & Server Actions", icon: "nextjs" },
+      { name: "Prisma ORM", icon: "prisma" },
+      { name: "PostgreSQL / Neon", icon: "postgresql" },
+      { name: "Auth.js", icon: "auth" },
+      { name: "Stripe", icon: "stripe" },
+      { name: "Resend", icon: "resend" },
     ],
   },
   {
-    title: "Architecture & Motion",
+    key: "architecture",
     items: [
-      { name: "Zustand", tag: "STATE" },
-      { name: "React Hook Form + Zod", tag: "FORMS" },
-      { name: "Framer Motion", tag: "MOTION" },
-      { name: "CSS Design Tokens", tag: "SYSTEM" },
-      { name: "Lucide React", tag: "ICONS" },
-      { name: "ESLint", tag: "QUALITY" },
+      { name: "Zustand", icon: "zustand" },
+      { name: "React Hook Form", icon: "reacthookform" },
+      { name: "Zod", icon: "zod" },
+      { name: "Framer Motion", icon: "framer" },
+      { name: "CSS Design Tokens", icon: "tokens" },
+      { name: "Lucide", icon: "lucide" },
+      { name: "ESLint", icon: "eslint" },
     ],
   },
 ] as const;
+
+export type SkillIconKey = (typeof skillGroups)[number]["items"][number]["icon"];
 
 export const services = [
   {

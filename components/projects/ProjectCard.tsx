@@ -1,10 +1,11 @@
 "use client";
 
-import Image from "next/image";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { readableAccent } from "@/lib/utils";
 
 const VISIBLE_TECH_COUNT = 3;
 
@@ -31,7 +32,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         className="relative block aspect-[16/10] w-full overflow-hidden border-b border-border"
       >
         {cover && (
-          <Image
+          <SafeImage
             src={cover.src}
             alt={cover.alt}
             fill
@@ -41,7 +42,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         )}
         <span
           className="absolute left-3 top-3 rounded-full bg-bg/70 px-2 py-1 font-mono text-[10px] tracking-[.08em] backdrop-blur-sm"
-          style={{ color: project.accent.hex }}
+          style={{ color: readableAccent(project.accent.hex) }}
         >
           {project.index} / 10
         </span>
@@ -75,7 +76,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           <Link
             href={`/work/${project.slug}`}
             data-cursor="EXPLORE"
-            className="inline-flex items-center gap-[6px] font-mono text-[11px] tracking-[.06em] text-text-faint transition-colors duration-300 hover:text-accent-bright"
+            className="-my-[14px] inline-flex items-center gap-[6px] py-[14px] font-mono text-[11px] tracking-[.06em] text-text-faint transition-colors duration-300 hover:text-accent-bright"
           >
             {t("projectCard.caseStudy")}
             <ArrowUpRight className="h-[12px] w-[12px] transition-transform duration-300 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
@@ -89,7 +90,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 rel="noopener noreferrer"
                 data-cursor="OPEN"
                 aria-label={`${t("projectCard.liveDemo")} — ${project.title}`}
-                className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-border-strong text-text-dim transition-all duration-300 ease-signature hover:border-accent hover:bg-accent hover:text-bg"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-text-dim transition-all duration-300 ease-signature hover:border-accent hover:bg-accent hover:text-bg md:h-[30px] md:w-[30px]"
               >
                 <ExternalLink className="h-[13px] w-[13px]" />
               </a>
@@ -100,7 +101,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${t("projectCard.github")} — ${project.title}`}
-                className="flex h-[30px] w-[30px] items-center justify-center rounded-full border border-border-strong text-text-dim transition-all duration-300 ease-signature hover:border-accent-line hover:text-accent-bright"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-text-dim transition-all duration-300 ease-signature hover:border-accent-line hover:text-accent-bright md:h-[30px] md:w-[30px]"
               >
                 <Github className="h-[13px] w-[13px]" />
               </a>

@@ -8,6 +8,7 @@ import Magnetic from "@/components/ui/Magnetic";
 import Logo from "@/components/ui/Logo";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useAnchorNav } from "@/lib/useAnchorNav";
 
 type HeaderProps = {
   scrolled: boolean;
@@ -28,16 +29,22 @@ const navKeyByHref: Record<string, string> = {
 
 export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }: HeaderProps) {
   const { t } = useTranslation();
+  const anchor = useAnchorNav();
 
   return (
     <header
       className={cn(
-        "fixed left-0 right-0 top-0 z-[1000] border-b border-transparent py-[26px] transition-all duration-500 ease-signature",
-        scrolled && "border-border bg-bg/80 py-4 backdrop-blur-2xl backdrop-saturate-150"
+        "fixed left-0 right-0 top-0 z-[1000] border-b border-transparent transition-all duration-500 ease-signature",
+        // Mutually exclusive padding classes: two utilities for the same property (py-[14px] / py-2)
+        // are resolved by stylesheet order, not class order, so the "compact on scroll" state
+        // would never apply if both were present.
+        scrolled
+          ? "border-border bg-bg/85 py-2 backdrop-blur-2xl backdrop-saturate-150 md:py-4"
+          : "py-[14px] md:py-[26px]"
       )}
     >
       <nav className="wrap flex items-center justify-between gap-3">
-        <Link href="#hero" className="flex min-w-0 items-center">
+        <Link href={anchor.isHome ? "#hero" : "/"} className="flex min-h-[44px] min-w-0 items-center">
           <Logo size={30} />
         </Link>
 
@@ -45,7 +52,8 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
           {nav.map((item) => (
             <a
               key={item.href}
-              href={item.href}
+              href={anchor.href(item.href)}
+              onClick={(e) => anchor.onClick(e, item.href)}
               className={cn(
                 "relative py-1 text-[13.5px] text-text-dim transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-accent after:transition-[width] after:duration-300 hover:text-text hover:after:w-full",
                 activeHref === item.href && "text-text after:w-full"
@@ -67,7 +75,7 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
           >
             {t("header.github")}
           </Magnetic>
-          <Magnetic as="a" href="#contact" className="btn btn-primary !px-[22px] !py-[11px] text-[13px]">
+          <Magnetic as="a" href={anchor.href("#contact")} onClick={(e) => anchor.onClick(e, "#contact")} className="btn btn-primary !px-[22px] !py-[11px] text-[13px]">
             {t("header.startProject")}
           </Magnetic>
         </div>
@@ -79,21 +87,23 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
             aria-label={menuOpen ? t("header.closeMenu") : t("header.openMenu")}
             aria-expanded={menuOpen}
             onClick={onToggleMenu}
-            className="z-[1100] flex h-[26px] w-[26px] flex-shrink-0 flex-col items-center justify-center gap-[5px]"
+            className="z-[1100] -mr-[9px] flex h-11 w-11 flex-shrink-0 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-accent"
           >
-            <span
-              className={cn(
-                "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
-                menuOpen && "translate-y-[6px] rotate-45"
-              )}
-            />
-            <span className={cn("h-px w-full bg-text transition-all duration-[400ms] ease-signature", menuOpen && "opacity-0")} />
-            <span
-              className={cn(
-                "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
-                menuOpen && "-translate-y-[6px] -rotate-45"
-              )}
-            />
+            <span className="flex h-[26px] w-[26px] flex-col items-center justify-center gap-[5px]">
+              <span
+                className={cn(
+                  "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
+                  menuOpen && "translate-y-[6px] rotate-45"
+                )}
+              />
+              <span className={cn("h-px w-full bg-text transition-all duration-[400ms] ease-signature", menuOpen && "opacity-0")} />
+              <span
+                className={cn(
+                  "h-px w-full bg-text transition-all duration-[400ms] ease-signature",
+                  menuOpen && "-translate-y-[6px] -rotate-45"
+                )}
+              />
+            </span>
           </button>
         </div>
       </nav>

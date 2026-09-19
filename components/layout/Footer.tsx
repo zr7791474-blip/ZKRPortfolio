@@ -3,16 +3,18 @@
 import { mailtoHref, siteConfig } from "@/lib/site";
 import Logo from "@/components/ui/Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useAnchorNav } from "@/lib/useAnchorNav";
 
 export default function Footer() {
   const { t } = useTranslation();
+  const anchor = useAnchorNav();
   const emailHref = siteConfig.email
     ? mailtoHref({
         email: siteConfig.email,
         subject: "Project Inquiry",
         body: "Hello Zakaria,\n\nI would like to contact you regarding...",
       })
-    : "#contact";
+    : anchor.href("#contact");
 
   const links = [
     { label: "GitHub", href: siteConfig.githubUrl, external: true },
@@ -24,11 +26,11 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border py-[50px]">
-      <div className="wrap flex flex-wrap items-center justify-between gap-5">
-        <a href="#hero" className="flex items-center" aria-label="Back to top">
+      <div className="wrap flex flex-wrap items-center justify-between gap-x-5 gap-y-4">
+        <a href={anchor.isHome ? "#hero" : "#"} className="flex min-h-[44px] items-center" aria-label="Back to top">
           <Logo size={26} />
         </a>
-        <div className="flex gap-[26px]">
+        <div className="flex flex-wrap gap-x-1 gap-y-1 md:gap-x-3">
           {links.map((l) => (
             <a
               key={l.label}
@@ -36,7 +38,7 @@ export default function Footer() {
               target={l.external ? "_blank" : undefined}
               rel={l.external ? "noopener noreferrer" : undefined}
               aria-label={l.label}
-              className="text-[13px] text-text-dim transition-colors hover:text-accent"
+              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-2 text-[13px] text-text-dim transition-colors hover:text-accent"
             >
               {l.label}
             </a>

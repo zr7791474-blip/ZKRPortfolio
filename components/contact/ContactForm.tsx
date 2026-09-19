@@ -12,7 +12,7 @@ type Status = "idle" | "loading" | "success" | "success-mailto" | "error";
 // Shared field-row spacing — one place to tune the whole form's rhythm.
 const ROW_GAP = "gap-5";
 const inputClasses =
-  "w-full border-0 border-b border-border-strong bg-transparent px-[2px] py-[9px] text-[15px] text-text transition-colors focus-ring focus:border-accent focus:outline-none";
+  "w-full border-0 border-b border-border-strong bg-transparent px-[2px] py-[11px] text-[16px] text-text transition-colors focus-ring focus:border-accent focus:shadow-[0_1px_0_0_#cda05a] focus:outline-none md:py-[9px] md:text-[15px]";
 const labelClasses = "font-mono text-[11px] uppercase tracking-[.06em] text-text-faint";
 const errorClasses = "min-h-[14px] text-[11.5px] text-[#d97757]";
 
