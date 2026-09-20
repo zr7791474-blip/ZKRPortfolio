@@ -25,7 +25,7 @@ export default function Footer() {
   ].filter((l) => l.href);
 
   return (
-    <footer className="border-t border-border py-[50px]">
+    <footer className="tone-inverse border-t border-border py-[50px]">
       <div className="wrap flex flex-wrap items-center justify-between gap-x-5 gap-y-4">
         <a href={anchor.isHome ? "#hero" : "#"} className="flex min-h-[44px] items-center" aria-label="Back to top">
           <Logo size={26} />

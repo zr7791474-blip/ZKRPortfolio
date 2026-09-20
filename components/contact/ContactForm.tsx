@@ -12,9 +12,9 @@ type Status = "idle" | "loading" | "success" | "success-mailto" | "error";
 // Shared field-row spacing — one place to tune the whole form's rhythm.
 const ROW_GAP = "gap-5";
 const inputClasses =
-  "w-full border-0 border-b border-border-strong bg-transparent px-[2px] py-[11px] text-[16px] text-text transition-colors focus-ring focus:border-accent focus:shadow-[0_1px_0_0_#cda05a] focus:outline-none md:py-[9px] md:text-[15px]";
+  "w-full border-0 border-b border-border-strong bg-transparent px-[2px] py-[11px] text-[16px] text-text transition-colors focus-ring focus:border-accent focus:shadow-[0_1px_0_0_rgb(var(--accent))] focus:outline-none md:py-[9px] md:text-[15px]";
 const labelClasses = "font-mono text-[11px] uppercase tracking-[.06em] text-text-faint";
-const errorClasses = "min-h-[14px] text-[11.5px] text-[#d97757]";
+const errorClasses = "min-h-[14px] text-[11.5px] text-danger";
 
 export default function ContactForm() {
   const { t, tList } = useTranslation();
@@ -117,7 +117,7 @@ export default function ContactForm() {
   if (status === "success" || status === "success-mailto") {
     return (
       <div className="px-2 py-[50px] text-center">
-        <div className="mx-auto mb-5 flex h-[52px] w-[52px] items-center justify-center rounded-full border border-sage text-sage">
+        <div className="mx-auto mb-5 flex h-[52px] w-[52px] items-center justify-center rounded-full border border-accent text-accent">
           <Check className="h-[22px] w-[22px]" />
         </div>
         <h3 className="mb-[10px] font-serif text-2xl">
@@ -175,7 +175,7 @@ export default function ContactForm() {
       </div>
 
       {status === "error" && (
-        <p className="text-[13px] text-[#d97757]" role="alert">
+        <p className="text-[13px] text-danger" role="alert">
           {serverError}
         </p>
       )}

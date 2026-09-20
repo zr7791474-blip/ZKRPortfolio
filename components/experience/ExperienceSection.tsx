@@ -10,7 +10,7 @@ export default function ExperienceSection() {
   const { t } = useTranslation();
 
   return (
-    <section id="experience" className="border-t border-border bg-midnight py-24 md:py-[150px]">
+    <section id="experience" className="border-t border-border bg-bg py-24 md:py-[150px]">
       <div className="wrap">
         <SectionHeading
           title={
@@ -20,7 +20,6 @@ export default function ExperienceSection() {
               {t("experience.title2")}
             </>
           }
-          description={t("experience.description")}
         />
 
         <Reveal className="border-t border-border">

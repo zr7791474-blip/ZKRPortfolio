@@ -21,7 +21,6 @@ export default function ServicesSection() {
               {t("services.title2")}
             </>
           }
-          description={t("services.description")}
         />
 
         <Reveal className="border-t border-border">
@@ -37,7 +36,7 @@ export default function ServicesSection() {
                 <h3 className="font-serif text-2xl font-medium">{t(`services.${service.num}.title`)}</h3>
                 <p className="mt-[6px] max-w-[520px] text-[13.5px] text-text-dim">{t(`services.${service.num}.description`)}</p>
               </div>
-              <div className="hidden h-[34px] w-[34px] items-center justify-center rounded-full border border-border-strong transition-all duration-[400ms] ease-signature group-hover:rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-bg md:flex">
+              <div className="hidden h-[34px] w-[34px] items-center justify-center rounded-full border border-border-strong transition-ui duration-[400ms] ease-signature group-hover:rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-bg md:flex">
                 <ArrowUpRight className="h-[14px] w-[14px]" />
               </div>
             </motion.div>

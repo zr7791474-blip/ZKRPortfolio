@@ -6,7 +6,7 @@ export default function SectionHeading({
   description,
 }: {
   title: ReactNode;
-  description: string;
+  description?: string;
 }) {
   return (
     <Reveal>
@@ -14,7 +14,7 @@ export default function SectionHeading({
         <h2 className="font-serif text-[clamp(32px,4.4vw,54px)] leading-[1.05] tracking-[-0.02em]">
           {title}
         </h2>
-        <p className="max-w-[360px] text-[15px] text-text-dim">{description}</p>
+        {description && <p className="max-w-[360px] text-[15px] text-text-dim">{description}</p>}
       </div>
     </Reveal>
   );

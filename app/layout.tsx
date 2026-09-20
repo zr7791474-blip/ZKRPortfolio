@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Loader from "@/components/layout/Loader";
-import CursorGlow from "@/components/ui/CursorGlow";
-import CustomCursor from "@/components/ui/CustomCursor";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import NavigationRoot from "@/components/navigation/NavigationRoot";
 import Footer from "@/components/layout/Footer";
@@ -11,10 +9,16 @@ import ZkrAssistant from "@/components/assistant/ZkrAssistant";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 import MotionProvider from "@/components/ui/MotionProvider";
 
+const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem("zkr-theme");var t=(s==="light"||s==="dark")?s:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);var m=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<m.length;i++){m[i].setAttribute("content",t==="dark"?"#101E13":"#EEF4EB");m[i].removeAttribute("media")}}catch(e){}})();`;
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#121317",
+  // Browser UI colour follows the OS scheme; ThemeToggle overrides it after a manual choice.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EEF4EB" },
+    { media: "(prefers-color-scheme: dark)", color: "#101E13" },
+  ],
   // Android Chrome: resize the layout viewport when the on-screen keyboard opens,
   // so the bottom-anchored Agent composer is never hidden behind it.
   interactiveWidget: "resizes-content",
@@ -44,8 +48,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
+        {/* Runs before first paint (no theme flash): saved choice → OS preference → light. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font -- this rule predates the App
@@ -60,8 +66,6 @@ export default function RootLayout({
           <MotionProvider>
             <Loader />
             <ScrollProgress />
-            <CursorGlow />
-            <CustomCursor />
             <NavigationRoot />
             {children}
             <Footer />

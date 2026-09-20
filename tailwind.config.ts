@@ -1,6 +1,10 @@
 import type { Config } from "tailwindcss";
 
+/** RGB-triplet CSS variable with Tailwind alpha support. */
+const v = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -9,44 +13,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Palette lifted from near-black (#0a0a0b) to a soft charcoal so the page breathes;
-        // every text tier below is contrast-checked (WCAG AA) against these surfaces.
-        bg: "#121317",
-        surface: "#1a1b21",
-        "surface-2": "#21222a",
-        "surface-3": "#292a33",
-        border: {
-          DEFAULT: "rgba(242,241,236,0.12)",
-          strong: "rgba(242,241,236,0.22)",
-        },
-        text: {
-          DEFAULT: "#f2f1ec",
-          dim: "#bdbbb5",
-          faint: "#918f8b",
-        },
+        // All colours are CSS variables (RGB triplets) defined per theme in app/globals.css,
+        // so Tailwind opacity modifiers (bg-bg/80, border-border/60 …) keep working and every
+        // component adapts to light / dark without per-component overrides.
+        bg: v("bg"),
+        surface: v("surface"),
+        "surface-2": v("surface-2"),
+        "surface-3": v("surface-3"),
+        border: { DEFAULT: v("border"), strong: v("border-strong") },
+        text: { DEFAULT: v("text"), dim: v("text-dim"), faint: v("text-faint") },
         accent: {
-          DEFAULT: "#cda05a",
-          bright: "#e0b876",
-          soft: "rgba(205,160,90,0.14)",
-          line: "rgba(205,160,90,0.35)",
+          DEFAULT: v("accent"), // readable accent (text, links, small labels)
+          bright: v("accent-bright"), // hover / emphasis
+          soft: "rgb(var(--brand) / 0.14)",
+          line: "rgb(var(--brand) / 0.45)",
         },
-        sage: "#7f9284",
-        cream: "#e8e0d0",
-        burgundy: { DEFAULT: "#7a2e35", soft: "rgba(122,46,53,0.16)" },
-        dusty: { DEFAULT: "#7c93b3", soft: "rgba(124,147,179,0.16)" },
-        pine: { DEFAULT: "#4a5d4e", soft: "rgba(74,93,78,0.18)" },
-        clay: { DEFAULT: "#b98a63", soft: "rgba(185,138,99,0.16)" },
-        // Atmospheric palette pulled from the hero image — used to give each
-        // section its own mood instead of repeating flat black everywhere.
-        obsidian: "#0e0f13",
-        ink: "#181a21",
-        forest: { DEFAULT: "#1b2b22", soft: "rgba(31,51,37,0.35)" },
-        aurora: { DEFAULT: "#8fae6a", soft: "rgba(143,174,106,0.16)", line: "rgba(143,174,106,0.35)" },
-        midnight: "#141c2e",
-        mist: "#8b9296",
-        lavender: { DEFAULT: "#a99bc7", soft: "rgba(169,155,199,0.14)" },
-        rose: { DEFAULT: "#c98a94", soft: "rgba(201,138,148,0.14)" },
-        "cream-ink": "#211c14",
+        brand: v("brand"), // #629959 — decorative fills, dots, bars (never small text)
+        danger: v("danger"),
+      },
+      // Like `transition-all` but WITHOUT outline properties, so keyboard focus rings appear instantly
+      // instead of fading in over 300–500ms.
+      transitionProperty: {
+        ui: "color, background-color, border-color, opacity, transform, box-shadow",
       },
       fontFamily: {
         serif: ["Fraunces", "Georgia", "serif"],
@@ -65,9 +53,9 @@ const config: Config = {
           to: { transform: "translateX(-50%)" },
         },
         "pulse-dot": {
-          "0%": { boxShadow: "0 0 0 0 rgba(127,146,132,.45)" },
-          "70%": { boxShadow: "0 0 0 8px rgba(127,146,132,0)" },
-          "100%": { boxShadow: "0 0 0 0 rgba(127,146,132,0)" },
+          "0%": { boxShadow: "0 0 0 0 rgb(var(--brand) / .45)" },
+          "70%": { boxShadow: "0 0 0 8px rgb(var(--brand) / 0)" },
+          "100%": { boxShadow: "0 0 0 0 rgb(var(--brand) / 0)" },
         },
         "wa-pulse": {
           "0%": { transform: "scale(1)", opacity: "0.7" },

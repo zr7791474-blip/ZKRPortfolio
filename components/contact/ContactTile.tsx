@@ -49,7 +49,7 @@ export default function ContactTile({
       {badge}
 
       <div className="pointer-events-none mb-[26px] flex items-start justify-between">
-        <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-border-strong transition-all duration-[400ms] ease-signature group-hover:scale-[1.08] group-hover:border-accent group-hover:text-accent">
+        <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-border-strong transition-ui duration-[400ms] ease-signature group-hover:scale-[1.08] group-hover:border-accent group-hover:text-accent">
           {icon}
         </div>
       </div>

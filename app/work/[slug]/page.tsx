@@ -8,7 +8,6 @@ import ScreenshotGallery from "@/components/case-studies/ScreenshotGallery";
 import SchematicPanel from "@/components/projects/SchematicPanel";
 import Reveal from "@/components/ui/Reveal";
 import T from "@/components/ui/T";
-import { readableAccent } from "@/lib/utils";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -38,13 +37,13 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         </Link>
 
         <Reveal>
-          <div className="mb-3 font-mono text-xs" style={{ color: readableAccent(project.accent.hex) }}>
+          <div className="mb-3 font-mono text-xs text-accent">
             {project.index} / 10 — {project.title.toUpperCase()}
           </div>
           <h1 className="max-w-3xl font-serif text-[clamp(36px,6vw,72px)] tracking-[-0.02em]">
             {project.tagline}
           </h1>
-          <p className="mt-4 text-lg" style={{ color: readableAccent(project.accent.hex) }}>
+          <p className="mt-4 text-lg text-accent">
             {project.category}
           </p>
           <p className="mt-6 max-w-xl text-[16px] text-text-dim">{project.description}</p>

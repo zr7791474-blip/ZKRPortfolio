@@ -52,11 +52,12 @@ export default function FloatingDock() {
       className={cn(
         "fixed bottom-7 right-7 z-[900] flex flex-col items-end gap-[10px] opacity-0 transition-all duration-500 ease-signature",
         "max-md:inset-x-3.5 max-md:bottom-3.5 max-md:items-stretch",
-        visible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-5",
-        hideOnScroll && "max-md:translate-y-[120%]"
+        // `invisible` (visibility:hidden) also removes the links from the tab order while the dock is hidden.
+        visible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none invisible translate-y-5",
+        hideOnScroll && "max-md:invisible max-md:translate-y-[120%]"
       )}
     >
-      <div className="flex items-center gap-[6px] rounded-full border border-border-strong bg-surface/75 p-2 backdrop-blur-xl backdrop-saturate-150 max-md:w-full max-md:justify-around max-md:rounded-[20px]">
+      <div className="flex items-center gap-[6px] rounded-full border border-border-strong bg-surface p-2 max-md:w-full max-md:justify-around max-md:rounded-[20px]">
         {items.map((item) => (
           <a
             key={item.label}
@@ -64,7 +65,7 @@ export default function FloatingDock() {
             target={item.external ? "_blank" : undefined}
             rel={item.external ? "noopener noreferrer" : undefined}
             aria-label={item.label}
-            className="flex h-[42px] w-[42px] items-center justify-center rounded-full text-text-dim transition-all duration-[350ms] ease-signature hover:-translate-y-[3px] hover:bg-accent-soft hover:text-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent max-md:h-[46px] max-md:w-full"
+            className="flex h-[42px] w-[42px] items-center justify-center rounded-full text-text-dim transition-ui duration-[350ms] ease-signature hover:-translate-y-[3px] hover:bg-accent-soft hover:text-accent-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent max-md:h-[46px] max-md:w-full"
           >
             <item.icon className="h-[17px] w-[17px]" />
           </a>

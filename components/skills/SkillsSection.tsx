@@ -17,7 +17,7 @@ export default function SkillsSection() {
   const { t } = useTranslation();
 
   return (
-    <section id="skills" className="relative overflow-hidden border-t border-border bg-ink py-24 md:py-[150px]">
+    <section id="skills" className="relative overflow-hidden border-t border-border bg-surface py-24 md:py-[150px]">
       <div className="wrap relative">
         <SectionHeading
           title={

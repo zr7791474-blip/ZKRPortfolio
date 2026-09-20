@@ -28,7 +28,7 @@ export default function MobileMenu({ open, onNavigate }: { open: boolean; onNavi
           animate={{ clipPath: "circle(150% at calc(100% - 40px) 40px)" }}
           exit={{ clipPath: "circle(0px at calc(100% - 40px) 40px)" }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[1050] flex flex-col overflow-y-auto bg-bg px-8 pb-10 pt-24 md:hidden [&>a:first-of-type]:mt-auto [&>a:last-of-type]:mb-auto"
+          className="fixed inset-0 z-[1050] flex flex-col overflow-y-auto bg-bg px-8 pb-10 pt-24 xl:hidden [&>a:first-of-type]:mt-auto [&>a:last-of-type]:mb-auto"
           role="dialog"
           aria-modal="true"
           aria-label={t("mobileMenu.label")}

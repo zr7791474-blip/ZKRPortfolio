@@ -9,6 +9,7 @@ import Logo from "@/components/ui/Logo";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 import { useAnchorNav } from "@/lib/useAnchorNav";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 type HeaderProps = {
   scrolled: boolean;
@@ -39,7 +40,7 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
         // are resolved by stylesheet order, not class order, so the "compact on scroll" state
         // would never apply if both were present.
         scrolled
-          ? "border-border bg-bg/85 py-2 backdrop-blur-2xl backdrop-saturate-150 md:py-4"
+          ? "border-border bg-bg/95 py-2 md:py-4"
           : "py-[14px] md:py-[26px]"
       )}
     >
@@ -48,7 +49,9 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
           <Logo size={30} />
         </Link>
 
-        <div className="hidden items-center gap-[38px] md:flex">
+        {/* Full desktop nav only from 1280px: 7 links + language + theme + 2 buttons need ~1,200px in FR/ES.
+            Below that the compact header (logo · language · theme · menu) is used. */}
+        <div className="hidden items-center gap-[38px] xl:flex">
           {nav.map((item) => (
             <a
               key={item.href}
@@ -64,8 +67,9 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
           ))}
         </div>
 
-        <div className="hidden items-center gap-[14px] md:flex">
+        <div className="hidden items-center gap-[14px] xl:flex">
           <LanguageSwitcher />
+          <ThemeToggle />
           <Magnetic
             as="a"
             href={siteConfig.githubUrl}
@@ -81,8 +85,9 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
         </div>
 
         {/* Mobile-only row: compact language switcher + hamburger, aligned and never overflowing */}
-        <div className="flex flex-shrink-0 items-center gap-3 md:hidden">
+        <div className="flex flex-shrink-0 items-center gap-1.5 xl:hidden">
           <LanguageSwitcher compact />
+          <ThemeToggle />
           <button
             aria-label={menuOpen ? t("header.closeMenu") : t("header.openMenu")}
             aria-expanded={menuOpen}

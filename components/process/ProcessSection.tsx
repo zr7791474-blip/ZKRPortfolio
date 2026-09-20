@@ -18,7 +18,7 @@ export default function ProcessSection() {
   return (
     <section
       id="process"
-      className="relative overflow-hidden border-t border-border bg-gradient-to-b from-forest via-bg to-midnight py-24 md:py-[150px]"
+      className="relative overflow-hidden border-t border-border bg-surface py-24 md:py-[150px]"
     >
       <div className="wrap relative">
         <SectionHeading
@@ -29,13 +29,12 @@ export default function ProcessSection() {
               {t("process.title2")}
             </>
           }
-          description={t("process.description")}
         />
 
         <div ref={trackRef} className="relative pl-[2px]">
           <div className="absolute bottom-0 left-0 top-0 w-px bg-border">
             <motion.div
-              className="absolute left-0 top-0 w-full origin-top bg-gradient-to-b from-aurora to-dusty"
+              className="absolute left-0 top-0 w-full origin-top bg-brand"
               style={{ scaleY: progress, height: "100%" }}
             />
           </div>

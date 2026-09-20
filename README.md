@@ -31,7 +31,7 @@ npm run start         # serve the production build
 app/
   layout.tsx            root layout: fonts, chrome (loader, nav, footer, dock)
   page.tsx               homepage — composes every section
-  globals.css             Tailwind layers + the few things Tailwind can't express as config
+  globals.css             theme variables (light / dark / .tone-inverse) + Tailwind layers
   work/[slug]/page.tsx    dedicated, statically-generated case-study route per project
   api/contact/route.ts    contact form endpoint (see "Contact form" below)
 
@@ -43,20 +43,26 @@ components/
   projects/     ProjectsSection, ProjectCard, SchematicPanel (signature visual)
   case-studies/ CaseStudyContent, ScreenshotGallery — shared by the inline
                 preview on the homepage AND the /work/[slug] route
-  skills/       SkillsSection
+  skills/       SkillsSection, TechIcon (simple-icons brand marks)
+  assistant/    ZkrAssistant (dialog UI)
   services/     ServicesSection
   process/      ProcessSection
   contact/      ContactSection, ContactTile, ContactForm, CopyEmailButton, FloatingDock
-  ui/           Reveal, Magnetic, Counter, Marquee, CursorGlow, SectionHeading
+  ui/           Reveal, Magnetic, Counter, Marquee, SectionHeading, ThemeToggle, SafeImage,
+                MotionProvider, Logo, LanguageSwitcher
 
 data/
   projects.ts   single source of truth for all 4 projects — edit this file to
                  change any project content anywhere on the site
   content.ts    nav links, hero stats, skills, services, process steps, marquee
+  profile.ts    the only facts the Assistant may state
 
 lib/
   site.ts       typed env-var accessor for contact details + mailto helper
   utils.ts      cn() class helper, email validation
+  assistant/    engine.ts — local intent engine (see ZKR Assistant)
+  i18n/         dictionaries (EN/FR/ES) + LanguageContext
+  useAnchorNav.ts  route-aware #anchor links for the shared header/footer
 
 public/projects/<slug>/   screenshot assets (see below)
 ```
@@ -83,38 +89,47 @@ code changes needed:
 Until the real files exist, everything degrades instead of breaking:
 
 - `Logo` falls back to the "ZKR•" text wordmark.
-- `HeroImage` falls back to the ambient grid + glow treatment used elsewhere on the site.
+- `HeroImage` falls back to the plain blueprint grid.
 - Project images (`components/ui/SafeImage.tsx`) fall back to a plain card-surface panel — nothing is drawn or invented in place of a missing screenshot.
 - No build failure. The only visible symptoms are the browser's 404 for the favicon and for the image requests.
 
 Never replace the official logo with a redrawn/SVG version — the brand mark is `public/logo/zkr.jpg`.
 
-## Color rhythm
+## Colour system & themes
 
-The site deliberately avoids "black background everywhere." Each section has
-its own atmosphere, all still recognizably ZKR (dark, warm-accented,
-technical), derived from tones present in the hero image:
+One green palette, two intentionally designed themes (light is the default):
 
-- **Hero** — cinematic image + warm/aurora overlay
-- **Projects** — each project gets a two-tone wash (`accent` + `moodVia` in `data/projects.ts`): brass+forest (Company), burgundy+cream (Ecommerce), dusty blue+lavender (Eclipse), clay+forest (Estate)
-- **About** — a deliberate light "paper" moment: warm cream background, dark ink text, pine-green accent — the one section that isn't dark, by design, to prevent black fatigue
-- **Experience** — blue-charcoal (`midnight`)
-- **Skills** — a quiet neutral `ink` tone, no gradients or glows: just the logo wall (see below)
-- **Process** — a top-to-bottom gradient from forest → base → midnight, with a matching aurora→dusty-blue scroll-progress line
-- **Contact** — obsidian with both a brass glow and an aurora glow, as the closing "climax" scene
+`#EEF4EB · #E2F2DE · #CBE5C5 · #B2D8A9 · #98CA8E · #7FBD75 · #629959 · #426C3C · #203A21 · #101E13`
 
-All of these colors live in `tailwind.config.ts` under a clearly separated
-"atmospheric palette" block, so the whole system is one file to retune.
+| Role | Light | Dark |
+|---|---|---|
+| Page | `#EEF4EB` | `#101E13` |
+| Soft surfaces | `#E2F2DE` / `#CBE5C5` | `#203A21` / `#2C4B2D` |
+| Borders | `#B2D8A9` | `#426C3C` |
+| Text | `#203A21` (dim `#35573A`, faint `#3F6839`) | `#EEF4EB` (dim `#CBE5C5`, faint `#A9C2A2`) |
+| Accent (links, labels) | `#426C3C` | `#7FBD75` |
+| Decorative brand fill | `#629959` | `#629959` |
 
-The base palette is a soft charcoal rather than near-black (`bg #121317`,
-`surface #1a1b21`, `surface-2 #21222a`, `ink #181a21`, `midnight #141c2e`),
-with `text-dim #bdbbb5` / `text-faint #918f8b` chosen to stay above WCAG AA
-(4.5:1) on every surface. Per-project accent colours that are too dark to read
-as text are lightened (hue preserved) by `readableAccent()` in `lib/utils.ts`.
+Dark is the deep end of the same palette, not an inversion. The closing Contact +
+Footer block (`.tone-inverse`) is a deep-green band in light mode (`#101E13`) and a
+raised band in dark mode (`#203A21`). Section backgrounds alternate page/surface
+for separation; there are no gradients, glows, blur or glass.
 
-The site is a single dark theme by design (plus the cream About section) —
-there is no theme toggle and no `prefers-color-scheme` handling; the OS colour
-scheme does not change how it renders.
+**How it works.** Every colour is a CSS variable (an RGB triplet) defined per theme
+in `app/globals.css`; `tailwind.config.ts` maps them (`bg-bg`, `text-text`,
+`border-border`, `text-accent`, `bg-brand` …) with alpha support, so components never
+hard-code a colour and adapt automatically. The theme lives on `<html data-theme>`:
+
+- an inline script in `app/layout.tsx` sets it before first paint (saved choice → OS
+  `prefers-color-scheme` → light), so there is no flash of the wrong theme;
+- `components/ui/ThemeToggle.tsx` (header, desktop + mobile) switches it, saves the
+  choice in `localStorage` (`zkr-theme`), follows the OS live while nothing is saved,
+  keeps other tabs in sync and updates the browser `theme-color`;
+- both text tiers are contrast-checked (WCAG AA) on every surface they appear on;
+  `#629959` is reserved for decorative fills, never small text.
+
+To retune the whole site, edit the variable blocks (`:root`, `[data-theme="dark"]`,
+`.tone-inverse`) in `app/globals.css`.
 
 ## Skills section
 
@@ -135,23 +150,39 @@ name. No cards, pills, progress bars, percentages or claimed proficiency levels.
 
 ## ZKR Assistant (EN / FR / ES)
 
-A local, deterministic assistant — deliberately **no LLM / external API** — so
-every answer is traceable to real content in `data/profile.ts` and unmatched
-questions get an honest "I don't have that information" in the visitor's
-language instead of a guess.
+A local, deterministic assistant — deliberately **no LLM, external API, database or
+backend** — so every answer is traceable to real content in `data/profile.ts`, and
+anything it can't match with enough confidence gets an honest "I don't have that
+information" (in the visitor's language) instead of a guess.
 
-- Engine: `lib/assistant/engine.ts`. Input is accent-folded and tokenised;
-  keywords match only as whole words (never substrings). The language is chosen
-  by score (function words, language-specific vocabulary, ¿ ñ ç …); words shared
-  by two languages cancel out; on a tie the website's current language wins.
-- UI: `components/assistant/ZkrAssistant.tsx` — labels, placeholder and
-  suggestion chips follow the site language; the welcome message re-localises
-  when the language changes.
-- Add a topic: add its keywords per language in `TOPIC_KEYWORDS` and its answer
-  text per language in `buildResponses()`.
+- **Engine:** `lib/assistant/engine.ts`.
+  1. *Normalise:* lower-case, strip accents, split into whole-word tokens, light
+     consistent stemming (`skills→skill`, `competences→competenc`). Matching is always
+     whole-token, so `nta` can never fire inside `contact`.
+  2. *Score intents:* each intent (skills, contact, experience, education, projects,
+     about, github, instagram, availability) has per-language keywords, weak hints and
+     "combo" groups (question word × build-verb ⇒ *"What have you created?"* is Projects
+     without a listed phrase). Phrase = its length, keyword = 2, combo = 3, weak hint = 1.
+     Below `MIN_CONFIDENT_SCORE` (2) the honest fallback is returned; ties use a fixed
+     priority. Pleasantries only answer short messages.
+  3. *Language:* scored from function words, language-specific vocabulary and script
+     hints (¿ ñ ç …); words shared by two languages cancel out; the website's language
+     only breaks ties.
+  4. *Answer:* concise `Label: value` lines from `data/profile.ts` + localized follow-up
+     chips (Projects / Experience / Contact …) in the language of the reply.
+- **Generic "work"** (*"Tell me about your work"*, *"Parle-moi de ton travail"*) is
+  answered as Experience, which also lists what was shipped; explicit "projects /
+  réalisations / show me your work" go to Projects.
+- **Education** is honestly "not listed" — no degree is invented.
+- **UI:** `components/assistant/ZkrAssistant.tsx` — answers are instant (no fake typing
+  state); the panel is a mobile bottom sheet / desktop card, a labelled dialog with
+  focus trap, Escape and focus return; the email and URLs in answers are clickable.
+- **Add a topic:** add it to `INTENTS` (keywords per language) and `buildResponses()`.
 
 ## Accessibility & motion
 
+- The theme toggle has a localized accessible name that says what it will do ("Switch to dark mode").
+- Every focusable control shows an instant, visible focus ring (`transition-ui` deliberately excludes outline properties; the hidden contact dock is `visibility:hidden` so it is not tabbable).
 - Touch targets are ≥ 44px on phones; form inputs are 16px so iOS Safari does not zoom.
 - The Agent is a labelled dialog with a focus trap, Escape, focus return and a live region for answers.
 - `MotionConfig reducedMotion="user"` (`components/ui/MotionProvider.tsx`) makes every Framer Motion animation honour `prefers-reduced-motion`; CSS animations are neutralised in `globals.css`.
@@ -164,14 +195,7 @@ language instead of a guess.
 - **Living schematic** — the system-diagram panel on every project has breathing nodes plus a small dot that continuously travels the trace line (`offset-path`, degrades gracefully to a static line on browsers without support)
 - **Mouse-reactive hero frame** — the technical coordinate frame around the hero shifts a few pixels with the cursor (disabled under `prefers-reduced-motion`)
 
-## Custom cursor
 
-Desktop only (disabled on touch devices and under `prefers-reduced-motion`):
-a small dot + trailing ring that shows a contextual label ("VIEW", "OPEN",
-"EXPLORE") when hovering elements with a `data-cursor="..."` attribute —
-already set on the hero CTAs, project links, and screenshot thumbnails in
-`components/projects/ProjectCard.tsx` and `components/hero/Hero.tsx`. Add
-the attribute to any new interactive element to give it a label.
 
 ## Screenshots
 
@@ -248,7 +272,8 @@ components. See `.env.example`.
 - `npm run lint`, `npx tsc --noEmit` and `npm run build` all pass (0 TypeScript
   errors, 0 ESLint errors). The routes — `/`, `/api/contact`, the 10
   `/work/[slug]` pages and the 404 page — were smoke-tested in real Chromium on
-  desktop and on 320 / 375 / 390 / 430px phones in EN, FR and ES.
+  desktop and on 320 / 375 / 390 / 430 / 768 / 1024 / 1280 / 1440px in EN, FR and ES,
+  in both the light and dark theme.
 - The contact API deliberately answers **503** with `{ fallback: "mailto" }` when
   neither `RESEND_API_KEY` nor `CONTACT_FORM_ENDPOINT` is set; the form then
   opens a pre-filled email. Browsers log that 503 in the console — it is expected

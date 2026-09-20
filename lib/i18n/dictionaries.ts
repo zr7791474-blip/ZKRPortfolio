@@ -18,6 +18,7 @@ export const dictionaries = {
     nav: { work: "Work", about: "About", experience: "Experience", skills: "Skills", services: "Services", process: "Process", contact: "Contact" },
     header: { github: "GitHub", startProject: "Start a Project", openMenu: "Open menu", closeMenu: "Close menu" },
     mobileMenu: { close: "Close", label: "Navigation menu" },
+    theme: { toDark: "Switch to dark mode", toLight: "Switch to light mode", toggle: "Toggle color theme" },
     language: { label: "Language" },
     hero: {
       availability: "Available for selected projects",
@@ -50,7 +51,6 @@ export const dictionaries = {
     experience: {
       title1: "Real-World",
       title2: "Experience.",
-      description: "Not a résumé of job titles — a record of what's actually been designed, built, and shipped, end to end.",
       "01": { title: "Independent Full-Stack Developer", description: "Working under the name ZKR, based in Casablanca, Morocco — owning projects from the first line of code to production deployment." },
       "02": { title: "Frontend, Backend & Database", description: "Every project on this site spans the full stack: the interface, the business logic behind it, and the data model underneath." },
       "03": { title: "10 Shipped, Production-Ready Products", description: "Agency sites, an e-commerce platform, a SaaS dashboard, a real-estate marketplace, and more — each a complete system, not a mockup." },
@@ -65,7 +65,6 @@ export const dictionaries = {
     services: {
       title1: "What I",
       title2: "Solve.",
-      description: "Services framed around the business problem, not the tech stack behind it.",
       "01": { title: "Websites & Landing Pages", description: "Fast, on-brand marketing sites that convert visitors into leads or customers." },
       "02": { title: "E-commerce Platforms", description: "Full storefronts — product catalog, cart, checkout, and order management." },
       "03": { title: "SaaS & Web Applications", description: "Dashboards, internal tools, and multi-user products with real business logic." },
@@ -76,7 +75,6 @@ export const dictionaries = {
     process: {
       title1: "How I",
       title2: "Work.",
-      description: "The same seven-stage process behind every project on this page, from first call to post-launch iteration.",
       "01": { title: "Discovery", description: "Understand the real problem, the users, and what \"done\" actually looks like before any code gets written." },
       "02": { title: "Planning", description: "Map the system — data models, user flows, and edge cases — before touching the interface." },
       "03": { title: "Design", description: "Interface decisions grounded in the system underneath, not a moodboard picked in isolation." },
@@ -89,7 +87,7 @@ export const dictionaries = {
       title1: "Selected",
       title2: "Work.",
       description:
-        "Ten complete products — agency and business sites, a commerce platform, a SaaS dashboard, a real-estate marketplace, a task-management tool, and a handful of brand/event/storefront concepts. Each one built end-to-end, not styled mockups.",
+        "Each one built end-to-end, not styled mockups.",
     },
     projectCard: {
       liveDemo: "Live Demo",
@@ -113,7 +111,7 @@ export const dictionaries = {
       copied: "Copied to clipboard",
       headlineEm: "useful",
       headlinePost: ".",
-      paragraph: "I build production-ready digital products and complete systems — not just websites. If you have an idea worth building, I can help you turn it into something real.",
+      paragraph: "If you have an idea worth building, I can help you turn it into something real.",
       availability: "Available for selected projects",
       direct: "Direct",
       projectInquiry: "Project Inquiry",
@@ -157,8 +155,8 @@ export const dictionaries = {
       title: "ZKR",
       subtitle: "Portfolio Assistant",
       placeholder: "Ask about my work…",
+      suggestionsLabel: "Suggested questions",
       send: "Send",
-      typing: "ZKR is typing…",
       disclaimer: "Answers are based only on real information from this portfolio.",
       suggestions: ["What do you do?", "Show me your projects", "How can I contact you?", "What are your skills?"],
     },
@@ -167,6 +165,7 @@ export const dictionaries = {
     nav: { work: "Travaux", about: "À propos", experience: "Expérience", skills: "Compétences", services: "Services", process: "Méthode", contact: "Contact" },
     header: { github: "GitHub", startProject: "Démarrer un projet", openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu" },
     mobileMenu: { close: "Fermer", label: "Menu de navigation" },
+    theme: { toDark: "Passer en mode sombre", toLight: "Passer en mode clair", toggle: "Changer le thème de couleur" },
     language: { label: "Langue" },
     hero: {
       availability: "Disponible pour des projets sélectionnés",
@@ -199,7 +198,6 @@ export const dictionaries = {
     experience: {
       title1: "Expérience",
       title2: "Concrète.",
-      description: "Pas une liste d'intitulés de poste — un aperçu de ce qui a réellement été conçu, développé et mis en production, de bout en bout.",
       "01": { title: "Développeur Full-Stack Indépendant", description: "Je travaille sous le nom ZKR, basé à Casablanca, au Maroc — en prenant en charge chaque projet de la première ligne de code jusqu'à la mise en production." },
       "02": { title: "Frontend, Backend & Base de Données", description: "Chaque projet présenté ici couvre l'ensemble de la pile technique : l'interface, la logique métier et le modèle de données sous-jacent." },
       "03": { title: "10 Produits Livrés et Prêts pour la Production", description: "Sites d'agence, plateforme e-commerce, tableau de bord SaaS, marketplace immobilière, et plus — chacun un système complet, pas une simple maquette." },
@@ -214,7 +212,6 @@ export const dictionaries = {
     services: {
       title1: "Ce que je",
       title2: "résous.",
-      description: "Des services pensés autour du problème métier, pas de la stack technique derrière.",
       "01": { title: "Sites web & pages de destination", description: "Des sites marketing rapides et sur-mesure qui convertissent les visiteurs en prospects ou clients." },
       "02": { title: "Plateformes e-commerce", description: "Boutiques complètes — catalogue produits, panier, paiement et gestion des commandes." },
       "03": { title: "SaaS & applications web", description: "Dashboards, outils internes et produits multi-utilisateurs avec une vraie logique métier." },
@@ -225,7 +222,6 @@ export const dictionaries = {
     process: {
       title1: "Comment je",
       title2: "travaille.",
-      description: "Le même processus en sept étapes derrière chaque projet de cette page, du premier appel à l'itération post-lancement.",
       "01": { title: "Découverte", description: "Comprendre le vrai problème, les utilisateurs, et à quoi ressemble « terminé » avant d'écrire la moindre ligne de code." },
       "02": { title: "Planification", description: "Cartographier le système — modèles de données, parcours utilisateurs, cas limites — avant de toucher à l'interface." },
       "03": { title: "Conception", description: "Des décisions d'interface ancrées dans le système sous-jacent, pas dans un moodboard choisi isolément." },
@@ -238,7 +234,7 @@ export const dictionaries = {
       title1: "Travaux",
       title2: "sélectionnés.",
       description:
-        "Dix produits complets — sites d'agence et d'entreprise, une plateforme e-commerce, un dashboard SaaS, une marketplace immobilière, un outil de gestion de tâches, et plusieurs concepts de marque/événement/boutique. Chacun construit de bout en bout, pas de simples maquettes.",
+        "Chacun construit de bout en bout, pas de simples maquettes.",
     },
     projectCard: {
       liveDemo: "Démo en ligne",
@@ -262,7 +258,7 @@ export const dictionaries = {
       copied: "Copié dans le presse-papiers",
       headlineEm: "utile",
       headlinePost: ".",
-      paragraph: "Je construis des produits digitaux prêts pour la production et des systèmes complets — pas seulement des sites web. Si vous avez une idée qui mérite d'être construite, je peux vous aider à la concrétiser.",
+      paragraph: "Si vous avez une idée qui mérite d'être construite, je peux vous aider à la concrétiser.",
       availability: "Disponible pour des projets sélectionnés",
       direct: "Direct",
       projectInquiry: "Demande de projet",
@@ -306,8 +302,8 @@ export const dictionaries = {
       title: "ZKR",
       subtitle: "Assistant du Portfolio",
       placeholder: "Posez une question…",
+      suggestionsLabel: "Questions suggérées",
       send: "Envoyer",
-      typing: "ZKR est en train d'écrire…",
       disclaimer: "Les réponses reposent uniquement sur les informations réelles de ce portfolio.",
       suggestions: ["Que fais-tu ?", "Montre-moi tes projets", "Comment te contacter ?", "Quelles sont tes compétences ?"],
     },
@@ -316,6 +312,7 @@ export const dictionaries = {
     nav: { work: "Trabajos", about: "Sobre mí", experience: "Experiencia", skills: "Habilidades", services: "Servicios", process: "Proceso", contact: "Contacto" },
     header: { github: "GitHub", startProject: "Iniciar un proyecto", openMenu: "Abrir menú", closeMenu: "Cerrar menú" },
     mobileMenu: { close: "Cerrar", label: "Menú de navegación" },
+    theme: { toDark: "Cambiar a modo oscuro", toLight: "Cambiar a modo claro", toggle: "Cambiar el tema de color" },
     language: { label: "Idioma" },
     hero: {
       availability: "Disponible para proyectos seleccionados",
@@ -348,7 +345,6 @@ export const dictionaries = {
     experience: {
       title1: "Experiencia",
       title2: "Real.",
-      description: "No es una lista de puestos de trabajo — es un registro de lo que realmente se ha diseñado, construido y publicado, de principio a fin.",
       "01": { title: "Desarrollador Full-Stack Independiente", description: "Trabajo bajo el nombre ZKR, con base en Casablanca, Marruecos — encargándome de cada proyecto desde la primera línea de código hasta su despliegue en producción." },
       "02": { title: "Frontend, Backend y Base de Datos", description: "Cada proyecto de esta página abarca toda la pila tecnológica: la interfaz, la lógica de negocio y el modelo de datos que lo sustenta." },
       "03": { title: "10 Productos Entregados y Listos para Producción", description: "Sitios de agencia, una plataforma de comercio electrónico, un panel SaaS, un marketplace inmobiliario y más — cada uno un sistema completo, no una maqueta." },
@@ -363,7 +359,6 @@ export const dictionaries = {
     services: {
       title1: "Lo que",
       title2: "resuelvo.",
-      description: "Servicios enmarcados en torno al problema de negocio, no a la pila tecnológica detrás.",
       "01": { title: "Sitios web y landing pages", description: "Sitios de marketing rápidos y a medida que convierten visitantes en leads o clientes." },
       "02": { title: "Plataformas e-commerce", description: "Tiendas completas — catálogo de productos, carrito, pago y gestión de pedidos." },
       "03": { title: "SaaS y aplicaciones web", description: "Dashboards, herramientas internas y productos multiusuario con lógica de negocio real." },
@@ -374,7 +369,6 @@ export const dictionaries = {
     process: {
       title1: "Cómo",
       title2: "trabajo.",
-      description: "El mismo proceso de siete etapas detrás de cada proyecto de esta página, desde la primera llamada hasta la iteración post-lanzamiento.",
       "01": { title: "Descubrimiento", description: "Entender el problema real, los usuarios, y cómo es realmente «terminado» antes de escribir una sola línea de código." },
       "02": { title: "Planificación", description: "Mapear el sistema — modelos de datos, flujos de usuario y casos límite — antes de tocar la interfaz." },
       "03": { title: "Diseño", description: "Decisiones de interfaz basadas en el sistema subyacente, no en un moodboard elegido de forma aislada." },
@@ -387,7 +381,7 @@ export const dictionaries = {
       title1: "Trabajos",
       title2: "seleccionados.",
       description:
-        "Diez productos completos — sitios de agencia y de empresa, una plataforma e-commerce, un dashboard SaaS, un marketplace inmobiliario, una herramienta de gestión de tareas, y varios conceptos de marca/evento/tienda. Cada uno construido de principio a fin, no simples maquetas.",
+        "Cada uno construido de principio a fin, no simples maquetas.",
     },
     projectCard: {
       liveDemo: "Demo en vivo",
@@ -411,7 +405,7 @@ export const dictionaries = {
       copied: "Copiado al portapapeles",
       headlineEm: "útil",
       headlinePost: ".",
-      paragraph: "Construyo productos digitales listos para producción y sistemas completos — no solo sitios web. Si tienes una idea que merece construirse, puedo ayudarte a hacerla realidad.",
+      paragraph: "Si tienes una idea que merece construirse, puedo ayudarte a hacerla realidad.",
       availability: "Disponible para proyectos seleccionados",
       direct: "Directo",
       projectInquiry: "Consulta de proyecto",
@@ -455,8 +449,8 @@ export const dictionaries = {
       title: "ZKR",
       subtitle: "Asistente del Portafolio",
       placeholder: "Escribe tu pregunta…",
+      suggestionsLabel: "Preguntas sugeridas",
       send: "Enviar",
-      typing: "ZKR está escribiendo…",
       disclaimer: "Las respuestas se basan únicamente en información real de este portafolio.",
       suggestions: ["¿A qué te dedicas?", "Muéstrame tus proyectos", "¿Cómo puedo contactarte?", "¿Cuáles son tus habilidades?"],
     },

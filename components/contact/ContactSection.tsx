@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Mail, Github, Twitter, MessageCircle, Instagram } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import ContactForm from "./ContactForm";
@@ -26,24 +25,7 @@ export default function ContactSection() {
   ].filter((s) => s.href);
 
   return (
-    <section id="contact" className="relative overflow-hidden border-t border-border bg-obsidian py-24 md:py-[150px]">
-      <motion.div
-        aria-hidden
-        className="bg-grid pointer-events-none absolute inset-0 opacity-[0.35]"
-        animate={{ backgroundPosition: ["0px 0px", "64px 64px"] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2"
-        style={{ background: "radial-gradient(ellipse, rgba(205,160,90,0.10) 0%, transparent 65%)" }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-[10%] -left-[10%] h-[420px] w-[600px]"
-        style={{ background: "radial-gradient(ellipse, rgba(143,174,106,0.08) 0%, transparent 70%)" }}
-      />
-
+    <section id="contact" className="tone-inverse relative overflow-hidden border-t border-border py-24 md:py-[150px]">
       <div className="wrap relative grid grid-cols-1 gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         {/* LEFT — headline, positioning, direct contact */}
         <Reveal className="lg:sticky lg:top-[140px] lg:self-start">
@@ -57,10 +39,10 @@ export default function ContactSection() {
             {t("contact.paragraph")}
           </p>
 
-          <div className="mt-8 flex items-center gap-[10px] font-mono text-[11px] uppercase tracking-[.1em] text-sage">
+          <div className="mt-8 flex items-center gap-[10px] font-mono text-[11px] uppercase tracking-[.1em] text-accent">
             <span className="relative flex h-[6px] w-[6px]">
-              <span className="absolute inset-0 rounded-full bg-sage" />
-              <span className="absolute inset-0 animate-pulse-dot rounded-full bg-sage" />
+              <span className="absolute inset-0 rounded-full bg-brand" />
+              <span className="absolute inset-0 animate-pulse-dot rounded-full bg-brand" />
             </span>
             {t("contact.availability")}
           </div>

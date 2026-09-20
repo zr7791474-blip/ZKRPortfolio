@@ -1,11 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Send, X } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
-import { answerQuestion, errorMessage, welcomeMessage, type AssistantLocale } from "@/lib/assistant/engine";
+import {
+  answerQuestion,
+  answerTopic,
+  errorMessage,
+  welcomeMessage,
+  type AssistantLocale,
+  type FollowUp,
+} from "@/lib/assistant/engine";
 import { cn } from "@/lib/utils";
 
 type ChatMessage = {
@@ -14,21 +21,64 @@ type ChatMessage = {
   /** Welcome messages are rendered from the CURRENT site language, so they follow a language switch. */
   kind?: "welcome";
   text?: string;
+  /** Language of an assistant reply — follow-up chips answer in it. */
+  locale?: AssistantLocale;
+  followUps?: FollowUp[];
 };
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-
 const FOCUSABLE = 'button:not([disabled]), input:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
+const LINK_TOKEN = /(https?:\/\/[^\s]+|[\w.+-]+@[\w-]+\.[\w.-]+)/g;
+const LABEL_LINE = /^([^:\n]{2,22}?)\s?:\s(.+)$/;
 
 function localeToAssistantLocale(locale: string): AssistantLocale {
-  if (locale === "fr" || locale === "es") return locale;
-  return "en";
+  return locale === "fr" || locale === "es" ? locale : "en";
 }
 
 let idCounter = 0;
 function nextId() {
   idCounter += 1;
   return `msg-${idCounter}-${Date.now()}`;
+}
+
+/** Makes the email address and https URLs that the engine quotes from the profile clickable. */
+function linkify(text: string): ReactNode[] {
+  return text.split(LINK_TOKEN).map((part, i) => {
+    if (i % 2 === 0) return part;
+    const isEmail = !part.startsWith("http");
+    return (
+      <a
+        key={i}
+        href={isEmail ? `mailto:${part}` : part}
+        {...(isEmail ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+        className="break-all underline decoration-brand decoration-1 underline-offset-2 transition-colors hover:text-accent"
+      >
+        {part}
+      </a>
+    );
+  });
+}
+
+/** "Label: value" lines get a stronger label; everything else is plain text. */
+function MessageText({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("\n").map((line, i) => {
+        const match = line.match(LABEL_LINE);
+        return (
+          <span key={i} className="block">
+            {match ? (
+              <>
+                <span className="font-medium text-text">{match[1] ?? ""}:</span> {linkify(match[2] ?? "")}
+              </>
+            ) : (
+              linkify(line)
+            )}
+          </span>
+        );
+      })}
+    </>
+  );
 }
 
 export default function ZkrAssistant() {
@@ -39,14 +89,16 @@ export default function ZkrAssistant() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([{ id: "welcome", role: "assistant", kind: "welcome" }]);
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const answerTimer = useRef<number | null>(null);
 
   const suggestions = tList("assistant.suggestions");
+  const lastMessage = messages[messages.length - 1];
+  // Starter questions before the first exchange; afterwards the last reply's follow-ups.
+  const showStarters = messages.length === 1;
+  const followUps = !showStarters && lastMessage?.role === "assistant" ? (lastMessage.followUps ?? []) : [];
 
   const closePanel = useCallback((restoreFocus = true) => {
     setOpen(false);
@@ -103,48 +155,46 @@ export default function ZkrAssistant() {
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: reduceMotion ? "auto" : "smooth" });
-  }, [messages, isTyping, reduceMotion]);
+  }, [messages, reduceMotion]);
 
-  useEffect(
-    () => () => {
-      if (answerTimer.current) window.clearTimeout(answerTimer.current);
-    },
-    []
-  );
+  /** The engine is local and synchronous, so answers appear instantly — no artificial "typing" delay. */
+  function push(userText: string, reply: () => ReturnType<typeof answerQuestion>) {
+    let answer: ReturnType<typeof answerQuestion> | null = null;
+    try {
+      answer = reply();
+    } catch {
+      /* falls through to the localized error message */
+    }
+    setMessages((prev) => [
+      ...prev,
+      { id: nextId(), role: "user", text: userText },
+      answer
+        ? { id: nextId(), role: "assistant", text: answer.text, locale: answer.locale, followUps: answer.followUps }
+        : { id: nextId(), role: "assistant", text: errorMessage(siteLocale), locale: siteLocale },
+    ]);
+    // Keep typing flow on desktop; on touch screens don't pop the keyboard back up after a chip tap.
+    if (!window.matchMedia("(pointer: coarse)").matches) inputRef.current?.focus();
+  }
 
-  function pushUserMessageAndAnswer(text: string) {
+  function ask(text: string) {
     const trimmed = text.trim();
     if (!trimmed) return;
-
-    const userMessage: ChatMessage = { id: nextId(), role: "user", text: trimmed };
-    setMessages((prev) => [...prev, userMessage]);
     setInput("");
-    setIsTyping(true);
+    // The site language only breaks ties; the question's own language wins.
+    push(trimmed, () => answerQuestion(trimmed, siteLocale));
+  }
 
-    answerTimer.current = window.setTimeout(
-      () => {
-        try {
-          // The site language only breaks ties; the question's own language wins.
-          const { text: answer } = answerQuestion(trimmed, siteLocale);
-          setMessages((prev) => [...prev, { id: nextId(), role: "assistant", text: answer }]);
-        } catch {
-          setMessages((prev) => [...prev, { id: nextId(), role: "assistant", text: errorMessage(siteLocale) }]);
-        } finally {
-          setIsTyping(false);
-        }
-      },
-      reduceMotion ? 120 : 420 + Math.random() * 260
-    );
+  function askFollowUp(f: FollowUp, replyLocale: AssistantLocale) {
+    push(f.label, () => answerTopic(f.topic, replyLocale));
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    pushUserMessageAndAnswer(input);
+    ask(input);
   }
 
-  const showSuggestions = messages.length <= 1 && !isTyping;
-  const focusRing =
-    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  const chipClass =
+    "flex min-h-[44px] items-center rounded-full border border-border-strong px-[14px] py-[6px] text-left text-[13px] text-text-dim transition-colors hover:border-accent hover:text-accent sm:min-h-0 sm:px-[12px] sm:text-[12.5px] [@media(pointer:coarse)]:!min-h-[44px]";
 
   return (
     <>
@@ -157,20 +207,15 @@ export default function ZkrAssistant() {
         aria-haspopup="dialog"
         aria-controls="zkr-assistant-panel"
         onClick={() => (open ? closePanel() : setOpen(true))}
-        whileHover={{ scale: 1.06 }}
+        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.96 }}
         transition={{ duration: 0.3, ease: EASE }}
         className={cn(
-          "fixed z-[1300] flex items-center justify-center rounded-full border border-border-strong bg-surface/90 text-text shadow-[0_18px_38px_-20px_rgba(0,0,0,0.6)] backdrop-blur-md transition-[opacity,border-color,background-color] duration-300 hover:border-accent-line",
-          focusRing,
-          // Mobile-first base sizing/position
+          "fixed z-[1300] flex items-center justify-center rounded-full border border-border-strong bg-surface text-text shadow-[0_10px_24px_-14px_rgb(var(--shadow)/0.45)] transition-[opacity,border-color,background-color] duration-300 hover:border-accent",
           "bottom-24 right-4 h-[48px] w-[48px]",
-          // Desktop (sm and up) sizing/position
           "sm:bottom-[104px] sm:right-7 sm:h-[52px] sm:w-[52px]",
-          // On mobile the panel becomes a bottom sheet that would sit under this button, and the
-          // sheet has its own close button — so hide the trigger on mobile only. `invisible`
-          // (visibility:hidden) also removes it from the tab order and the accessibility tree,
-          // unlike opacity alone. sm: forces it back on desktop, where it doubles as the toggle.
+          // On phones the panel is a bottom sheet with its own close button, so the trigger is hidden while
+          // it is open (`invisible` also removes it from the tab order); on desktop it doubles as the toggle.
           open && "invisible opacity-0 sm:visible sm:opacity-100 [@media(max-height:520px)]:!invisible [@media(max-height:520px)]:!opacity-0"
         )}
       >
@@ -204,7 +249,7 @@ export default function ZkrAssistant() {
       <AnimatePresence>
         {open && (
           <>
-            {/* Mobile scrim — closes the panel on tap, keeps content underneath from scrolling/interacting */}
+            {/* Phone scrim — closes the panel on tap and keeps the page underneath from scrolling/interacting */}
             <motion.div
               aria-hidden
               data-testid="assistant-scrim"
@@ -213,7 +258,7 @@ export default function ZkrAssistant() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-[1290] bg-bg/70 backdrop-blur-sm sm:hidden"
+              className="fixed inset-0 z-[1290] bg-bg/70 sm:hidden"
             />
 
             <motion.div
@@ -227,14 +272,12 @@ export default function ZkrAssistant() {
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
               transition={{ duration: 0.35, ease: EASE }}
               className={cn(
-                "fixed z-[1295] flex flex-col overflow-hidden border border-border bg-surface shadow-[0_32px_64px_-24px_rgba(0,0,0,0.65)]",
-                // Mobile-first base: a full-width bottom sheet with equal 12px side margins.
-                // dvh (not vh) so the sheet tracks the browser's collapsing URL bar.
+                "fixed z-[1295] flex flex-col overflow-hidden border border-border bg-surface shadow-[0_24px_48px_-24px_rgb(var(--shadow)/0.4)]",
+                // Phones: full-width bottom sheet with 12px side margins; dvh tracks the collapsing URL bar.
                 "inset-x-3 bottom-3 h-[min(76dvh,580px)] w-auto rounded-lg",
-                // Desktop (sm and up): a compact card anchored above the trigger button
+                // sm and up: compact card anchored above the trigger.
                 "sm:inset-x-auto sm:bottom-[168px] sm:left-auto sm:right-7 sm:h-[min(560px,calc(100dvh-200px))] sm:w-[380px] sm:rounded-md",
-                // Short viewports (landscape phones): the anchored card would run off the top, so use
-                // a full-height side sheet instead; the trigger is hidden while it is open.
+                // Short viewports (landscape phones): the anchored card would run off the top → full-height side sheet.
                 "[@media(max-height:520px)]:!bottom-3 [@media(max-height:520px)]:!h-[calc(100dvh-1.5rem)]"
               )}
             >
@@ -253,10 +296,7 @@ export default function ZkrAssistant() {
                   type="button"
                   aria-label={t("assistant.closeLabel")}
                   onClick={() => closePanel()}
-                  className={cn(
-                    "flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-text-dim transition-colors hover:text-text sm:h-9 sm:w-9 [@media(pointer:coarse)]:!h-11 [@media(pointer:coarse)]:!w-11",
-                    focusRing
-                  )}
+                  className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-text-dim transition-colors hover:text-text sm:h-9 sm:w-9 [@media(pointer:coarse)]:!h-11 [@media(pointer:coarse)]:!w-11"
                 >
                   <X className="h-[18px] w-[18px]" aria-hidden />
                 </button>
@@ -269,7 +309,7 @@ export default function ZkrAssistant() {
                 aria-live="polite"
                 aria-relevant="additions"
                 aria-label={`${t("assistant.title")} — ${t("assistant.subtitle")}`}
-                className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5"
+                className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5"
               >
                 {messages.map((message) => (
                   <div
@@ -278,57 +318,51 @@ export default function ZkrAssistant() {
                     data-role={message.role}
                     className={cn("flex", message.role === "user" ? "justify-end" : "justify-start")}
                   >
-                    <p
+                    <div
                       className={cn(
-                        "max-w-[88%] whitespace-pre-line break-words rounded-md px-[14px] py-[10px] text-[14px] leading-relaxed sm:max-w-[85%] sm:text-[13.5px]",
+                        "max-w-[90%] space-y-1 break-words rounded-md px-[14px] py-[10px] text-[14px] leading-relaxed sm:max-w-[88%] sm:text-[13.5px]",
                         message.role === "user"
                           ? "bg-accent text-bg"
-                          : "border border-border bg-bg/60 text-text-dim"
+                          : "border border-border bg-bg text-text-dim"
                       )}
                     >
-                      {message.kind === "welcome" ? welcomeMessage(siteLocale) : message.text}
-                    </p>
+                      {message.kind === "welcome" ? (
+                        welcomeMessage(siteLocale)
+                      ) : message.role === "assistant" ? (
+                        <MessageText text={message.text ?? ""} />
+                      ) : (
+                        message.text
+                      )}
+                    </div>
                   </div>
                 ))}
 
-                {isTyping && (
-                  <div className="flex justify-start" role="status">
-                    <span className="sr-only">{t("assistant.typing")}</span>
-                    <span aria-hidden className="flex items-center gap-1 rounded-md border border-border bg-bg/60 px-[14px] py-[12px]">
-                      {[0, 1, 2].map((i) => (
-                        <motion.span
-                          key={i}
-                          className="h-[5px] w-[5px] rounded-full bg-text-faint"
-                          animate={reduceMotion ? undefined : { opacity: [0.3, 1, 0.3] }}
-                          transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.15, ease: "easeInOut" }}
-                        />
-                      ))}
-                    </span>
-                  </div>
-                )}
-
-                {showSuggestions && (
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {suggestions.map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => pushUserMessageAndAnswer(s)}
-                        className={cn(
-                          "tech-badge flex min-h-[44px] items-center !px-[12px] !py-[6px] text-left !text-[12.5px] transition-colors hover:border-accent-line hover:text-accent-bright sm:min-h-0 sm:!px-[10px] sm:!text-[11.5px] [@media(pointer:coarse)]:!min-h-[44px]",
-                          focusRing
-                        )}
-                      >
-                        {s}
-                      </button>
-                    ))}
+                {(showStarters ? suggestions.length > 0 : followUps.length > 0) && (
+                  <div role="group" aria-label={t("assistant.suggestionsLabel")} className="flex flex-wrap gap-2 pt-1">
+                    {showStarters
+                      ? suggestions.map((s) => (
+                          <button key={s} type="button" onClick={() => ask(s)} className={chipClass}>
+                            {s}
+                          </button>
+                        ))
+                      : followUps.map((f) => (
+                          <button
+                            key={f.topic}
+                            type="button"
+                            data-followup={f.topic}
+                            onClick={() => askFollowUp(f, lastMessage?.locale ?? siteLocale)}
+                            className={chipClass}
+                          >
+                            {f.label}
+                          </button>
+                        ))}
                   </div>
                 )}
               </div>
 
               {/* Composer */}
               <form onSubmit={handleSubmit} className="border-t border-border p-3">
-                <div className="flex items-center gap-2 rounded-md border border-border-strong bg-bg/60 pl-4 pr-1.5 focus-within:border-accent-line focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent/70">
+                <div className="flex items-center gap-2 rounded-md border border-border-strong bg-bg pl-4 pr-1.5 focus-within:border-accent focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent/70">
                   <input
                     ref={inputRef}
                     type="text"
@@ -346,10 +380,7 @@ export default function ZkrAssistant() {
                     type="submit"
                     aria-label={t("assistant.send")}
                     disabled={!input.trim()}
-                    className={cn(
-                      "flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent text-bg transition-opacity disabled:opacity-40 sm:h-9 sm:w-9 [@media(pointer:coarse)]:!h-11 [@media(pointer:coarse)]:!w-11",
-                      focusRing
-                    )}
+                    className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent text-bg transition-opacity disabled:opacity-40 sm:h-9 sm:w-9 [@media(pointer:coarse)]:!h-11 [@media(pointer:coarse)]:!w-11"
                   >
                     <Send className="h-[15px] w-[15px]" aria-hidden />
                   </button>

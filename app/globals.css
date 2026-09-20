@@ -2,6 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * ZKR green design system — one palette, two intentionally designed themes.
+ *
+ * Palette:  #EEF4EB  #E2F2DE  #CBE5C5  #B2D8A9  #98CA8E  #7FBD75  #629959  #426C3C  #203A21  #101E13
+ *
+ * Light (default): airy pale-green surfaces, dark-green text.
+ * Dark: the deep end of the SAME palette (not an inversion): #101E13 page, #203A21 surfaces.
+ * The theme is set on <html data-theme="light|dark"> by an inline script in app/layout.tsx
+ * (saved choice → else the OS preference → else light) before first paint.
+ *
+ * Values are RGB triplets so Tailwind alpha modifiers work (bg-bg/80 …).
+ */
+:root {
+  color-scheme: light;
+  --bg: 238 244 235; /* #EEF4EB page */
+  --surface: 226 242 222; /* #E2F2DE soft surface */
+  --surface-2: 203 229 197; /* #CBE5C5 */
+  --surface-3: 178 216 169; /* #B2D8A9 */
+  --border: 178 216 169; /* #B2D8A9 */
+  --border-strong: 152 202 142; /* #98CA8E */
+  --text: 32 58 33; /* #203A21 */
+  --text-dim: 53 87 58; /* #35573A — ≥6:1 on every light surface */
+  --text-faint: 63 104 57; /* #3F6839 — ≥4.7:1 on every light surface */
+  --accent: 66 108 60; /* #426C3C readable accent */
+  --accent-bright: 32 58 33; /* #203A21 hover */
+  --brand: 98 153 89; /* #629959 decorative */
+  --danger: 154 52 42; /* error text, ≥6:1 on light */
+  --shadow: 32 58 33;
+  /* raised/deep block used by the closing Contact + Footer (.tone-inverse) */
+  --inv-bg: 16 30 19; /* #101E13 */
+  --inv-surface: 32 58 33; /* #203A21 */
+  --inv-surface-2: 44 75 45; /* #2C4B2D */
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: 16 30 19; /* #101E13 page */
+  --surface: 32 58 33; /* #203A21 */
+  --surface-2: 44 75 45; /* #2C4B2D (derived between #203A21 and #426C3C) */
+  --surface-3: 66 108 60; /* #426C3C */
+  --border: 66 108 60; /* #426C3C */
+  --border-strong: 98 153 89; /* #629959 */
+  --text: 238 244 235; /* #EEF4EB */
+  --text-dim: 203 229 197; /* #CBE5C5 */
+  --text-faint: 169 194 162; /* #A9C2A2 — ≥5:1 on bg / surface */
+  --accent: 127 189 117; /* #7FBD75 */
+  --accent-bright: 152 202 142; /* #98CA8E */
+  --brand: 98 153 89; /* #629959 */
+  --danger: 240 160 140;
+  --shadow: 0 0 0;
+  --inv-bg: 32 58 33; /* raised block on the dark page */
+  --inv-surface: 44 75 45;
+  --inv-surface-2: 56 92 54;
+}
+
+/*
+ * Dark scope used by the closing Contact + Footer block. In the light theme it gives the page a
+ * deep-green ending (#101E13); in the dark theme it becomes a slightly raised band (#203A21).
+ */
+.tone-inverse {
+  --bg: var(--inv-bg);
+  --surface: var(--inv-surface);
+  --surface-2: var(--inv-surface-2);
+  --surface-3: 66 108 60;
+  --border: 66 108 60;
+  --border-strong: 98 153 89;
+  --text: 238 244 235;
+  --text-dim: 203 229 197;
+  --text-faint: 169 194 162;
+  --accent: 127 189 117;
+  --accent-bright: 152 202 142;
+  --brand: 98 153 89;
+  --danger: 240 160 140;
+  --shadow: 0 0 0;
+  color-scheme: dark;
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
+}
+
 @layer base {
   * {
     @apply box-border;
@@ -15,11 +94,17 @@
     line-height: 1.6;
   }
   ::selection {
-    background: var(--accent-selection, rgba(205, 160, 90, 0.18));
-    color: #e0b876;
+    background: rgb(var(--brand) / 0.32);
+    color: rgb(var(--text));
   }
   a {
     color: inherit;
+  }
+
+  /* One consistent, always-visible keyboard focus ring (zero specificity so components can override). */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -33,14 +118,6 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
-    }
-  }
-
-  @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    body,
-    a,
-    button {
-      cursor: none;
     }
   }
 }
@@ -61,27 +138,24 @@
   }
 
   .btn {
-    @apply inline-flex items-center gap-[10px] rounded-full border border-border-strong px-7 py-[15px] text-sm font-medium outline-offset-[3px] transition-all duration-500 ease-signature;
-  }
-  .btn:focus-visible {
-    outline: 2px solid #cda05a;
+    @apply inline-flex items-center gap-[10px] rounded-full border border-border-strong px-7 py-[15px] text-sm font-medium outline-offset-[3px] transition-ui duration-500 ease-signature;
   }
   .btn-primary {
     @apply border-text bg-text text-bg hover:-translate-y-0.5 hover:border-accent hover:bg-accent;
   }
   .btn-ghost {
-    @apply hover:-translate-y-0.5 hover:border-accent-line hover:text-accent-bright;
+    @apply hover:-translate-y-0.5 hover:border-accent hover:text-accent;
   }
 
   .tech-badge {
-    @apply rounded-full border border-border-strong px-3 py-[6px] font-mono text-[11px] text-text-dim transition-all duration-300 hover:border-accent-line hover:text-accent-bright;
+    @apply rounded-full border border-border-strong px-3 py-[6px] font-mono text-[11px] text-text-dim transition-ui duration-300 hover:border-accent hover:text-accent;
   }
 }
 
-/* Background grid used behind the hero — kept out of Tailwind config since it's a one-off. */
+/* Faint blueprint grid behind the hero / contact. */
 .bg-grid {
-  background-image: linear-gradient(rgba(242, 241, 236, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(242, 241, 236, 0.09) 1px, transparent 1px);
+  background-image: linear-gradient(rgb(var(--text) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--text) / 0.06) 1px, transparent 1px);
   background-size: 64px 64px;
   background-position: center top;
 }
@@ -89,24 +163,9 @@
 .focus-ring {
   outline-offset: 3px;
 }
-.focus-ring:focus-visible {
-  outline: 2px solid #cda05a;
-}
 
-/*
- * Fix: native <select> dropdown text was unreadable (light text on the
- * browser's default light/white popup background) until hovered, because
- * no color-scheme was declared. `color-scheme: dark` tells the browser to
- * render the select's native popup chrome (background, scrollbar, default
- * option highlight) in dark-appropriate colors, and the explicit
- * background-color/color on <option> is a belt-and-suspenders fallback for
- * engines that don't fully theme the option list from color-scheme alone.
- * Scoped to `select` only — the rest of the page is unaffected.
- */
-select {
-  color-scheme: dark;
-}
+/* Native <select> popup follows the theme (color-scheme comes from :root / [data-theme]). */
 select option {
-  background-color: #1a1b21; /* surface */
-  color: #f2f1ec; /* text */
+  background-color: rgb(var(--surface));
+  color: rgb(var(--text));
 }

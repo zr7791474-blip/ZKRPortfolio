@@ -27,8 +27,8 @@ export default function CopyEmailButton({ email }: { email: string }) {
       aria-live="polite"
       className="inline-flex min-h-[44px] items-center gap-[6px] border-b border-dashed border-border-strong pb-[2px] font-mono text-[11px] text-text-faint transition-colors hover:text-accent"
     >
-      {copied ? <Check className="h-3 w-3 text-sage" /> : <Copy className="h-3 w-3" />}
-      <span className={copied ? "text-sage" : ""}>{copied ? t("contact.copied") : t("contact.copyEmail")}</span>
+      {copied ? <Check className="h-3 w-3 text-accent" /> : <Copy className="h-3 w-3" />}
+      <span className={copied ? "text-accent" : ""}>{copied ? t("contact.copied") : t("contact.copyEmail")}</span>
     </button>
   );
 }

@@ -69,7 +69,7 @@ export default function ScreenshotGallery({ project }: { project: Project }) {
                 sizes="(min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-signature group-hover:scale-[1.04]"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-bg/0 opacity-0 transition-all duration-400 group-hover:bg-bg/30 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-bg/0 opacity-0 transition-ui duration-400 group-hover:bg-bg/30 group-hover:opacity-100">
                 <ZoomIn className="h-5 w-5 text-text" />
               </div>
             </div>
@@ -92,7 +92,7 @@ export default function ScreenshotGallery({ project }: { project: Project }) {
             role="dialog"
             aria-modal="true"
             aria-label={active.label}
-            className="fixed inset-0 z-[2000] flex items-center justify-center bg-bg/95 p-6 backdrop-blur-sm"
+            className="fixed inset-0 z-[2000] flex items-center justify-center bg-bg/95 p-6"
             onClick={() => setActiveIndex(null)}
           >
             <button

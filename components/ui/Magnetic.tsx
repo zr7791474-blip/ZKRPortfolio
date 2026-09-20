@@ -12,7 +12,7 @@ type MagneticProps = {
   target?: string;
   rel?: string;
   onClick?: (e: MouseEvent<HTMLElement>) => void;
-  /** Read by CustomCursor to show a contextual label ("VIEW", "OPEN", ...) on hover. */
+  /** Optional cursor-label hint, exposed as a data attribute ("VIEW", "OPEN", ...). */
   "data-cursor"?: string;
 };
 
