@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
 
@@ -20,6 +21,12 @@ const NODE_POINTS = [
  */
 export default function SchematicPanel({ project }: { project: Project }) {
   const reduceMotion = useReducedMotion();
+  // The decorative pulsing nodes are drawn only AFTER mount and only when motion is allowed. Deciding
+  // this during render made server HTML (motion assumed) differ from the first client render for
+  // reduced-motion visitors — a hydration mismatch (React #418/#423) on every case-study page.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const animateNodes = mounted && !reduceMotion;
 
   return (
     <div className="relative overflow-hidden rounded-md border border-border bg-surface p-6 sm:p-9">
@@ -39,7 +46,7 @@ export default function SchematicPanel({ project }: { project: Project }) {
           viewport={{ once: true }}
           transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
         />
-        {!reduceMotion &&
+        {animateNodes &&
           NODE_POINTS.map((p, i) => (
             <motion.circle
               key={i}
@@ -52,7 +59,7 @@ export default function SchematicPanel({ project }: { project: Project }) {
               transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.35, ease: "easeInOut" }}
             />
           ))}
-        {!reduceMotion && (
+        {animateNodes && (
           <motion.circle
             r={2.2}
             className="fill-brand"
@@ -87,14 +94,16 @@ export default function SchematicPanel({ project }: { project: Project }) {
         ))}
       </ul>
 
-      <div className="mt-[22px] flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-border pt-[18px] font-mono text-[10.5px] uppercase tracking-[.1em] text-text-faint">
-        {project.architecture.layers.map((layer, i) => (
-          <span key={layer} className="flex items-center gap-2">
-            {i > 0 && <span className="text-accent">→</span>}
-            {layer}
-          </span>
-        ))}
-      </div>
+      {project.architecture.layers.length > 0 && (
+        <div className="mt-[22px] flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-border pt-[18px] font-mono text-[10.5px] uppercase tracking-[.1em] text-text-faint">
+          {project.architecture.layers.map((layer, i) => (
+            <span key={layer} className="flex items-center gap-2">
+              {i > 0 && <span className="text-accent">→</span>}
+              {layer}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

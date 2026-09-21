@@ -46,7 +46,7 @@ export default function Header({ scrolled, menuOpen, onToggleMenu, activeHref }:
     >
       <nav className="wrap flex items-center justify-between gap-3">
         <Link href={anchor.isHome ? "#hero" : "/"} className="flex min-h-[44px] min-w-0 items-center">
-          <Logo size={30} />
+          <Logo priority size={30} />
         </Link>
 
         {/* Full desktop nav only from 1280px: 7 links + language + theme + 2 buttons need ~1,200px in FR/ES.

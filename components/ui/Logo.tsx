@@ -10,6 +10,8 @@ type LogoProps = {
   wordmarkClassName?: string;
   size?: number;
   showWordmark?: boolean;
+  /** Above-the-fold marks (loading screen, header) load eagerly with a preload instead of lazily. */
+  priority?: boolean;
 };
 
 /**
@@ -24,6 +26,7 @@ export default function Logo({
   wordmarkClassName,
   size = 34,
   showWordmark = true,
+  priority = false,
 }: LogoProps) {
   const [imgFailed, setImgFailed] = useState(false);
 
@@ -39,6 +42,7 @@ export default function Logo({
             alt="ZKR"
             fill
             sizes={`${size}px`}
+            priority={priority}
             className="object-cover"
             onError={() => setImgFailed(true)}
           />

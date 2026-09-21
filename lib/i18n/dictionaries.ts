@@ -1,3 +1,4 @@
+import { projects } from "@/data/projects";
 export type Locale = "en" | "fr" | "es";
 
 export const locales: Locale[] = ["en", "fr", "es"];
@@ -10,7 +11,7 @@ export const localeLabels: Record<Locale, string> = {
 
 /**
  * Site-shell copy only (nav, hero, about, skills, services, process, contact,
- * footer, loader). The 10 project entries in data/projects.ts stay in their
+ * footer, loader). The project entries in data/projects.ts stay in their
  * original authored language by design — see README.
  */
 export const dictionaries = {
@@ -19,6 +20,7 @@ export const dictionaries = {
     header: { github: "GitHub", startProject: "Start a Project", openMenu: "Open menu", closeMenu: "Close menu" },
     mobileMenu: { close: "Close", label: "Navigation menu" },
     theme: { toDark: "Switch to dark mode", toLight: "Switch to light mode", toggle: "Toggle color theme" },
+    notFound: { title: "Page not found", body: "The page you're looking for doesn't exist.", back: "Back to home" },
     language: { label: "Language" },
     hero: {
       availability: "Available for selected projects",
@@ -36,7 +38,7 @@ export const dictionaries = {
       available: "Available For Selected Projects",
     },
     statsBar: {
-      projects: { value: "10", label: "Featured Projects" },
+      projects: { value: String(projects.length), label: "Featured Projects" },
       stack: { value: "Full-Stack", label: "Frontend + Backend + Database" },
       production: { value: "Production-Ready", label: "Real auth, real data, real payments" },
       endToEnd: { value: "End-to-End", label: "From schema to shipped UI" },
@@ -53,7 +55,7 @@ export const dictionaries = {
       title2: "Experience.",
       "01": { title: "Independent Full-Stack Developer", description: "Working under the name ZKR, based in Casablanca, Morocco — owning projects from the first line of code to production deployment." },
       "02": { title: "Frontend, Backend & Database", description: "Every project on this site spans the full stack: the interface, the business logic behind it, and the data model underneath." },
-      "03": { title: "10 Shipped, Production-Ready Products", description: "Agency sites, an e-commerce platform, a SaaS dashboard, a real-estate marketplace, and more — each a complete system, not a mockup." },
+      "03": { title: `${projects.length} Shipped Products`, description: "Agency sites, an e-commerce platform, a SaaS dashboard, a real-estate marketplace, and more — each a complete system, not a mockup." },
       "04": { title: "Open to New Projects", description: "Currently available for selected full-stack engagements — see the contact section below to start a conversation." },
     },
     skills: {
@@ -84,6 +86,7 @@ export const dictionaries = {
       "07": { title: "Iteration", description: "Ship, observe, and keep refining — a product is never really \"finished,\" just at its current version." },
     },
     projectsSection: {
+      more: "More projects",
       title1: "Selected",
       title2: "Work.",
       description:
@@ -166,6 +169,7 @@ export const dictionaries = {
     header: { github: "GitHub", startProject: "Démarrer un projet", openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu" },
     mobileMenu: { close: "Fermer", label: "Menu de navigation" },
     theme: { toDark: "Passer en mode sombre", toLight: "Passer en mode clair", toggle: "Changer le thème de couleur" },
+    notFound: { title: "Page introuvable", body: "La page que vous cherchez n'existe pas.", back: "Retour à l'accueil" },
     language: { label: "Langue" },
     hero: {
       availability: "Disponible pour des projets sélectionnés",
@@ -183,7 +187,7 @@ export const dictionaries = {
       available: "Disponible Pour Projets Sélectionnés",
     },
     statsBar: {
-      projects: { value: "10", label: "Projets phares" },
+      projects: { value: String(projects.length), label: "Projets phares" },
       stack: { value: "Full-Stack", label: "Frontend + Backend + Base de données" },
       production: { value: "Prêt pour la production", label: "Vraie auth, vraies données, vrais paiements" },
       endToEnd: { value: "De bout en bout", label: "Du schéma à l'interface livrée" },
@@ -200,7 +204,7 @@ export const dictionaries = {
       title2: "Concrète.",
       "01": { title: "Développeur Full-Stack Indépendant", description: "Je travaille sous le nom ZKR, basé à Casablanca, au Maroc — en prenant en charge chaque projet de la première ligne de code jusqu'à la mise en production." },
       "02": { title: "Frontend, Backend & Base de Données", description: "Chaque projet présenté ici couvre l'ensemble de la pile technique : l'interface, la logique métier et le modèle de données sous-jacent." },
-      "03": { title: "10 Produits Livrés et Prêts pour la Production", description: "Sites d'agence, plateforme e-commerce, tableau de bord SaaS, marketplace immobilière, et plus — chacun un système complet, pas une simple maquette." },
+      "03": { title: `${projects.length} Produits Livrés`, description: "Sites d'agence, plateforme e-commerce, tableau de bord SaaS, marketplace immobilière, et plus — chacun un système complet, pas une simple maquette." },
       "04": { title: "Disponible Pour de Nouveaux Projets", description: "Actuellement disponible pour des missions full-stack sélectionnées — rendez-vous dans la section contact pour démarrer une conversation." },
     },
     skills: {
@@ -231,6 +235,7 @@ export const dictionaries = {
       "07": { title: "Itération", description: "Livrer, observer et continuer à affiner — un produit n'est jamais vraiment « fini », juste à sa version actuelle." },
     },
     projectsSection: {
+      more: "Autres projets",
       title1: "Travaux",
       title2: "sélectionnés.",
       description:
@@ -313,6 +318,7 @@ export const dictionaries = {
     header: { github: "GitHub", startProject: "Iniciar un proyecto", openMenu: "Abrir menú", closeMenu: "Cerrar menú" },
     mobileMenu: { close: "Cerrar", label: "Menú de navegación" },
     theme: { toDark: "Cambiar a modo oscuro", toLight: "Cambiar a modo claro", toggle: "Cambiar el tema de color" },
+    notFound: { title: "Página no encontrada", body: "La página que buscas no existe.", back: "Volver al inicio" },
     language: { label: "Idioma" },
     hero: {
       availability: "Disponible para proyectos seleccionados",
@@ -330,7 +336,7 @@ export const dictionaries = {
       available: "Disponible Para Proyectos Seleccionados",
     },
     statsBar: {
-      projects: { value: "10", label: "Proyectos destacados" },
+      projects: { value: String(projects.length), label: "Proyectos destacados" },
       stack: { value: "Full-Stack", label: "Frontend + Backend + Base de datos" },
       production: { value: "Listo para producción", label: "Auth real, datos reales, pagos reales" },
       endToEnd: { value: "De principio a fin", label: "Del esquema a la interfaz entregada" },
@@ -347,7 +353,7 @@ export const dictionaries = {
       title2: "Real.",
       "01": { title: "Desarrollador Full-Stack Independiente", description: "Trabajo bajo el nombre ZKR, con base en Casablanca, Marruecos — encargándome de cada proyecto desde la primera línea de código hasta su despliegue en producción." },
       "02": { title: "Frontend, Backend y Base de Datos", description: "Cada proyecto de esta página abarca toda la pila tecnológica: la interfaz, la lógica de negocio y el modelo de datos que lo sustenta." },
-      "03": { title: "10 Productos Entregados y Listos para Producción", description: "Sitios de agencia, una plataforma de comercio electrónico, un panel SaaS, un marketplace inmobiliario y más — cada uno un sistema completo, no una maqueta." },
+      "03": { title: `${projects.length} Productos Entregados`, description: "Sitios de agencia, una plataforma de comercio electrónico, un panel SaaS, un marketplace inmobiliario y más — cada uno un sistema completo, no una maqueta." },
       "04": { title: "Disponible Para Nuevos Proyectos", description: "Actualmente disponible para proyectos full-stack seleccionados — visita la sección de contacto para iniciar una conversación." },
     },
     skills: {
@@ -378,6 +384,7 @@ export const dictionaries = {
       "07": { title: "Iteración", description: "Publicar, observar y seguir refinando — un producto nunca está realmente «terminado», solo en su versión actual." },
     },
     projectsSection: {
+      more: "Más proyectos",
       title1: "Trabajos",
       title2: "seleccionados.",
       description:

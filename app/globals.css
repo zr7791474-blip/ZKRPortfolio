@@ -3,78 +3,91 @@
 @tailwind utilities;
 
 /*
- * ZKR green design system — one palette, two intentionally designed themes.
+ * ZKR design system — the "Meadow Green" palette, one identity in two themes.
  *
- * Palette:  #EEF4EB  #E2F2DE  #CBE5C5  #B2D8A9  #98CA8E  #7FBD75  #629959  #426C3C  #203A21  #101E13
+ *   yellow-green ──────────── teal ──────────── deep blue
+ *   #D9ED92 #B5E48C #99D98C #76C893 #52B69A #34A0A4 #168AAD #1A759F #1E6091 #184E77
  *
- * Light (default): airy pale-green surfaces, dark-green text.
- * Dark: the deep end of the SAME palette (not an inversion): #101E13 page, #203A21 surfaces.
+ * The palette has no near-white or near-black, so page/surface tones are derived from it:
+ * light paper = #D9ED92 lightened, dark page = #184E77 darkened. Text colours were chosen for
+ * WCAG AA on every surface they sit on: on light only #184E77 / #1E6091 / #1A759F are dark enough,
+ * so the greens (#B5E48C, #99D98C, #52B69A) carry borders, fills and decoration, never body text.
+ *
+ * Light (default): #F4FAE0 page, #184E77 ink, #1A759F accent.
+ * Dark: #0C273C page (#184E77 darkened), light-lime text, #76C893 accent.
  * The theme is set on <html data-theme="light|dark"> by an inline script in app/layout.tsx
  * (saved choice → else the OS preference → else light) before first paint.
  *
  * Values are RGB triplets so Tailwind alpha modifiers work (bg-bg/80 …).
  */
+/*
+ * Typography roles. Today these resolve to Fraunces / Inter / JetBrains Mono (loaded by the
+ * <link> in app/layout.tsx). To adopt a new typeface, add its @font-face (files in public/fonts/)
+ * and change the variable below — headings, nav, buttons, forms, footer and the Agent all follow.
+ *   --font-display : headings, project titles, editorial quotes
+ *   --font-body    : body copy, navigation, buttons, forms, Agent messages
+ *   --font-mono    : small labels, tags, metadata
+ */
+:root {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
 :root {
   color-scheme: light;
-  --bg: 238 244 235; /* #EEF4EB page */
-  --surface: 226 242 222; /* #E2F2DE soft surface */
-  --surface-2: 203 229 197; /* #CBE5C5 */
-  --surface-3: 178 216 169; /* #B2D8A9 */
-  --border: 178 216 169; /* #B2D8A9 */
-  --border-strong: 152 202 142; /* #98CA8E */
-  --text: 32 58 33; /* #203A21 */
-  --text-dim: 53 87 58; /* #35573A — ≥6:1 on every light surface */
-  --text-faint: 63 104 57; /* #3F6839 — ≥4.7:1 on every light surface */
-  --accent: 66 108 60; /* #426C3C readable accent */
-  --accent-bright: 32 58 33; /* #203A21 hover */
-  --brand: 98 153 89; /* #629959 decorative */
-  --danger: 154 52 42; /* error text, ≥6:1 on light */
-  --shadow: 32 58 33;
-  /* raised/deep block used by the closing Contact + Footer (.tone-inverse) */
-  --inv-bg: 16 30 19; /* #101E13 */
-  --inv-surface: 32 58 33; /* #203A21 */
-  --inv-surface-2: 44 75 45; /* #2C4B2D */
+  --bg: 244 250 224; /* #F4FAE0 page (#D9ED92 @28%) */
+  --surface: 239 247 209; /* #EFF7D1 */
+  --surface-2: 228 242 177; /* #E4F2B0 */
+  --surface-3: 181 228 140; /* #B5E48C */
+  --border: 181 228 140; /* #B5E48C */
+  --border-strong: 153 217 140; /* #99D98C */
+  --text: 24 78 119; /* #184E77 ink — 8.2:1 on the page */
+  --text-dim: 50 99 132; /* #326384 — ≥5.4:1 on every light surface */
+  --text-faint: 28 106 152; /* #1C6A98 — ≥4.9:1 on every light surface */
+  --accent: 26 117 159; /* #1A759F readable accent (links, labels) */
+  --accent-bright: 24 78 119; /* #184E77 hover */
+  --brand: 82 182 154; /* #52B69A decorative fills, dots, bars */
+  --danger: 140 47 39; /* error text (semantic, ≥6.7:1) */
+  --shadow: 24 78 119;
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: 16 30 19; /* #101E13 page */
-  --surface: 32 58 33; /* #203A21 */
-  --surface-2: 44 75 45; /* #2C4B2D (derived between #203A21 and #426C3C) */
-  --surface-3: 66 108 60; /* #426C3C */
-  --border: 66 108 60; /* #426C3C */
-  --border-strong: 98 153 89; /* #629959 */
-  --text: 238 244 235; /* #EEF4EB */
-  --text-dim: 203 229 197; /* #CBE5C5 */
-  --text-faint: 169 194 162; /* #A9C2A2 — ≥5:1 on bg / surface */
-  --accent: 127 189 117; /* #7FBD75 */
-  --accent-bright: 152 202 142; /* #98CA8E */
-  --brand: 98 153 89; /* #629959 */
-  --danger: 240 160 140;
+  --bg: 12 39 60; /* #0C273C page */
+  --surface: 19 62 95; /* #133E5F */
+  --surface-2: 24 78 119; /* #184E77 */
+  --surface-3: 30 96 145; /* #1E6091 */
+  --border: 30 96 145; /* #1E6091 */
+  --border-strong: 26 117 159; /* #1A759F */
+  --text: 244 250 224; /* #F4FAE0 */
+  --text-dim: 216 225 204; /* #D8E1CC */
+  --text-faint: 163 176 167; /* #A3B0A7 — ≥5:1 on page / surface */
+  --accent: 118 200 147; /* #76C893 */
+  --accent-bright: 181 228 140; /* #B5E48C hover */
+  --brand: 82 182 154; /* #52B69A */
+  --danger: 255 180 162;
   --shadow: 0 0 0;
-  --inv-bg: 32 58 33; /* raised block on the dark page */
-  --inv-surface: 44 75 45;
-  --inv-surface-2: 56 92 54;
 }
 
 /*
- * Dark scope used by the closing Contact + Footer block. In the light theme it gives the page a
- * deep-green ending (#101E13); in the dark theme it becomes a slightly raised band (#203A21).
+ * Closing Contact + Footer band: the palette's own deep blue (#184E77), identical in both
+ * themes — the page ends on the strongest colour of the system.
  */
 .tone-inverse {
-  --bg: var(--inv-bg);
-  --surface: var(--inv-surface);
-  --surface-2: var(--inv-surface-2);
-  --surface-3: 66 108 60;
-  --border: 66 108 60;
-  --border-strong: 98 153 89;
-  --text: 238 244 235;
-  --text-dim: 203 229 197;
-  --text-faint: 169 194 162;
-  --accent: 127 189 117;
-  --accent-bright: 152 202 142;
-  --brand: 98 153 89;
-  --danger: 240 160 140;
+  --bg: 24 78 119; /* #184E77 */
+  --surface: 18 58 89; /* #123A59 */
+  --surface-2: 12 39 60; /* #0C273C */
+  --surface-3: 30 96 145;
+  --border: 30 96 145; /* #1E6091 */
+  --border-strong: 26 117 159; /* #1A759F */
+  --text: 244 250 224;
+  --text-dim: 216 225 204;
+  --text-faint: 176 200 190; /* ≥5:1 on #184E77 */
+  --accent: 181 228 140; /* #B5E48C */
+  --accent-bright: 217 237 146; /* #D9ED92 */
+  --brand: 82 182 154;
+  --danger: 255 180 162;
   --shadow: 0 0 0;
   color-scheme: dark;
   background-color: rgb(var(--bg));

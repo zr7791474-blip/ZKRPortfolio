@@ -38,7 +38,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
         <Reveal>
           <div className="mb-3 font-mono text-xs text-accent">
-            {project.index} / 10 — {project.title.toUpperCase()}
+            {project.title.toUpperCase()}
           </div>
           <h1 className="max-w-3xl font-serif text-[clamp(36px,6vw,72px)] tracking-[-0.02em]">
             {project.tagline}
@@ -48,13 +48,15 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </p>
           <p className="mt-6 max-w-xl text-[16px] text-text-dim">{project.description}</p>
 
-          <div className="mt-8 flex flex-wrap gap-2">
-            {project.technologies.map((t) => (
-              <span key={t} className="tech-badge">
-                {t}
-              </span>
-            ))}
-          </div>
+          {(project.technologies.length > 0 || (project.highlights?.length ?? 0) > 0) && (
+            <div className="mt-8 flex flex-wrap gap-2">
+              {(project.technologies.length > 0 ? project.technologies : (project.highlights ?? [])).map((t) => (
+                <span key={t} className="tech-badge">
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="mt-9 flex flex-wrap gap-[14px]">
             {project.liveUrl && (

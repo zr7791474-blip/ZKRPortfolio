@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import Logo from "@/components/ui/Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { projects } from "@/data/projects";
 
 export default function Loader() {
   const [progress, setProgress] = useState(0);
@@ -12,7 +13,7 @@ export default function Loader() {
   const { t, tList } = useTranslation();
 
   const loaderMessages = tList("loader.messages");
-  const loaderMeta = [`10 ${t("loader.projects")}`, t("loader.discipline"), t("loader.location")];
+  const loaderMeta = [`${projects.length} ${t("loader.projects")}`, t("loader.discipline"), t("loader.location")];
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -60,7 +61,7 @@ export default function Loader() {
             animate={{ clipPath: "inset(0 0% 0 0)" }}
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Logo size={80} wordmarkClassName="text-[15vw] md:text-[80px] gap-3" imageClassName="!rounded-2xl" />
+            <Logo priority size={80} wordmarkClassName="text-[15vw] md:text-[80px] gap-3" imageClassName="!rounded-2xl" />
           </motion.div>
 
           <div className="relative h-px w-[240px] overflow-hidden bg-border-strong">

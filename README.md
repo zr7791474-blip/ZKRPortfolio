@@ -67,69 +67,96 @@ lib/
 public/projects/<slug>/   screenshot assets (see below)
 ```
 
-## Updating project content
+## Projects
 
-Everything shown for a project — title, description, tech badges, feature
-list, schematic panel labels, case-study sections, links — comes from
-`data/projects.ts`. No component needs to change to update copy, add a
-feature, or fix a link.
+`data/projects.ts` is the single source of truth (cards, case-study pages and the Assistant all read
+it). **The array order is the display order** — ordered by portfolio value, not by date or name. The
+first `FEATURED_PROJECT_COUNT` (6) render as strong cards; the rest follow as a compact list. No
+ranking numbers are shown anywhere.
+
+Current order (13 projects):
+
+1. ZKR Estate · 2. ZKR Verano · 3. ZKR Ecommerce · 4. ZKR FeelingApp · 5. ZKR Atelier · 6. ZKR Resume AI
+7. ZKR Eclipse · 8. ZKR TaskFlow · 9. ZKR Company · 10. Fleurs Alliance · 11. Coffy° · 12. ZKR Festival · 13. ZKR Coffee
+
+The first six are the priority work. The remaining seven are ordered by technical depth as recorded
+in the data: Eclipse (dashboard platform + component library), TaskFlow (SaaS with auth and a kanban
+board), Company (11-route agency site), Fleurs Alliance (bilingual storefront with ordering),
+Coffy°, Festival and Coffee (marketing/concept sites).
+
+**Only verified facts.** FeelingApp, Atelier and Resume AI were supplied as screenshots + a live URL,
+without source or docs, so their entries contain only what those screenshots visibly show and have
+`technologies: []` — the cards show a real `highlights` list instead. Add a technology list, a
+`repositoryUrl`, or more detail only once verified.
+
+To add or change a project: edit its entry (or insert a new one at the right position), drop the
+screenshots into `public/projects/<slug>/`, and reference them in `screenshots`.
 
 ## Brand assets (logo, hero image & project screenshots)
 
-**No binary assets are included in this zip.** The code references them and is
-wired to pick them up automatically — drop the real files in at these paths, no
-code changes needed:
+The real files ship in `public/`:
 
 | Asset | Path | Used in |
 |---|---|---|
 | ZKR logo (official branding) | `public/logo/zkr.jpg` | `components/ui/Logo.tsx` — nav, loader, footer, Agent; also the favicon / apple-touch-icon (`app/layout.tsx`) |
-| Hero background | `public/hero/background.jpg` | `components/hero/HeroImage.tsx` — cinematic hero visual |
-| Project screenshots | `public/projects/<slug>/…` (file names are listed per project in `data/projects.ts`) | project cards and the `/work/[slug]` gallery + lightbox |
+| Hero background | `public/hero/background.jpg` (aurora photo, ~3 MB — served through `next/image`) | `components/hero/HeroImage.tsx` |
+| Project screenshots | `public/projects/<slug>/…` (13 folders) | project cards and the `/work/[slug]` gallery + lightbox |
 
-Until the real files exist, everything degrades instead of breaking:
-
-- `Logo` falls back to the "ZKR•" text wordmark.
-- `HeroImage` falls back to the plain blueprint grid.
-- Project images (`components/ui/SafeImage.tsx`) fall back to a plain card-surface panel — nothing is drawn or invented in place of a missing screenshot.
-- No build failure. The only visible symptoms are the browser's 404 for the favicon and for the image requests.
+If a file is ever missing the site degrades instead of breaking: `Logo` falls back to the "ZKR•"
+wordmark, `HeroImage` to the plain blueprint grid, and project images (`components/ui/SafeImage.tsx`)
+to a plain card-surface panel. Nothing is ever drawn or invented in place of a missing screenshot.
 
 Never replace the official logo with a redrawn/SVG version — the brand mark is `public/logo/zkr.jpg`.
 
 ## Colour system & themes
 
-One green palette, two intentionally designed themes (light is the default):
+The site uses the **Meadow Green** palette as one identity in two themes (light is the default):
 
-`#EEF4EB · #E2F2DE · #CBE5C5 · #B2D8A9 · #98CA8E · #7FBD75 · #629959 · #426C3C · #203A21 · #101E13`
+`#D9ED92 · #B5E48C · #99D98C · #76C893 · #52B69A · #34A0A4 · #168AAD · #1A759F · #1E6091 · #184E77`
+(yellow-green → teal → deep blue)
+
+The palette has no near-white or near-black, so page tones are *derived* from it: the light paper
+is `#D9ED92` lightened (`#F4FAE0`), the dark page is `#184E77` darkened (`#0C273C`). Text colours were
+chosen for WCAG AA on every surface they sit on — on light, only `#184E77` / `#1E6091` / `#1A759F`
+are dark enough for text, so the greens carry borders, fills and decoration instead.
 
 | Role | Light | Dark |
 |---|---|---|
-| Page | `#EEF4EB` | `#101E13` |
-| Soft surfaces | `#E2F2DE` / `#CBE5C5` | `#203A21` / `#2C4B2D` |
-| Borders | `#B2D8A9` | `#426C3C` |
-| Text | `#203A21` (dim `#35573A`, faint `#3F6839`) | `#EEF4EB` (dim `#CBE5C5`, faint `#A9C2A2`) |
-| Accent (links, labels) | `#426C3C` | `#7FBD75` |
-| Decorative brand fill | `#629959` | `#629959` |
+| Page | `#F4FAE0` | `#0C273C` |
+| Surfaces | `#EFF7D1` / `#E4F2B0` | `#133E5F` / `#184E77` |
+| Borders | `#B5E48C` / `#99D98C` | `#1E6091` / `#1A759F` |
+| Text (dim / faint) | `#184E77` (`#326384` / `#1C6A98`) | `#F4FAE0` (`#D8E1CC` / `#A3B0A7`) |
+| Accent (links, labels) | `#1A759F` | `#76C893` |
+| Decorative fills | `#52B69A` | `#52B69A` |
+| Closing Contact + Footer band | `#184E77` | `#184E77` |
 
-Dark is the deep end of the same palette, not an inversion. The closing Contact +
-Footer block (`.tone-inverse`) is a deep-green band in light mode (`#101E13`) and a
-raised band in dark mode (`#203A21`). Section backgrounds alternate page/surface
-for separation; there are no gradients, glows, blur or glass.
-
-**How it works.** Every colour is a CSS variable (an RGB triplet) defined per theme
-in `app/globals.css`; `tailwind.config.ts` maps them (`bg-bg`, `text-text`,
-`border-border`, `text-accent`, `bg-brand` …) with alpha support, so components never
-hard-code a colour and adapt automatically. The theme lives on `<html data-theme>`:
+**How it works.** Every colour is a CSS variable (an RGB triplet) defined per theme in
+`app/globals.css`; `tailwind.config.ts` maps them (`bg-bg`, `text-text`, `border-border`,
+`text-accent`, `bg-brand` …) with alpha support, so components never hard-code a colour. The theme
+lives on `<html data-theme>`:
 
 - an inline script in `app/layout.tsx` sets it before first paint (saved choice → OS
   `prefers-color-scheme` → light), so there is no flash of the wrong theme;
-- `components/ui/ThemeToggle.tsx` (header, desktop + mobile) switches it, saves the
-  choice in `localStorage` (`zkr-theme`), follows the OS live while nothing is saved,
-  keeps other tabs in sync and updates the browser `theme-color`;
-- both text tiers are contrast-checked (WCAG AA) on every surface they appear on;
-  `#629959` is reserved for decorative fills, never small text.
+- `components/ui/ThemeToggle.tsx` switches it, saves the choice in `localStorage` (`zkr-theme`),
+  follows the OS live while nothing is saved, syncs other tabs and updates the browser `theme-color`.
 
-To retune the whole site, edit the variable blocks (`:root`, `[data-theme="dark"]`,
-`.tone-inverse`) in `app/globals.css`.
+There are no gradients, glows, blur or glass. To retune everything, edit the variable blocks
+(`:root`, `[data-theme="dark"]`, `.tone-inverse`) in `app/globals.css`.
+
+## Typography
+
+Typefaces are three roles exposed as CSS variables (`app/globals.css`): `--font-display` (headings,
+project titles), `--font-body` (body, navigation, buttons, forms, Agent) and `--font-mono` (labels,
+tags). Today they resolve to Fraunces / Inter / JetBrains Mono, loaded by the `<link>` in
+`app/layout.tsx`.
+
+**A custom font has not been applied yet:** the material supplied for this round was a
+font-pairing preview image (a script face paired with a serif, captioned in Poppins), not font
+files, and no substitute was guessed. To adopt real fonts: put the files in `public/fonts/`, add
+their `@font-face` rules (correct `font-weight` / `font-style` per file, `font-display: swap`) to
+`app/globals.css`, and point the variables at them — every heading, nav item, button, form field,
+footer line and the Agent follows. Note that a script face suits display accents only; keep the
+body and interface roles on a readable text face.
 
 ## Skills section
 
@@ -199,22 +226,20 @@ information" (in the visitor's language) instead of a guess.
 
 ## Screenshots
 
-Real screenshots are never fabricated. `data/projects.ts` lists the real screenshot
-files each project expects under `public/projects/<slug>/` (these image files are
-**not** in this zip). Entries marked `isPlaceholder: true` (currently the
-Fleurs Alliance shots) are captioned "Placeholder" in the gallery.
+Real screenshots are never fabricated. Each project's screenshots live in
+`public/projects/<slug>/` and are listed in its `screenshots` array in `data/projects.ts`. A shot
+with `isPlaceholder: true` would be captioned "Placeholder" in the gallery — currently none are.
 
 To add or swap a screenshot:
 
 1. Drop the image into `public/projects/<slug>/`.
-2. Update that shot's entry in the project's `screenshots` array in `data/projects.ts`:
+2. Add or update its entry in the project's `screenshots` array:
    ```ts
    { src: "/projects/zkr-ecommerce/storefront.png", alt: "...", label: "Storefront", isPlaceholder: false },
    ```
 
-The project cover, the gallery grid and the lightbox all update automatically,
-and the "Placeholder" caption disappears once `isPlaceholder` is `false`. Click
-any screenshot on a `/work/[slug]` page to open it in the fullscreen lightbox.
+The project cover (the first screenshot), the gallery grid and the lightbox all update automatically.
+Click any screenshot on a `/work/[slug]` page to open it in the fullscreen lightbox.
 
 ## Contact form
 
@@ -273,7 +298,7 @@ components. See `.env.example`.
   errors, 0 ESLint errors). The routes — `/`, `/api/contact`, the 10
   `/work/[slug]` pages and the 404 page — were smoke-tested in real Chromium on
   desktop and on 320 / 375 / 390 / 430 / 768 / 1024 / 1280 / 1440px in EN, FR and ES,
-  in both the light and dark theme.
+  in both the light and dark theme (13 project routes, plus a themed 404).
 - The contact API deliberately answers **503** with `{ fallback: "mailto" }` when
   neither `RESEND_API_KEY` nor `CONTACT_FORM_ENDPOINT` is set; the form then
   opens a pre-filled email. Browsers log that 503 in the console — it is expected

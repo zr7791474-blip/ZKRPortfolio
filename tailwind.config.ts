@@ -28,7 +28,7 @@ const config: Config = {
           soft: "rgb(var(--brand) / 0.14)",
           line: "rgb(var(--brand) / 0.45)",
         },
-        brand: v("brand"), // #629959 — decorative fills, dots, bars (never small text)
+        brand: v("brand"), // #52B69A — decorative fills, dots, bars (never small text)
         danger: v("danger"),
       },
       // Like `transition-all` but WITHOUT outline properties, so keyboard focus rings appear instantly
@@ -37,9 +37,11 @@ const config: Config = {
         ui: "color, background-color, border-color, opacity, transform, box-shadow",
       },
       fontFamily: {
-        serif: ["Fraunces", "Georgia", "serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        // Typefaces are CSS variables (defined in app/globals.css) so the whole site can switch
+        // font in one place — see "Typography" in the README.
+        serif: ["var(--font-display)"],
+        sans: ["var(--font-body)"],
+        mono: ["var(--font-mono)"],
       },
       maxWidth: {
         wrap: "1280px",

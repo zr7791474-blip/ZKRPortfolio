@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 type Theme = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "zkr-theme";
-const THEME_COLOR: Record<Theme, string> = { light: "#EEF4EB", dark: "#101E13" };
+const THEME_COLOR: Record<Theme, string> = { light: "#F4FAE0", dark: "#0C273C" };
 
 /** Applies a theme to <html> and to the browser-UI colour. Does not persist. */
 function applyTheme(theme: Theme) {

@@ -1,3 +1,5 @@
+import { projects } from "./projects";
+
 export const nav = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
@@ -9,7 +11,7 @@ export const nav = [
 ] as const;
 
 export const heroStats = [
-  { value: "10", suffix: "", label: "Featured Projects", isNumber: true },
+  { value: String(projects.length), suffix: "", label: "Featured Projects", isNumber: true },
   { value: "Full-Stack", suffix: "", label: "Frontend + Backend + Database", isNumber: false },
   { value: "Production-Ready", suffix: "", label: "Real auth, real data, real payments", isNumber: false },
   { value: "End-to-End", suffix: "", label: "From schema to shipped UI", isNumber: false },
@@ -167,7 +169,7 @@ export const loaderMessages = [
 ] as const;
 
 export const loaderMeta = [
-  "10 PROJECTS",
+  `${projects.length} PROJECTS`,
   "FULL-STACK DEVELOPMENT",
   "CASABLANCA, MOROCCO",
 ] as const;

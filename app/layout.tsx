@@ -9,15 +9,15 @@ import ZkrAssistant from "@/components/assistant/ZkrAssistant";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 import MotionProvider from "@/components/ui/MotionProvider";
 
-const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem("zkr-theme");var t=(s==="light"||s==="dark")?s:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);var m=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<m.length;i++){m[i].setAttribute("content",t==="dark"?"#101E13":"#EEF4EB");m[i].removeAttribute("media")}}catch(e){}})();`;
+const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem("zkr-theme");var t=(s==="light"||s==="dark")?s:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);var m=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<m.length;i++){m[i].setAttribute("content",t==="dark"?"#0C273C":"#F4FAE0");m[i].removeAttribute("media")}}catch(e){}})();`;
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   // Browser UI colour follows the OS scheme; ThemeToggle overrides it after a manual choice.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#EEF4EB" },
-    { media: "(prefers-color-scheme: dark)", color: "#101E13" },
+    { media: "(prefers-color-scheme: light)", color: "#F4FAE0" },
+    { media: "(prefers-color-scheme: dark)", color: "#0C273C" },
   ],
   // Android Chrome: resize the layout viewport when the on-screen keyboard opens,
   // so the bottom-anchored Agent composer is never hidden behind it.
